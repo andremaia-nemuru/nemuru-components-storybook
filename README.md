@@ -16,8 +16,8 @@ We'll also be running our `example/` create-react-app that's linked to the local
 
 ```bash
 # (in another tab)
-cd example
-npm link react-poop-emoji
+cd newmuru-merchant
+npm link nemuru-components
 npm install
 npm start # runs create-react-app dev server
 ```
