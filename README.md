@@ -12,7 +12,7 @@ npm install # disregard any warnings about missing peer dependencies
 npm start # runs rollup with watch flag
 ```
 
-We'll also be running our `example/` create-react-app that's linked to the local version of your `react-poop-emoji` module.
+We'll also be running our `newmuru-merchant` create-react-app that's linked to the local version of your `nemuru-components` module.
 
 ```bash
 # (in another tab)
