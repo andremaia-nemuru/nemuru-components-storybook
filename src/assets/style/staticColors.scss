@@ -1,0 +1,139 @@
+
+
+
+$color-green: #4dd970;
+$color-dark: #08404d;
+
+
+$color-grey-65: #77787b;
+$color-grey-40: #a7a9ac;
+$color-grey-20: #d8d8d8;
+$color-grey-10: #f1f1f1;
+
+
+
+$color-light-accent: #f0e8e3;
+
+$color-blue: #36a3f7;
+$color-yellow: #ffca28;
+$color-coral: #ef5957;
+$color-light-brown: #d2b77f;
+$color-royal-blue: #5867dd;
+$color-broken-white: #f9fafa;
+
+$grey-200: #f4f5f8;
+
+
+.static-color-grey10{
+  &.static-color-as-bg{
+    background-color: $color-grey-10 !important;
+  }
+  &.static-color-as-font{
+    color: $color-grey-10 !important;
+  }
+}
+.static-color-grey20{
+  &.static-color-as-bg{
+    background-color: $color-grey-20 !important;
+  }
+  &.static-color-as-font{
+    color: $color-grey-20 !important;
+  }
+}
+.static-color-grey40{
+  &.static-color-as-bg{
+    background-color: $color-grey-40 !important;
+  }
+  &.static-color-as-font{
+    color: $color-grey-40 !important;
+  }
+}
+.static-color-grey65{
+  &.static-color-as-bg{
+    background-color: $color-grey-65 !important;
+  }
+  &.static-color-as-font{
+    color: $color-grey-65 !important;
+  }
+}
+
+.static-color-broken-white{
+  &.static-color-as-bg{
+    background-color: $color-broken-white !important;
+  }
+  &.static-color-as-font{
+    color: $color-broken-white !important;
+  }
+}
+
+.static-color-royal-blue{
+  &.static-color-as-bg{
+    background-color: $color-royal-blue !important;
+  }
+  &.static-color-as-font{
+    color: $color-royal-blue !important;
+  }
+}
+
+.static-color-light-brown{
+  &.static-color-as-bg{
+    background-color: $color-light-brown !important;
+  }
+  &.static-color-as-font{
+    color: $color-light-brown !important;
+  }
+}
+
+.static-color-coral{
+  &.static-color-as-bg{
+    background-color: $color-coral !important;
+  }
+  &.static-color-as-font{
+    color: $color-coral !important;
+  }
+}
+
+.static-color-yellow{
+  &.static-color-as-bg{
+    background-color: $color-yellow !important;
+  }
+  &.static-color-as-font{
+    color: $color-yellow !important;
+  }
+}
+
+.static-color-blue{
+  &.static-color-as-bg{
+    background-color: $color-blue !important;
+  }
+  &.static-color-as-font{
+    color: $color-blue !important;
+  }
+}
+
+.static-color-secondary{
+  &.static-color-as-bg{
+    background-color: $color-dark !important;
+  }
+  &.static-color-as-font{
+    color: $color-dark !important;
+  }
+}
+
+.static-color-focus{
+  &.static-color-as-bg{
+    background-color: $color-grey-65 !important;
+  }
+  &.static-color-as-font{
+    color: $color-grey-65 !important;
+  }
+}
+
+.static-color-green{
+  &.static-color-as-bg{
+    background-color: $color-green !important;
+  }
+  &.static-color-as-font{
+    color: $color-green !important;
+  }
+}
