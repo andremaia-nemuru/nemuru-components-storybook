@@ -1,0 +1,8 @@
+{
+    "plugins": [
+        "@babel/plugin-proposal-export-default-from",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-transform-destructuring"
+    ],
+    "presets": ["@babel/preset-react"]
+}
