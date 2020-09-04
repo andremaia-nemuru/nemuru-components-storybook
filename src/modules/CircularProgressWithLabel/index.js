@@ -9,19 +9,20 @@ export default function CircularProgressWithLabel(props) {
     return (
         <Box position="relative" display="inline-flex">
 
-             <div className={'wrap-circle'} style={{
-                 "borderRadius": "30px",
-                 "boxShadow":"0 0 10px #0004",
-                 "height":"30px",
-                 "position":"absolute",
-                 "width":"30px",
-                 "top":"5px",
-                 "left":"5px"
-             }}/>
+            <div className={'wrap-circle'} style={{
+                "borderRadius": "30px",
+                "boxShadow": "0 0 10px #0004",
+                "height": "30px",
+                "position": "absolute",
+                "width": "30px",
+                "top": "5px",
+                "left": "5px"
+            }}/>
             {subCircleValue && (
-                <CircularProgress variant="static" value={subCircleValue} {...options} className={subCircleClassName || ''} style={{position: 'absolute', opacity: 0.6}}/>
+                <CircularProgress variant="static" value={subCircleValue} {...options}
+                                  className={subCircleClassName || ''} style={{position: 'absolute', opacity: 0.6}}/>
             )}
-                 <CircularProgress variant="static" value={value} {...options} />
+            <CircularProgress variant="static" value={value} {...options} />
             <Box
                 top={0}
                 left={0}
@@ -41,8 +42,8 @@ export default function CircularProgressWithLabel(props) {
 }
 
 CircularProgressWithLabel.propTypes = {
-  options: PropTypes.object,
-  subCircleClassName: PropTypes.string,
-  subCircleValue: PropTypes.number,
-  value: PropTypes.number.isRequired
+    options: PropTypes.object,
+    subCircleClassName: PropTypes.string,
+    subCircleValue: PropTypes.number,
+    value: PropTypes.number.isRequired
 }
