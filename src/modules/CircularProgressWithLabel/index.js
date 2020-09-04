@@ -5,9 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function CircularProgressWithLabel(props) {
+    const {value, subCircleValue, subCircleClassName, options} = props;
     return (
         <Box position="relative" display="inline-flex">
-             {/*<CircularProgress variant="static" value={70} style={{position: 'absolute', color: '#f80'}}/>*/}
+
              <div className={'wrap-circle'} style={{
                  "borderRadius": "30px",
                  "boxShadow":"0 0 10px #0004",
@@ -17,7 +18,10 @@ export default function CircularProgressWithLabel(props) {
                  "top":"5px",
                  "left":"5px"
              }}/>
-                 <CircularProgress variant="static" {...props} />
+            {subCircleValue && (
+                <CircularProgress variant="static" value={subCircleValue} {...options} className={subCircleClassName || ''} style={{position: 'absolute', opacity: 0.6}}/>
+            )}
+                 <CircularProgress variant="static" value={value} {...options} />
             <Box
                 top={0}
                 left={0}
@@ -29,7 +33,7 @@ export default function CircularProgressWithLabel(props) {
                 justifyContent="center"
             >
                 <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
-                    props.value,
+                    value,
                 )}%`}</Typography>
             </Box>
         </Box>
@@ -37,9 +41,8 @@ export default function CircularProgressWithLabel(props) {
 }
 
 CircularProgressWithLabel.propTypes = {
-    /**
-     * The value of the progress indicator for the determinate and static variants.
-     * Value between 0 and 100.
-     */
-    value: PropTypes.number.isRequired,
-};
+  options: PropTypes.object,
+  subCircleClassName: PropTypes.string,
+  subCircleValue: PropTypes.number,
+  value: PropTypes.number.isRequired
+}
