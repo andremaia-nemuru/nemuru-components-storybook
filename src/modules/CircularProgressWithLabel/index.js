@@ -5,24 +5,26 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function CircularProgressWithLabel(props) {
-    const {value, subCircleValue, subCircleClassName, options} = props;
+    const {value, subCircleValue, subCircleClassName, size, options} = props;
+    const wrapCircleSizePx = `${size - 6}px`;
     return (
         <Box position="relative" display="inline-flex">
 
+
+            {subCircleValue && (
+                <CircularProgress variant="static" value={subCircleValue} size={size} thickness={1.5} {...options}
+                                  className={subCircleClassName || ''} style={{position: 'absolute'}}/>
+            )}
+            <CircularProgress variant="static" value={value} size={size} thickness={1.5} {...options} />
             <div className={'wrap-circle'} style={{
                 "borderRadius": "30px",
-                "boxShadow": "0 0 10px #0004",
-                "height": "30px",
+                "boxShadow": "0 0 10px #0006",
+                "height": wrapCircleSizePx,
                 "position": "absolute",
-                "width": "30px",
-                "top": "5px",
-                "left": "5px"
+                "width": wrapCircleSizePx,
+                "top": "3px",
+                "left": "3px"
             }}/>
-            {subCircleValue && (
-                <CircularProgress variant="static" value={subCircleValue} {...options}
-                                  className={subCircleClassName || ''} style={{position: 'absolute', opacity: 0.6}}/>
-            )}
-            <CircularProgress variant="static" value={value} {...options} />
             <Box
                 top={0}
                 left={0}
@@ -33,9 +35,13 @@ export default function CircularProgressWithLabel(props) {
                 alignItems="center"
                 justifyContent="center"
             >
-                <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
-                    value,
-                )}%`}</Typography>
+                <Typography variant="caption" component="div" color="secondary">
+                    <strong>
+                        {`${Math.round(
+                            value,
+                        )}%`}
+                    </strong>
+                </Typography>
             </Box>
         </Box>
     );
