@@ -5,13 +5,13 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 export default function CircularProgressWithLabel(props) {
-    const {value, subCircleValue, subCircleClassName, size, options} = props;
+    const {value, subCircleValue, subCircleClassName, size, options, label} = props;
     const wrapCircleSizePx = `${size - 6}px`;
     return (
         <Box position="relative" display="inline-flex">
 
 
-            {subCircleValue && (
+            {!!subCircleValue && (
                 <CircularProgress variant="static" value={subCircleValue} size={size} thickness={1.5} {...options}
                                   className={subCircleClassName || ''} style={{position: 'absolute'}}/>
             )}
@@ -34,14 +34,9 @@ export default function CircularProgressWithLabel(props) {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
+                style={{lineHeight: "0px"}}
             >
-                <Typography variant="caption" component="div" color="secondary">
-                    <strong>
-                        {`${Math.round(
-                            value,
-                        )}%`}
-                    </strong>
-                </Typography>
+                {label || value}
             </Box>
         </Box>
     );
