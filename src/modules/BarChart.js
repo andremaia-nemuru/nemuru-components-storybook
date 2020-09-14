@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useTheme, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { Bar } from 'react-chartjs-2';
 
 BarChart.propTypes = {
-    chartDataset: PropTypes.arrayOf(PropTypes.number).isRequired,
+    chartDataset: PropTypes.object.isRequired,
     chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
     chartMaxValue: PropTypes.number.isRequired,
-    barBackgroundColor: PropTypes.string.isRequired,
-    barThickness: PropTypes.number.isRequired,
+    barBackgroundColor: PropTypes.string,
+    barThickness: PropTypes.number,
     maintainAspectRatio: PropTypes.bool,
     displayLegend: PropTypes.bool,
     displayGridLines: PropTypes.bool,
-    xAxesFontSize: PropTypes.number.isRequired,
-    yAxesFontSize: PropTypes.number.isRequired,
+    xAxesFontSize: PropTypes.number,
+    yAxesFontSize: PropTypes.number,
     yAxisLabelsSuffix: PropTypes.string,
 };
 
@@ -31,8 +31,6 @@ export default function BarChart({
     yAxisLabelsSuffix = '',
     ...props
 }) {
-    const themePalette = useTheme().palette;
-
     const data = {
         labels: chartLabels,
         datasets: [
