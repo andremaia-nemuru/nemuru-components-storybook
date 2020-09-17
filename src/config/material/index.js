@@ -210,7 +210,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
       MuiSelect: {
         select: {
           "&:focus": {
-            backgroundColor: '#fff',
+            backgroundColor: 'inherit',
           }
         }
       }
