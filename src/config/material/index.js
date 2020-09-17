@@ -206,6 +206,13 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
         root: {
           backgroundColor: 'rgba(240, 240, 240, 0.7)'
         }
+      },
+      MuiSelect: {
+        select: {
+          "&:focus": {
+            backgroundColor: 'inherit',
+          }
+        }
       }
     },
     shadows: [
