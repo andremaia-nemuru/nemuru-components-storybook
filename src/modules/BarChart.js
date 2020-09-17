@@ -14,7 +14,9 @@ BarChart.propTypes = {
     displayGridLines: PropTypes.bool,
     xAxesFontSize: PropTypes.number,
     yAxesFontSize: PropTypes.number,
-    yAxisLabelsSuffix: PropTypes.string,
+    yAxisTicksCallback: PropTypes.func,
+    defaultTicksStepSize: PropTypes.number,
+    defaultTicksMaxValue: PropTypes.number,
 };
 
 export default function BarChart({
@@ -28,7 +30,9 @@ export default function BarChart({
     displayGridLines = false,
     xAxesFontSize = 10,
     yAxesFontSize = 10,
-    yAxisLabelsSuffix = '',
+    yAxisTicksCallback = (v) => v,
+    defaultTicksStepSize = 5000,
+    defaultTicksMaxValue = 20000,
     ...props
 }) {
     const data = {
@@ -78,9 +82,16 @@ export default function BarChart({
                     ticks: {
                         beginAtZero: true,
                         // Ticks for the Y axis (the actual values of the chart) are calculated dinamically based on the chartMaxValue
-                        stepSize: chartMaxValue > 0 ? chartMaxValue / 4 : 5,
-                        max: chartMaxValue > 0 ? chartMaxValue : 20,
-                        callback: (value) => `${value}${yAxisLabelsSuffix}`,
+                        stepSize:
+                            chartMaxValue > 0
+                                ? chartMaxValue / 4
+                                : defaultTicksStepSize,
+                        max:
+                            chartMaxValue > 0
+                                ? chartMaxValue
+                                : defaultTicksMaxValue,
+                        // The callback function allows to change the display ticks values
+                        callback: yAxisTicksCallback,
                         fontSize: yAxesFontSize,
                     },
                     gridLines: {
