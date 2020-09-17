@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from '@material-ui/core';
-import { Bar } from 'react-chartjs-2';
+import Chart from 'react-chartjs-2';
 
 BarChart.propTypes = {
     chartDataset: PropTypes.object.isRequired,
@@ -104,7 +104,7 @@ export default function BarChart({
     return (
         // Height/width properties must be added to an outer container, and not to the chart component itself
         <Box {...props}>
-            <Bar data={data} options={options} />
+            <Chart type="bar" data={data} options={options} />
         </Box>
     );
 }
