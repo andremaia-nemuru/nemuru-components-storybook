@@ -1,6 +1,11 @@
+import config from '../config';
+
+export function getIconName(str) {
+    return config.ICONS[str] || '';
+}
 
 export function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
+    return item && typeof item === 'object' && !Array.isArray(item);
 }
 
 export function mergeDeep(target, ...sources) {
@@ -20,6 +25,3 @@ export function mergeDeep(target, ...sources) {
 
     return mergeDeep(target, ...sources);
 }
-
-
-
