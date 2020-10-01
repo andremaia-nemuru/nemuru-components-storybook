@@ -21,6 +21,7 @@ BarChart.propTypes = {
 
 export default function BarChart({
     chartDataset,
+    chartDatasets,
     chartLabels,
     chartMaxValue,
     barBackgroundColor = 'lightgrey',
@@ -31,14 +32,17 @@ export default function BarChart({
     xAxesFontSize = 10,
     yAxesFontSize = 10,
     yAxisTicksCallback = (v) => v,
-    defaultTicksStepSize = 5000,
+    defaultTicksStepSize = 500,
     defaultTicksMaxValue = 20000,
     ...props
 }) {
+    if (chartDataset){
+        chartDatasets = [ chartDataset ]
+    }
     const data = {
         labels: chartLabels,
         datasets: [
-            chartDataset,
+            ...chartDatasets,
             // A second dataset is needed to display those grey bars as background. The values are the difference between the maximum and the real value
             {
                 label: 'greyBars',
