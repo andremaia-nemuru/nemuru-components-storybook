@@ -17,6 +17,7 @@ export default function InputRange(props) {
         min,
         max,
         step,
+        maxLength,
         unitName,
         hintLabel,
         ...rest
@@ -39,6 +40,12 @@ export default function InputRange(props) {
                 value={numStringValue}
                 name={name}
                 onChange={(e) => {  action(e.target.name, Number(e.target.value))}}
+                onInput={(e) => {
+                    if (!maxLength) return;
+                    e.target.value = Math.max(0, parseInt(e.target.value))
+                        .toString()
+                        .slice(0, maxLength);
+                }}
                 InputProps={{
                     endAdornment: <i className="icon-edit-input" style={{ pointerEvents: 'none', opacity: 0.5, verticalAlign: 'text-top', fontSize: '25px' }}>
                     </i>
