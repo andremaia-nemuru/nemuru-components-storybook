@@ -17,14 +17,14 @@ export default class Header extends Component {
             logged,
             children,
             className,
-            isMobile,
+            bottomMenuVariant,
             logo,
             ...rest
         } = this.props
 
         return (
             <div className={className}>
-                {isMobile ? (
+                {bottomMenuVariant ? (
                     <Fragment>
                         <AppBar position='fixed' color='transparent' style={{bottom: 0, top: 'auto'}}>
                             {children}
