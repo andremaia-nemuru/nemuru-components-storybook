@@ -19,7 +19,7 @@ export default function InputRangeMobile(props) {
         unitName,
         hintLabel,
         hideDetails = false,
-        color,
+        color = 'inherit',
         ...rest
     } = props;
     const { palette: themePalette } = useTheme();
@@ -33,8 +33,8 @@ export default function InputRangeMobile(props) {
 
     return (
         <Fragment>
-            <div className="input-unit-helper">
-                <div className="wrapper" style={{ ...fontStyles }}>
+            <div className="input-unit-helper-mobile">
+                <div className="wrapper-mobile" style={{ ...fontStyles }}>
                     <span>{value}</span>
                     <span>{unitName}</span>
                 </div>
@@ -75,9 +75,9 @@ export default function InputRangeMobile(props) {
                 {...rest}
             />
             <div
-                className={
+                className={`px-2 ${
                     hideDetails ? 'hide-extend-anim' : 'show-extend-anim'
-                }
+                }`}
                 style={{
                     transitionDuration: '0.2s',
                     pointerEvents: hideDetails ? 'none' : 'inherit',
