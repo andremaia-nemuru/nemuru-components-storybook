@@ -1,4 +1,5 @@
 export InputRange from './modules/InputRange';
+export InputRangeMobile from './modules/InputRangeMobile';
 export TableMui from './modules/TableMui';
 export Header from './modules/Header';
 export Themer from './modules/Themer';
