@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import { useTheme } from '@material-ui/styles';
-import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
+import RichTextfield from '../RichTextfield';
 
 export default function InputRangeMobile(props) {
     const {
@@ -18,13 +17,12 @@ export default function InputRangeMobile(props) {
         maxLength,
         unitName,
         hintLabel,
+        allowDecimals = false,
         hideDetails = false,
         color = 'inherit',
         ...rest
     } = props;
-    const { palette: themePalette } = useTheme();
     const rangedValue = value < min ? min : value > max ? max : value;
-    const numStringValue = Number(value).toString(); // fix to avoid leading zeros on input
     const fontStyles = {
         color,
         fontWeight: 'bold',
@@ -33,46 +31,24 @@ export default function InputRangeMobile(props) {
 
     return (
         <Fragment>
-            <div className="input-unit-helper-mobile">
-                <div className="wrapper-mobile" style={{ ...fontStyles }}>
-                    <span>{value}</span>
-                    <span>{unitName}</span>
-                </div>
-            </div>
-            <TextField
+            <RichTextfield
+                isMobile
+                fontStyles={fontStyles}
+                allowDecimals={allowDecimals}
+                maxLength={maxLength}
                 label={label}
-                type={'number'}
                 id={id}
-                value={numStringValue}
+                value={value}
+                unitName={unitName}
                 name={name}
-                onChange={(e) => {
-                    action(e.target.name, Number(e.target.value));
-                }}
-                onInput={(e) => {
-                    if (!maxLength) return;
-                    e.target.value = Math.max(0, parseInt(e.target.value))
-                        .toString()
-                        .slice(0, maxLength);
-                }}
+                error={value !== rangedValue}
+                action={action}
+                rest={rest}
                 InputProps={{
-                    endAdornment: (
-                        <i
-                            className="icon-edit-input"
-                            style={{
-                                pointerEvents: 'none',
-                                opacity: 0.5,
-                                verticalAlign: 'text-top',
-                                fontSize: '25px',
-                                color: themePalette.static.grey65,
-                            }}
-                        ></i>
-                    ),
                     style: {
                         ...fontStyles,
                     },
                 }}
-                error={value !== rangedValue}
-                {...rest}
             />
             <div
                 className={`px-2 ${
