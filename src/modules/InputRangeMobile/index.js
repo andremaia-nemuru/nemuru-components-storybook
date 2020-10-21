@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Slider from '@material-ui/core/Slider';
-import { InputRangeTextField } from '../InputRange';
+import RichTextfield from '../RichTextfield';
 
 export default function InputRangeMobile(props) {
     const {
@@ -31,18 +31,15 @@ export default function InputRangeMobile(props) {
 
     return (
         <Fragment>
-            <div className="input-unit-helper-mobile">
-                <div className="wrapper-mobile" style={{ ...fontStyles }}>
-                    <span>{value}</span>
-                    <span>{unitName}</span>
-                </div>
-            </div>
-            <InputRangeTextField
+            <RichTextfield
+                isMobile
+                fontStyles={fontStyles}
                 allowDecimals={allowDecimals}
                 maxLength={maxLength}
                 label={label}
                 id={id}
                 value={value}
+                unitName={unitName}
                 name={name}
                 error={value !== rangedValue}
                 action={action}
