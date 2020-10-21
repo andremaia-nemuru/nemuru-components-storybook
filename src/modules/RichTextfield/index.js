@@ -7,8 +7,16 @@ const replaceCommasForDots = (value) => value.replace(/,/g, '.');
 const removeDuplicateDot = (value) =>
     value.split('.').length - 1 > 1 ? value.slice(0, -1) : value;
 
-const controlMaxLength = (value, maxLength) =>
-    value.split('.')[0].length === maxLength + 1 ? value.slice(0, -1) : value;
+const controlMaxLength = (value, maxLength) => {
+    let [intPart, decimalPart] = value.split('.');
+    if (intPart.length === maxLength + 1) {
+        intPart = intPart.slice(0, -1);
+    }
+    if (decimalPart && decimalPart.length > 2) {
+        decimalPart = decimalPart.slice(0, -1);
+    }
+    return value.indexOf('.') !== -1 ? `${intPart}.${decimalPart}` : intPart;
+};
 
 const parseAsFloatIfHasDecimals = (value) =>
     value.length - value.indexOf('.') > 2
