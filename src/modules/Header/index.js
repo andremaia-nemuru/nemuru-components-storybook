@@ -59,7 +59,7 @@ export default class Header extends Component {
                                 </Toolbar>
                             </Container>
                         </AppBar>
-                        <div style={{marginTop: '130px'}}/>
+                        <div style={{paddingTop: '130px'}}/>
                     </Fragment>
                 )}
 

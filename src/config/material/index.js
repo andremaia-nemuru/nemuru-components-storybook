@@ -6,41 +6,49 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
         palette: {
             primary: {
                 main: '#4dd970',
-                contrast: '#08404d',
                 contrastText: '#08404d',
             },
             secondary: {
                 main: '#08404d',
-                contrast: '#ffffff',
                 contrastText: '#4dd970',
             },
             error: {
                 main: '#ef5957',
-                contrast: '#ffffff',
+                contrastText: '#ffffff',
             },
             warning: {
                 main: '#ffca28',
-                contrast: '#ffffff',
+                contrastText: '#ffffff',
             },
             info: {
                 main: '#36a3f7',
-                contrast: '#ffffff',
+                contrastText: '#ffffff',
             },
             success: {
                 main: '#4dd970',
-                contrast: '#ffffff',
+                contrastText: '#ffffff',
             },
             text: {
-                primary: '#08404d',
+                accent: '#4dd970',
+                active: '#08404d',
+                title: '#08404d',
+                primary: '#4b5354',
                 secondary: '#77787b',
             },
             // additional colors
             dark: {
                 main: '#08404d',
-                contrast: '#ffffff',
+                accent: '#4dd970',
+                contrastText: '#ffffff',
             },
             light: {
-                main: '#d2b77f',
+                main: '#f0e8e3',
+                accent: '#4dd970',
+                contrastText: '#08404d',
+            },
+            extra: {
+                statusSent: '#08404d',
+                statusAnalysing: '#36a3f7',
             },
             static: {
                 green: '#4dd970',
@@ -62,6 +70,14 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 coloredGrey70: '#618d97',
                 coloredGrey80: '#316d7a',
             }
+
+        },
+        background: null,
+        logo: null,
+        customBorderRadius: {
+            button: 25,
+            paper: 15,
+            chip: 6,
         },
         spacing: [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80],
     };
@@ -93,10 +109,14 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
         overrides: {
             MuiButton: {
                 root: {
-                    borderRadius: 25,
+                    borderRadius: targetThemeValues.customBorderRadius.button,
                     border: 0,
                     textTransform: 'none',
                     fontSize: '16px',
+                },
+                contained: {
+                    backgroundColor: targetThemeValues.palette.light.main,
+                    color: targetThemeValues.palette.light.contrastText,
                 },
                 sizeLarge: {
                     height: '40px',
@@ -111,7 +131,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             },
             MuiFormControl: {
                 root: {
-                    margin: mainDefaultReusableValues.spacing[1]
+                    margin: targetThemeValues.spacing[1]
                 }
             },
             MuiInputBase: {
@@ -158,12 +178,12 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             },
             MuiChip: {
                 root: {
-                    borderRadius: '6px'
+                    borderRadius: targetThemeValues.customBorderRadius.chip
                 }
             },
             MuiPaper: {
                 rounded: {
-                    borderRadius: '15px',
+                    borderRadius: targetThemeValues.customBorderRadius.paper,
                 },
                 root: {
                     '&.dark-variant': {
