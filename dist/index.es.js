@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
+import { useTheme, ThemeProvider } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
-import { useTheme, ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { Box as Box$1, useTheme as useTheme$1, TextField as TextField$1, IconButton } from '@material-ui/core';
 import MaterialTable from 'material-table';
@@ -84,6 +84,158 @@ function _objectWithoutProperties(source, excluded) {
   return target;
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+const replaceCommasForDots = value => value.replace(/,/g, '.');
+
+const removeDuplicateDot = value => value.split('.').length - 1 > 1 ? value.slice(0, -1) : value;
+
+const controlMaxLength = (value, maxLength) => {
+  let _value$split = value.split('.'),
+      _value$split2 = _slicedToArray(_value$split, 2),
+      intPart = _value$split2[0],
+      decimalPart = _value$split2[1];
+
+  if (intPart.length === maxLength + 1) {
+    intPart = intPart.slice(0, -1);
+  }
+
+  if (decimalPart && decimalPart.length > 2) {
+    decimalPart = decimalPart.slice(0, -1);
+  }
+
+  return value.indexOf('.') !== -1 ? `${intPart}.${decimalPart}` : intPart;
+};
+
+const parseAsFloatIfHasDecimals = value => value.length - value.indexOf('.') > 2 ? parseFloat(value).toFixed(2) : value;
+
+function RichTextfield({
+  isMobile,
+  fontStyles = {},
+  value,
+  unitName,
+  allowDecimals = false,
+  maxLength,
+  action,
+  InputProps,
+  rest,
+  ...props
+}) {
+  const _useTheme = useTheme(),
+        themePalette = _useTheme.palette;
+
+  const handleChange = value => {
+    if (value.indexOf('.') !== -1) {
+      if (allowDecimals) {
+        if (value.split('.')[1]) {
+          return parseFloat(value);
+        } else {
+          return value;
+        }
+      } else {
+        return parseInt(value) || 0;
+      }
+    } else {
+      return parseInt(value) || 0;
+    }
+  };
+
+  const handleOnInput = e => {
+    let value = e.target.value;
+
+    if (allowDecimals) {
+      value = replaceCommasForDots(value);
+      value = removeDuplicateDot(value);
+      value = controlMaxLength(value, maxLength);
+      value = parseAsFloatIfHasDecimals(value);
+    } else {
+      value = controlMaxLength(value, maxLength);
+    }
+
+    e.target.value = value;
+  };
+
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "input-unit-helper"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: isMobile ? 'wrapper-mobile' : 'wrapper',
+    style: fontStyles
+  }, /*#__PURE__*/React.createElement("span", null, value), unitName)), /*#__PURE__*/React.createElement(TextField, _extends({}, props, {
+    value: value,
+    onChange: e => {
+      action(e.target.name, handleChange(e.target.value));
+    },
+    onInput: e => handleOnInput(e),
+    InputProps: {
+      endAdornment: /*#__PURE__*/React.createElement("i", {
+        className: "icon-edit-input",
+        style: {
+          pointerEvents: 'none',
+          opacity: 0.5,
+          verticalAlign: 'text-top',
+          fontSize: '25px',
+          color: themePalette.static.grey65
+        }
+      }),
+      ...InputProps
+    }
+  }, rest)));
+}
+
 function InputRange(props) {
   const value = props.value,
         id = props.id,
@@ -98,41 +250,23 @@ function InputRange(props) {
         maxLength = props.maxLength,
         unitName = props.unitName,
         hintLabel = props.hintLabel,
-        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel"]);
+        _props$allowDecimals = props.allowDecimals,
+        allowDecimals = _props$allowDecimals === void 0 ? false : _props$allowDecimals,
+        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel", "allowDecimals"]);
 
   const rangedValue = value < min ? min : value > max ? max : value;
-  const numStringValue = Number(value).toString(); // fix to avoid leading zeros on input
-
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "input-unit-helper"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "wrapper"
-  }, /*#__PURE__*/React.createElement("span", null, value), unitName)), /*#__PURE__*/React.createElement(TextField, _extends({
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(RichTextfield, {
+    allowDecimals: allowDecimals,
+    maxLength: maxLength,
     label: label,
-    type: 'number',
     id: id,
-    value: numStringValue,
+    value: value,
+    unitName: unitName,
     name: name,
-    onChange: e => {
-      action(e.target.name, Number(e.target.value));
-    },
-    onInput: e => {
-      if (!maxLength) return;
-      e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, maxLength);
-    },
-    InputProps: {
-      endAdornment: /*#__PURE__*/React.createElement("i", {
-        className: "icon-edit-input",
-        style: {
-          pointerEvents: 'none',
-          opacity: 0.5,
-          verticalAlign: 'text-top',
-          fontSize: '25px'
-        }
-      })
-    },
-    error: value !== rangedValue
-  }, rest)), hintLabel && /*#__PURE__*/React.createElement("small", {
+    error: value !== rangedValue,
+    action: action,
+    rest: rest
+  }), hintLabel && /*#__PURE__*/React.createElement("small", {
     className: 'float-right mt-1'
   }, hintLabel), /*#__PURE__*/React.createElement(Slider, {
     id: id,
@@ -162,58 +296,38 @@ function InputRangeMobile(props) {
         maxLength = props.maxLength,
         unitName = props.unitName,
         hintLabel = props.hintLabel,
+        _props$allowDecimals = props.allowDecimals,
+        allowDecimals = _props$allowDecimals === void 0 ? false : _props$allowDecimals,
         _props$hideDetails = props.hideDetails,
         hideDetails = _props$hideDetails === void 0 ? false : _props$hideDetails,
         _props$color = props.color,
         color = _props$color === void 0 ? 'inherit' : _props$color,
-        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel", "hideDetails", "color"]);
-
-  const _useTheme = useTheme(),
-        themePalette = _useTheme.palette;
+        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel", "allowDecimals", "hideDetails", "color"]);
 
   const rangedValue = value < min ? min : value > max ? max : value;
-  const numStringValue = Number(value).toString(); // fix to avoid leading zeros on input
-
   const fontStyles = {
     color,
     fontWeight: 'bold',
     fontSize: '24px'
   };
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "input-unit-helper-mobile"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "wrapper-mobile",
-    style: { ...fontStyles
-    }
-  }, /*#__PURE__*/React.createElement("span", null, value), /*#__PURE__*/React.createElement("span", null, unitName))), /*#__PURE__*/React.createElement(TextField, _extends({
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(RichTextfield, {
+    isMobile: true,
+    fontStyles: fontStyles,
+    allowDecimals: allowDecimals,
+    maxLength: maxLength,
     label: label,
-    type: 'number',
     id: id,
-    value: numStringValue,
+    value: value,
+    unitName: unitName,
     name: name,
-    onChange: e => {
-      action(e.target.name, Number(e.target.value));
-    },
-    onInput: e => {
-      if (!maxLength) return;
-      e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, maxLength);
-    },
+    error: value !== rangedValue,
+    action: action,
+    rest: rest,
     InputProps: {
-      endAdornment: /*#__PURE__*/React.createElement("i", {
-        className: "icon-edit-input",
-        style: {
-          pointerEvents: 'none',
-          opacity: 0.5,
-          verticalAlign: 'text-top',
-          fontSize: '25px',
-          color: themePalette.static.grey65
-        }
-      }),
       style: { ...fontStyles
       }
-    },
-    error: value !== rangedValue
-  }, rest)), /*#__PURE__*/React.createElement("div", {
+    }
+  }), /*#__PURE__*/React.createElement("div", {
     className: `px-2 ${hideDetails ? 'hide-extend-anim' : 'show-extend-anim'}`,
     style: {
       transitionDuration: '0.2s',
@@ -283,41 +397,49 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
     palette: {
       primary: {
         main: '#4dd970',
-        contrast: '#08404d',
         contrastText: '#08404d'
       },
       secondary: {
         main: '#08404d',
-        contrast: '#ffffff',
         contrastText: '#4dd970'
       },
       error: {
         main: '#ef5957',
-        contrast: '#ffffff'
+        contrastText: '#ffffff'
       },
       warning: {
         main: '#ffca28',
-        contrast: '#ffffff'
+        contrastText: '#ffffff'
       },
       info: {
         main: '#36a3f7',
-        contrast: '#ffffff'
+        contrastText: '#ffffff'
       },
       success: {
         main: '#4dd970',
-        contrast: '#ffffff'
+        contrastText: '#ffffff'
       },
       text: {
-        primary: '#08404d',
+        accent: '#4dd970',
+        active: '#08404d',
+        title: '#08404d',
+        primary: '#4b5354',
         secondary: '#77787b'
       },
       // additional colors
       dark: {
         main: '#08404d',
-        contrast: '#ffffff'
+        accent: '#4dd970',
+        contrastText: '#ffffff'
       },
       light: {
-        main: '#d2b77f'
+        main: '#f0e8e3',
+        accent: '#4dd970',
+        contrastText: '#08404d'
+      },
+      extra: {
+        statusSent: '#08404d',
+        statusAnalysing: '#36a3f7'
       },
       static: {
         green: '#4dd970',
@@ -340,6 +462,13 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         coloredGrey80: '#316d7a'
       }
     },
+    background: null,
+    logo: null,
+    customBorderRadius: {
+      button: 25,
+      paper: 15,
+      chip: 6
+    },
     spacing: [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80]
   };
   const targetThemeValues = mergeDeep(mainDefaultReusableValues, newCustomizableValues);
@@ -359,10 +488,14 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
     overrides: {
       MuiButton: {
         root: {
-          borderRadius: 25,
+          borderRadius: targetThemeValues.customBorderRadius.button,
           border: 0,
           textTransform: 'none',
           fontSize: '16px'
+        },
+        contained: {
+          backgroundColor: targetThemeValues.palette.light.main,
+          color: targetThemeValues.palette.light.contrastText
         },
         sizeLarge: {
           height: '40px',
@@ -377,7 +510,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiFormControl: {
         root: {
-          margin: mainDefaultReusableValues.spacing[1]
+          margin: targetThemeValues.spacing[1]
         }
       },
       MuiInputBase: {
@@ -422,12 +555,12 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiChip: {
         root: {
-          borderRadius: '6px'
+          borderRadius: targetThemeValues.customBorderRadius.chip
         }
       },
       MuiPaper: {
         rounded: {
-          borderRadius: '15px'
+          borderRadius: targetThemeValues.customBorderRadius.paper
         },
         root: {
           '&.dark-variant': {
@@ -626,7 +759,7 @@ class Header extends Component {
       }
     }, /*#__PURE__*/React.createElement(Container, null, /*#__PURE__*/React.createElement(Toolbar, null, logo, children))), /*#__PURE__*/React.createElement("div", {
       style: {
-        marginTop: '130px'
+        paddingTop: '130px'
       }
     })));
   }
