@@ -5,7 +5,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
     const mainDefaultReusableValues = {
         palette: {
             primary: {
-                main: '#4dd970',
+                main: '#fc0',
                 contrastText: '#08404d',
             },
             secondary: {
