@@ -437,7 +437,8 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       dark: {
         main: '#08404d',
         accent: '#4dd970',
-        contrastText: '#ffffff'
+        contrastText: '#ffffff',
+        imageBackgroundOpacity: 0.8
       },
       light: {
         main: '#f3f2ef',
