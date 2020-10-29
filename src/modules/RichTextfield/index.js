@@ -93,7 +93,6 @@ export default function RichTextfield({
                                 opacity: 0.5,
                                 verticalAlign: 'text-top',
                                 fontSize: '25px',
-                                color: themePalette.static.grey65,
                             }}
                         ></i>
                     ),

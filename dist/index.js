@@ -234,8 +234,7 @@ function RichTextfield({
           pointerEvents: 'none',
           opacity: 0.5,
           verticalAlign: 'text-top',
-          fontSize: '25px',
-          color: themePalette.static.grey65
+          fontSize: '25px'
         }
       }),
       ...InputProps
@@ -410,7 +409,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         main: '#08404d',
         contrastText: '#fff'
       },
-      error: {
+      danger: {
         main: '#ef5957',
         contrastText: '#ffffff'
       },
@@ -444,11 +443,6 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         accent: '#4dd970',
         contrastText: '#08404d'
       },
-      extra: {
-        statusSent: '#08404d',
-        statusAnalysing: '#36a3f7'
-      },
-      static: {},
       status: {
         active: '#4dd970',
         approved: '#43b46f',
@@ -469,6 +463,13 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
   };
   const targetThemeValues = mergeDeep(mainDefaultReusableValues, newCustomizableValues);
   const baseThemeConstruction = {
+    palette: {
+      status: {
+        active: targetThemeValues.palette && targetThemeValues.palette.status && targetThemeValues.palette.status.active || targetThemeValues.palette.success.main,
+        denied: targetThemeValues.palette && targetThemeValues.palette.status && targetThemeValues.palette.status.denied || targetThemeValues.palette.danger.main,
+        ...targetThemeValues.status
+      }
+    },
     breakpoints: {
       values: {
         xs: 0,
