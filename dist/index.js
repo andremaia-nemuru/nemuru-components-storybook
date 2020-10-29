@@ -408,7 +408,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       secondary: {
         main: '#08404d',
-        contrastText: '#4dd970'
+        contrastText: '#fff'
       },
       error: {
         main: '#ef5957',
@@ -440,7 +440,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         contrastText: '#ffffff'
       },
       light: {
-        main: '#f0e8e3',
+        main: '#f3f2ef',
         accent: '#4dd970',
         contrastText: '#08404d'
       },
@@ -448,25 +448,14 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         statusSent: '#08404d',
         statusAnalysing: '#36a3f7'
       },
-      static: {
-        green: '#4dd970',
-        altGreen: '#43b46f',
-        darkGreen: '#08404d',
-        grey65: '#77787b',
-        grey40: '#a7a9ac',
-        grey20: '#d8d8d8',
-        grey10: '#f1f1f1',
-        lightAccent: '#f0e8e3',
-        blue: '#36a3f7',
-        yellow: '#ffca28',
-        coral: '#ef5957',
-        lightBrown: '#d2b77f',
-        royalBlue: '#5867dd',
-        brokenWhite: '#f9fafa',
-        coloredGrey50: '#a6bfc4',
-        coloredGrey60: '#8faeb5',
-        coloredGrey70: '#618d97',
-        coloredGrey80: '#316d7a'
+      static: {},
+      status: {
+        active: '#4dd970',
+        approved: '#43b46f',
+        analysing: '#36a3f7',
+        sent: '#08404d',
+        cancelled: '#d8d8d8',
+        denied: '#ef5957'
       }
     },
     background: null,
@@ -534,7 +523,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         root: {
           color: targetThemeValues.palette.text.primary,
           '&.dark-variant': {
-            color: `${targetThemeValues.palette.dark.contrast} !important`
+            color: `${targetThemeValues.palette.dark.contrastText} !important`
           }
         }
       },
@@ -572,7 +561,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         root: {
           '&.dark-variant': {
             background: targetThemeValues.palette.dark.main,
-            color: targetThemeValues.palette.dark.contrast
+            color: targetThemeValues.palette.dark.contrastText
           }
         }
       },
@@ -792,7 +781,9 @@ function CircularProgressWithLabel(props) {
         subCircleClassName = props.subCircleClassName,
         size = props.size,
         options = props.options,
-        label = props.label;
+        label = props.label,
+        _props$subCircleStyle = props.subCircleStyle,
+        subCircleStyle = _props$subCircleStyle === void 0 ? {} : _props$subCircleStyle;
   const wrapCircleSizePx = `${size - 6}px`;
   return /*#__PURE__*/React__default.createElement(Box, {
     position: "relative",
@@ -805,7 +796,8 @@ function CircularProgressWithLabel(props) {
   }, options, {
     className: subCircleClassName || '',
     style: {
-      position: 'absolute'
+      position: 'absolute',
+      ...subCircleStyle
     }
   })), /*#__PURE__*/React__default.createElement(CircularProgress, _extends({
     variant: "static",

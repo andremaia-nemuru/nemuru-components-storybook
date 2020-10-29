@@ -94,16 +94,6 @@ body {
 
 
 
-.MuiPaper-root.dark-variant {
-  h1:not(.MuiTypography-root),
-  h2:not(.MuiTypography-root),
-  h3:not(.MuiTypography-root),
-  h4:not(.MuiTypography-root),
-  h5:not(.MuiTypography-root) {
-    color: #fff;
-  }
-}
-
 .MuiPaper-root.fade-bg {
   transform: scale(1.02);
   transform-origin: 50% 50%;
