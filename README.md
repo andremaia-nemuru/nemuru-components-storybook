@@ -46,3 +46,20 @@ Note that it's important for your `example/package.json` to have the correct `ho
 ## Example Module
 
 Here is an example react module created from this guide: [react-background-slideshow](https://github.com/transitive-bullshit/react-background-slideshow), a sexy tiled background slideshow for React. It comes with an example create-react-app hosted on github pages and should give you a good idea of the type of module you’ll be able to create starting from this boilerplate.
+
+## Icon font
+
+Open *demo.html* to see a list of all the glyphs in your font along with their codes/ligatures.
+
+To use the generated font in desktop programs, you can install the TTF font. In order to copy the character associated with each icon, refer to the text box at the bottom right corner of each glyph in demo.html. The character inside this text box may be invisible; but it can still be copied. See this guide for more info: https://icomoon.io/#docs/local-fonts
+
+You won't need any of the files located under the *demo-files* directory when including the generated font in your own projects.
+
+You can import *selection.json* back to the IcoMoon app using the *Import Icons* button (or via Main Menu → Manage Projects) to retrieve your icon selection.
+
+### Important
+
+When updating the font:
+- Update the font on IcoMoon website, download the zip file and extract it in ```/NemuruIconFont/source```.
+- Copy the contents of ```/source/style.css``` to ```../NemuruIconFont/style.scss```.
+- Encode ```/source/fonts/nemuru-icon-font.ttf``` as BASE64 and paste the string in ```/NemuruIconFont/NemuruIconFont.css```.
