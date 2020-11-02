@@ -28,6 +28,10 @@ html, body {
   //scroll-behavior: smooth;
 }
 
+a {
+  text-decoration: none;
+}
+
 html, body, #root > div, {
   height: 100%;
 }
