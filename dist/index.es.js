@@ -26545,7 +26545,7 @@ function PasswordTextfield({
   const themePalette = useTheme$1().palette;
   const STRENGTH_LEVELS = {
     0: {
-      color: themePalette.static.grey20
+      color: themePalette.status.cancelled
     },
     1: {
       color: themePalette.error.main

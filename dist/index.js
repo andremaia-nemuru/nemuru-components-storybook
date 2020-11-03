@@ -26552,7 +26552,7 @@ function PasswordTextfield({
   const themePalette = core.useTheme().palette;
   const STRENGTH_LEVELS = {
     0: {
-      color: themePalette.static.grey20
+      color: themePalette.status.cancelled
     },
     1: {
       color: themePalette.error.main

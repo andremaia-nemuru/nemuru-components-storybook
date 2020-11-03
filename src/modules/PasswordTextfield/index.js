@@ -25,7 +25,7 @@ export default function PasswordTextfield({
 
     const STRENGTH_LEVELS = {
         0: {
-            color: themePalette.static.grey20,
+            color: themePalette.status.cancelled,
         },
         1: {
             color: themePalette.error.main,
