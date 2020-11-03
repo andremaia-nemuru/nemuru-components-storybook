@@ -26552,7 +26552,7 @@ function PasswordTextfield({
   const themePalette = core.useTheme().palette;
   const STRENGTH_LEVELS = {
     0: {
-      color: themePalette.status.cancelled
+      color: themePalette.grey.A100
     },
     1: {
       color: themePalette.error.main
@@ -26561,10 +26561,10 @@ function PasswordTextfield({
       color: themePalette.warning.main
     },
     3: {
-      color: themePalette.primary.main
+      color: themePalette.success.main
     },
     4: {
-      color: themePalette.primary.main
+      color: themePalette.success.main
     }
   };
 
