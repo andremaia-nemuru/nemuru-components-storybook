@@ -234,7 +234,8 @@ function RichTextfield({
           pointerEvents: 'none',
           opacity: 0.5,
           verticalAlign: 'text-top',
-          fontSize: '25px'
+          fontSize: '25px',
+          color: themePalette.grey[700]
         }
       }),
       ...InputProps
