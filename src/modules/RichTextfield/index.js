@@ -1,27 +1,37 @@
 import React, { Fragment } from 'react';
-import { useTheme } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
+import NumberFormat from 'react-number-format';
 
-const replaceCommasForDots = (value) => value.replace(/,/g, '.');
-
-const removeDuplicateDot = (value) =>
-    value.split('.').length - 1 > 1 ? value.slice(0, -1) : value;
-
-const controlMaxLength = (value, maxLength) => {
-    let [intPart, decimalPart] = value.split('.');
-    if (intPart.length === maxLength + 1) {
-        intPart = intPart.slice(0, -1);
-    }
-    if (decimalPart && decimalPart.length > 2) {
-        decimalPart = decimalPart.slice(0, -1);
-    }
-    return value.indexOf('.') !== -1 ? `${intPart}.${decimalPart}` : intPart;
-};
-
-const parseAsFloatIfHasDecimals = (value) =>
-    value.length - value.indexOf('.') > 2
-        ? parseFloat(value).toFixed(2)
-        : value;
+const NumberFormatCustom = ({
+    maxLength,
+    allowDecimals,
+    unitName,
+    inputRef,
+    onChange,
+    ...props
+}) => (
+    <NumberFormat
+        {...props}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+            onChange({
+                target: {
+                    name: props.name,
+                    value: values.value,
+                },
+            });
+        }}
+        decimalSeparator={','}
+        thousandSeparator={'.'}
+        suffix={` ${unitName}`}
+        decimalScale={allowDecimals ? 2 : 0}
+        fixedDecimalScale
+        isNumericString
+        isAllowed={({ value }) => {
+            return maxLength ? value.split('.')[0].length <= maxLength : true;
+        }}
+    />
+);
 
 export default function RichTextfield({
     isMobile,
@@ -35,56 +45,21 @@ export default function RichTextfield({
     rest,
     ...props
 }) {
-    const { palette: themePalette } = useTheme();
-
-    const handleChange = (value) => {
-        if (value.indexOf('.') !== -1) {
-            if (allowDecimals) {
-                if (value.split('.')[1]) {
-                    return parseFloat(value);
-                } else {
-                    return value;
-                }
-            } else {
-                return parseInt(value) || 0;
-            }
-        } else {
-            return parseInt(value) || 0;
-        }
-    };
-
-    const handleOnInput = (e) => {
-        let value = e.target.value;
-        if (allowDecimals) {
-            value = replaceCommasForDots(value);
-            value = removeDuplicateDot(value);
-            value = controlMaxLength(value, maxLength);
-            value = parseAsFloatIfHasDecimals(value);
-        } else {
-            value = controlMaxLength(value, maxLength);
-        }
-        e.target.value = value;
-    };
-
     return (
         <Fragment>
-            <div className="input-unit-helper">
-                <div
-                    className={isMobile ? 'wrapper-mobile' : 'wrapper'}
-                    style={fontStyles}
-                >
-                    <span>{value}</span>
-                    {unitName}
-                </div>
-            </div>
             <TextField
                 {...props}
                 value={value}
                 onChange={(e) => {
-                    action(e.target.name, handleChange(e.target.value));
+                    action(e.target.name, Number(e.target.value));
                 }}
-                onInput={(e) => handleOnInput(e)}
                 InputProps={{
+                    inputComponent: NumberFormatCustom,
+                    inputProps: {
+                        allowDecimals,
+                        maxLength,
+                        unitName,
+                    },
                     endAdornment: (
                         <i
                             className="icon-edit-input"
