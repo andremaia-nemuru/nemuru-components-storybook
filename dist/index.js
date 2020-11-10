@@ -1483,6 +1483,9 @@ function RichTextfield({
   rest,
   ...props
 }) {
+  const _useTheme = styles.useTheme(),
+        themePalette = _useTheme.palette;
+
   return /*#__PURE__*/React__default.createElement(React.Fragment, null, /*#__PURE__*/React__default.createElement(TextField, _extends({}, props, {
     value: value,
     onChange: e => {

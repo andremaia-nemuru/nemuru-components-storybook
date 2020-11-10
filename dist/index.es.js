@@ -1,10 +1,10 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider } from '@material-ui/styles';
+import { useTheme, ThemeProvider } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { Box as Box$1, useTheme, TextField as TextField$1, IconButton } from '@material-ui/core';
+import { Box as Box$1, useTheme as useTheme$1, TextField as TextField$1, IconButton } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -1476,6 +1476,9 @@ function RichTextfield({
   rest,
   ...props
 }) {
+  const _useTheme = useTheme(),
+        themePalette = _useTheme.palette;
+
   return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(TextField, _extends({}, props, {
     value: value,
     onChange: e => {
@@ -27810,7 +27813,7 @@ function PasswordTextfield({
   children,
   ...props
 }) {
-  const themePalette = useTheme().palette;
+  const themePalette = useTheme$1().palette;
   const STRENGTH_LEVELS = {
     0: {
       color: themePalette.grey.A100

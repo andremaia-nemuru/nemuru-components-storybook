@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useTheme } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import NumberFormat from 'react-number-format';
 
@@ -45,6 +46,7 @@ export default function RichTextfield({
     rest,
     ...props
 }) {
+    const { palette: themePalette } = useTheme();
     return (
         <Fragment>
             <TextField
