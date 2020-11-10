@@ -24,7 +24,7 @@ const NumberFormatCustom = ({
         }}
         decimalSeparator={','}
         thousandSeparator={'.'}
-        suffix={` ${unitName}`}
+        suffix={unitName ? ` ${unitName}` : ''}
         decimalScale={allowDecimals ? 2 : 0}
         fixedDecimalScale
         isNumericString
@@ -36,14 +36,16 @@ const NumberFormatCustom = ({
 
 export default function RichTextfield({
     isMobile,
+    hideIcon = false,
     fontStyles = {},
     value,
     unitName,
     allowDecimals = false,
     maxLength,
-    action,
-    InputProps,
-    rest,
+    action = () => {},
+    InputProps = {},
+    inputProps = {},
+    rest = {},
     ...props
 }) {
     const { palette: themePalette } = useTheme();
@@ -61,8 +63,9 @@ export default function RichTextfield({
                         allowDecimals,
                         maxLength,
                         unitName,
+                        ...inputProps,
                     },
-                    endAdornment: (
+                    endAdornment: !hideIcon ? (
                         <i
                             className="icon-edit-input"
                             style={{
@@ -73,7 +76,7 @@ export default function RichTextfield({
                                 color: themePalette.grey[700],
                             }}
                         ></i>
-                    ),
+                    ) : null,
                     ...InputProps,
                 }}
                 {...rest}

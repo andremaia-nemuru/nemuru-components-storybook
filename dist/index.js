@@ -6,9 +6,9 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
-var PropTypes = _interopDefault(require('prop-types'));
 var styles = require('@material-ui/styles');
 var TextField = _interopDefault(require('@material-ui/core/TextField'));
+var PropTypes = _interopDefault(require('prop-types'));
 var Slider = _interopDefault(require('@material-ui/core/Slider'));
 var styles$1 = require('@material-ui/core/styles');
 var core = require('@material-ui/core');
@@ -1460,7 +1460,7 @@ const NumberFormatCustom = ({
   },
   decimalSeparator: ',',
   thousandSeparator: '.',
-  suffix: ` ${unitName}`,
+  suffix: unitName ? ` ${unitName}` : '',
   decimalScale: allowDecimals ? 2 : 0,
   fixedDecimalScale: true,
   isNumericString: true,
@@ -1473,14 +1473,16 @@ const NumberFormatCustom = ({
 
 function RichTextfield({
   isMobile,
+  hideIcon = false,
   fontStyles = {},
   value,
   unitName,
   allowDecimals = false,
   maxLength,
-  action,
-  InputProps,
-  rest,
+  action = () => {},
+  InputProps = {},
+  inputProps = {},
+  rest = {},
   ...props
 }) {
   const _useTheme = styles.useTheme(),
@@ -1496,9 +1498,10 @@ function RichTextfield({
       inputProps: {
         allowDecimals,
         maxLength,
-        unitName
+        unitName,
+        ...inputProps
       },
-      endAdornment: /*#__PURE__*/React__default.createElement("i", {
+      endAdornment: !hideIcon ? /*#__PURE__*/React__default.createElement("i", {
         className: "icon-edit-input",
         style: {
           pointerEvents: 'none',
@@ -1507,7 +1510,7 @@ function RichTextfield({
           fontSize: '25px',
           color: themePalette.grey[700]
         }
-      }),
+      }) : null,
       ...InputProps
     }
   }, rest)));
@@ -27908,6 +27911,7 @@ exports.Header = Header;
 exports.InputRange = InputRange;
 exports.InputRangeMobile = InputRangeMobile;
 exports.PasswordTextfield = PasswordTextfield;
+exports.RichTextfield = RichTextfield;
 exports.TableMui = TableMui;
 exports.Themer = Themer;
 exports.getIconName = getIconName;
