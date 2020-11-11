@@ -1,3 +1,4 @@
+export RichTextfield from './modules/RichTextfield';
 export InputRange from './modules/InputRange';
 export InputRangeMobile from './modules/InputRangeMobile';
 export TableMui from './modules/TableMui';
