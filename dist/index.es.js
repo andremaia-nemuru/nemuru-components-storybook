@@ -2005,7 +2005,7 @@ class Header extends Component {
       }
     }, children), /*#__PURE__*/React.createElement(Paper, {
       square: true,
-      elevation: 3,
+      elevation: 6,
       style: {
         height: '80px',
         display: 'flex',

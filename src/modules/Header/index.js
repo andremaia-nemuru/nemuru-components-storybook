@@ -29,7 +29,7 @@ export default class Header extends Component {
                         <AppBar position='fixed' color='transparent' style={{bottom: 0, top: 'auto'}}>
                             {children}
                         </AppBar>
-                        <Paper square elevation={3}
+                        <Paper square elevation={6}
                                style={{
                                    height: '80px',
                                    display: 'flex',
