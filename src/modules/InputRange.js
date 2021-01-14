@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import Slider from '@material-ui/core/Slider';
-import RichTextfield from '../RichTextfield';
+import RichTextfield from './RichTextfield';
 
 export default function InputRange(props) {
     const {

@@ -8,6 +8,10 @@ export function isObject(item) {
     return item && typeof item === 'object' && !Array.isArray(item);
 }
 
+export function formatSnakecaseToSpaces(text) {
+    return text.replace(/_/g, " ");
+}
+
 export function mergeDeep(target, ...sources) {
     if (!sources.length) return target;
     const source = sources.shift();

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import Slider from '@material-ui/core/Slider';
-import RichTextfield from '../RichTextfield';
+import RichTextfield from './RichTextfield';
 
 export default function InputRangeMobile(props) {
     const {

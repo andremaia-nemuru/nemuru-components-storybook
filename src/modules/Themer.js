@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import useTheme from "@material-ui/core/styles/useTheme";
 
-import {createCustomTheme, createDefaultTheme, nemuruMuiTheme} from "../../config/material";
+import {createCustomTheme, createDefaultTheme, nemuruMuiTheme} from "../config/material";
 import { ThemeProvider } from '@material-ui/styles';
 
 
