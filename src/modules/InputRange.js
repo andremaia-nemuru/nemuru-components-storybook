@@ -17,6 +17,7 @@ export default function InputRange(props) {
         min,
         max,
         step,
+        marks,
         maxLength,
         unitName,
         hintLabel,
@@ -54,6 +55,8 @@ export default function InputRange(props) {
                 min={min}
                 max={max}
                 step={step}
+                marks={marks}
+                {...sliderProps}
             />
         </Fragment>
     );

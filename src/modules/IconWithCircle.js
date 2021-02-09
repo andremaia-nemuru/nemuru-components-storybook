@@ -13,7 +13,7 @@ export default function IconWithCircle({
       display="flex"
       justifyContent="center"
       alignItems="center"
-      borderRadius="100%"
+      borderRadius="100px"
       height={height}
       width={width}
       bgcolor={backgroundColor}

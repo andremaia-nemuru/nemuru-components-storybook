@@ -1528,12 +1528,13 @@ function InputRange(props) {
         min = props.min,
         max = props.max,
         step = props.step,
+        marks = props.marks,
         maxLength = props.maxLength,
         unitName = props.unitName,
         hintLabel = props.hintLabel,
         _props$allowDecimals = props.allowDecimals,
         allowDecimals = _props$allowDecimals === void 0 ? false : _props$allowDecimals,
-        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel", "allowDecimals"]);
+        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "marks", "maxLength", "unitName", "hintLabel", "allowDecimals"]);
 
   const rangedValue = value < min ? min : value > max ? max : value;
   return /*#__PURE__*/React__default.createElement(React.Fragment, null, /*#__PURE__*/React__default.createElement(RichTextfield, {
@@ -1549,7 +1550,7 @@ function InputRange(props) {
     rest: rest
   }), hintLabel && /*#__PURE__*/React__default.createElement("small", {
     className: 'float-right mt-1'
-  }, hintLabel), /*#__PURE__*/React__default.createElement(Slider, {
+  }, hintLabel), /*#__PURE__*/React__default.createElement(Slider, _extends({
     id: id,
     name: name,
     title: name,
@@ -1559,8 +1560,9 @@ function InputRange(props) {
     },
     min: min,
     max: max,
-    step: step
-  }));
+    step: step,
+    marks: marks
+  }, sliderProps)));
 }
 
 function InputRangeMobile(props) {
@@ -1574,6 +1576,7 @@ function InputRangeMobile(props) {
         min = props.min,
         max = props.max,
         step = props.step,
+        marks = props.marks,
         maxLength = props.maxLength,
         unitName = props.unitName,
         hintLabel = props.hintLabel,
@@ -1583,7 +1586,7 @@ function InputRangeMobile(props) {
         hideDetails = _props$hideDetails === void 0 ? false : _props$hideDetails,
         _props$color = props.color,
         color = _props$color === void 0 ? 'inherit' : _props$color,
-        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "maxLength", "unitName", "hintLabel", "allowDecimals", "hideDetails", "color"]);
+        rest = _objectWithoutProperties(props, ["value", "id", "label", "name", "action", "input", "sliderProps", "min", "max", "step", "marks", "maxLength", "unitName", "hintLabel", "allowDecimals", "hideDetails", "color"]);
 
   const rangedValue = value < min ? min : value > max ? max : value;
   const fontStyles = {
@@ -1619,7 +1622,7 @@ function InputRangeMobile(props) {
     style: {
       transitionDuration: '0.2s'
     }
-  }, hintLabel), /*#__PURE__*/React__default.createElement(Slider, {
+  }, hintLabel), /*#__PURE__*/React__default.createElement(Slider, _extends({
     id: id,
     name: name,
     title: name,
@@ -1629,8 +1632,9 @@ function InputRangeMobile(props) {
     },
     min: min,
     max: max,
-    step: step
-  })));
+    step: step,
+    marks: marks
+  }, sliderProps))));
 }
 
 var config = {
@@ -27832,7 +27836,7 @@ function IconWithCircle({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: "100%",
+    borderRadius: "100px",
     height: height,
     width: width,
     bgcolor: backgroundColor
