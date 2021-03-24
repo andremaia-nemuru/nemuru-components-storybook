@@ -85,6 +85,7 @@ export default function SingleLinearStatBar(props) {
     return (
         <Fragment>
             <Box
+                className="appear-anim"
                 component="span"
                 display="flex"
                 alignItems="center"
@@ -136,8 +137,7 @@ export default function SingleLinearStatBar(props) {
                                         <Grid
                                             item
                                             className="stat-strong-value"
-                                            xs={8}
-                                            sm={6}
+                                            xs={7}
                                         >
                                             <Typography className="amount">
                                                 <strong>
@@ -151,17 +151,18 @@ export default function SingleLinearStatBar(props) {
                                         </Grid>
                                         <Grid
                                             item
-                                            xs={4}
-                                            sm={6}
-                                            className={
-                                                isScreenXs
-                                                    ? 'stat-strong-value'
-                                                    : ''
-                                            }
+                                            xs={5}
+                                            className={'stat-strong-value'}
                                         >
-                                            <Typography className="percentage">{`${percentage.toFixed(
-                                                1
-                                            )}%`}</Typography>
+                                            <Typography className="percentage">
+                                                {percentage !== 100
+                                                    ? `${percentage.toFixed(
+                                                          1
+                                                      )}%`
+                                                    : `${percentage.toFixed(
+                                                          0
+                                                      )}%`}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
 
@@ -191,19 +192,19 @@ export default function SingleLinearStatBar(props) {
                   (amountToShowPerAgent !== undefined &&
                       agent.agentLocation === filterSalesChannel) ? (
                     <>
-                        <Grid className="stat-results" container key={i}>
+                        <Grid
+                            className="stat-results"
+                            container
+                            key={i}
+                            style={{ cursor: 'default' }}
+                        >
                             <Grid item xs={5} sm={3}>
                                 <Typography className="text-overflow">
                                     {agent.agentName}
                                 </Typography>
                             </Grid>
-                            <Grid className="stat-results" item xs={7} sm={4}>
-                                <Grid
-                                    item
-                                    className="stat-strong-value"
-                                    xs={8}
-                                    sm={6}
-                                >
+                            <Grid className="stat-results"   style={{ cursor: 'default' }} item xs={7} sm={4}>
+                                <Grid item className="stat-strong-value" xs={7}>
                                     <Typography className="amount">
                                         <strong>
                                             {filterMetrics === 'AMOUNT'
@@ -216,15 +217,14 @@ export default function SingleLinearStatBar(props) {
                                 </Grid>
                                 <Grid
                                     item
-                                    xs={4}
-                                    sm={6}
-                                    className={
-                                        isScreenXs ? 'stat-strong-value' : ''
-                                    }
+                                    xs={5}
+                                    className={'stat-strong-value'}
                                 >
-                                    <Typography className="percentage">{`${percentage.toFixed(
-                                        1
-                                    )}%`}</Typography>
+                                    <Typography className="percentage">
+                                        {percentage !== 100
+                                            ? `${percentage.toFixed(1)}%`
+                                            : `${percentage.toFixed(0)}%`}
+                                    </Typography>
                                 </Grid>
                             </Grid>
 
