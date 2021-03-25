@@ -146,6 +146,11 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                     fontWeight: 600,
                 },
             },
+            MuiToggleButton: {
+                label: {
+                    pointerEvents: 'none'
+                }
+            },
             MuiFormControl: {
                 root: {
                     margin: targetThemeValues.spacing[1],
