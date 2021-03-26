@@ -1889,7 +1889,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         root: {
           '&.stat-results': {
             backgroundColor: '#fff0',
-            transition: 'all 1s ease',
+            transition: 'all 0.3s ease',
             display: 'flex',
             alignItems: 'center',
             minHeight: 36,
@@ -1903,10 +1903,12 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
               display: 'flex'
             },
             '&.total-selected': {
+              transition: 'all 0.3s ease',
+              cursor: 'default',
               color: targetThemeValues.palette.text.active
             },
             '&.selected': {
-              transition: 'all 1s ease',
+              transition: 'all 0.3s ease',
               backgroundColor: targetThemeValues.palette.grey.background,
               color: targetThemeValues.palette.text.active
             },
@@ -1964,16 +1966,19 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       MuiLinearProgress: {
         root: {
           '&.stat-bar': {
+            transition: 'all 0.3s ease',
             backgroundColor: targetThemeValues.palette.grey[200],
             height: 10,
             borderRadius: 5,
             width: '100%'
           },
           '&.stat-bar.thin': {
+            transition: 'all 0.3s ease',
             height: 5,
             marginBottom: 5
           },
           '&.stat-bar.selected': {
+            transition: 'all 0.3s ease',
             color: targetThemeValues.palette.text.active,
             backgroundColor: targetThemeValues.palette.grey.selected
           },
@@ -28845,6 +28850,7 @@ function SingleLinearStatBar(props) {
   }
 
   return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(Box$1, {
+    className: "appear-anim",
     component: "span",
     display: "flex",
     alignItems: "center",
@@ -28877,18 +28883,16 @@ function SingleLinearStatBar(props) {
   }, /*#__PURE__*/React.createElement(Grid, {
     item: true,
     className: "stat-strong-value",
-    xs: 8,
-    sm: 6
+    xs: 7
   }, /*#__PURE__*/React.createElement(Typography, {
     className: "amount"
   }, /*#__PURE__*/React.createElement("strong", null, filterMetrics === 'AMOUNT' ? formatAmountForDisplay(amountToShowPerChannel.amount) : amountToShowPerChannel.number))), /*#__PURE__*/React.createElement(Grid, {
     item: true,
-    xs: 4,
-    sm: 6,
-    className: isScreenXs ? 'stat-strong-value' : ''
+    xs: 5,
+    className: 'stat-strong-value'
   }, /*#__PURE__*/React.createElement(Typography, {
     className: "percentage"
-  }, `${percentage.toFixed(1)}%`))), /*#__PURE__*/React.createElement(Grid, {
+  }, percentage !== 100 ? `${percentage.toFixed(1)}%` : `${percentage.toFixed(0)}%`))), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12,
     sm: 5
@@ -28899,7 +28903,10 @@ function SingleLinearStatBar(props) {
   }))) : null)) : amountToShowPerAgent !== undefined && filterSalesChannel === '' || amountToShowPerAgent !== undefined && agent.agentLocation === filterSalesChannel ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Grid, {
     className: "stat-results",
     container: true,
-    key: i
+    key: i,
+    style: {
+      cursor: 'default'
+    }
   }, /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 5,
@@ -28908,24 +28915,25 @@ function SingleLinearStatBar(props) {
     className: "text-overflow"
   }, agent.agentName)), /*#__PURE__*/React.createElement(Grid, {
     className: "stat-results",
+    style: {
+      cursor: 'default'
+    },
     item: true,
     xs: 7,
     sm: 4
   }, /*#__PURE__*/React.createElement(Grid, {
     item: true,
     className: "stat-strong-value",
-    xs: 8,
-    sm: 6
+    xs: 7
   }, /*#__PURE__*/React.createElement(Typography, {
     className: "amount"
   }, /*#__PURE__*/React.createElement("strong", null, filterMetrics === 'AMOUNT' ? formatAmountForDisplay(amountToShowPerAgent.amount) : amountToShowPerAgent.number))), /*#__PURE__*/React.createElement(Grid, {
     item: true,
-    xs: 4,
-    sm: 6,
-    className: isScreenXs ? 'stat-strong-value' : ''
+    xs: 5,
+    className: 'stat-strong-value'
   }, /*#__PURE__*/React.createElement(Typography, {
     className: "percentage"
-  }, `${percentage.toFixed(1)}%`))), /*#__PURE__*/React.createElement(Grid, {
+  }, percentage !== 100 ? `${percentage.toFixed(1)}%` : `${percentage.toFixed(0)}%`))), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     xs: 12,
     sm: 5
