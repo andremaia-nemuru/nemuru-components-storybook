@@ -222,7 +222,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 root: {
                     '&.stat-results': {
                         backgroundColor: '#fff0',
-                        transition: 'all 1s ease',
+                        transition: 'all 0.3s ease',
                         display: 'flex',
                         alignItems: 'center',
                         minHeight: 36,
@@ -236,10 +236,12 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                             display: 'flex',
                         },
                         '&.total-selected': {
+                            transition: 'all 0.3s ease',
+                            cursor: 'default',
                             color: targetThemeValues.palette.text.active,
                         },
                         '&.selected': {
-                            transition: 'all 1s ease',
+                            transition: 'all 0.3s ease',
                             backgroundColor:
                                 targetThemeValues.palette.grey.background,
                             color: targetThemeValues.palette.text.active,
@@ -298,16 +300,20 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             MuiLinearProgress: {
                 root: {
                     '&.stat-bar': {
+                        transition: 'all 0.3s ease',
                         backgroundColor: targetThemeValues.palette.grey[200],
                         height: 10,
                         borderRadius: 5,
                         width: '100%',
                     },
                     '&.stat-bar.thin': {
+                        transition: 'all 0.3s ease',
+
                         height: 5,
                         marginBottom: 5,
                     },
                     '&.stat-bar.selected': {
+                        transition: 'all 0.3s ease',
                         color: targetThemeValues.palette.text.active,
                         backgroundColor:
                             targetThemeValues.palette.grey.selected,
