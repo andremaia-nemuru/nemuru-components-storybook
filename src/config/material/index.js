@@ -24,6 +24,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             info: {
                 main: '#36a3f7',
                 contrastText: '#ffffff',
+                light: '#E1F1FD',
             },
             success: {
                 main: '#4dd970',
@@ -149,7 +150,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             MuiToggleButton: {
                 label: {
                     pointerEvents: 'none'
-                }
+                },
             },
             MuiFormControl: {
                 root: {
@@ -179,7 +180,6 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                     color: 'inherit',
                     position: 'relative',
                     transition: 'border-bottom 0.2s ease',
-
                     fontSize: '18px',
                 },
                 underline: {
