@@ -24,6 +24,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             info: {
                 main: '#36a3f7',
                 contrastText: '#ffffff',
+                light: '#E1F1FD',
             },
             success: {
                 main: '#4dd970',
@@ -132,6 +133,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 },
 
                 contained: {
+                    height: '45px',
                     backgroundColor: targetThemeValues.palette.light.main,
                     color: targetThemeValues.palette.light.contrastText,
                 },
@@ -148,8 +150,8 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             },
             MuiToggleButton: {
                 label: {
-                    pointerEvents: 'none'
-                }
+                    pointerEvents: 'none',
+                },
             },
             MuiFormControl: {
                 root: {
@@ -255,6 +257,11 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                         '& .stat-strong-value': {
                             display: 'flex',
                             justifyContent: 'flex-end',
+                        },
+                        '&.adjust-loan': {
+                            display: 'flex',
+                            background: targetThemeValues.palette.grey[200],
+                            borderRadius: '20px',
                         },
                     },
                 },
