@@ -22,6 +22,9 @@ var useTheme = _interopDefault(require('@material-ui/core/styles/useTheme'));
 var CircularProgress = _interopDefault(require('@material-ui/core/CircularProgress'));
 require('@material-ui/core/Typography');
 var Box = _interopDefault(require('@material-ui/core/Box'));
+var pickers = require('@material-ui/pickers');
+var DateFnsUtils = _interopDefault(require('@date-io/date-fns'));
+var reactHookForm = require('react-hook-form');
 var Alert = _interopDefault(require('@material-ui/lab/Alert'));
 var nemuruComponents = require('nemuru-components');
 var LinearProgress = _interopDefault(require('@material-ui/core/LinearProgress'));
@@ -1659,8 +1662,7 @@ function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
 function formatSnakecaseToSpaces(text) {
-    const isTextString = (typeof text === 'string')
-  return isTextString && text && text.replace(/_/g, ' ');
+  return text && text.replace(/_/g, ' ');
 }
 function formatNumber(num) {
   return new Intl.NumberFormat('es-ES', {
@@ -1728,7 +1730,8 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       info: {
         main: '#36a3f7',
-        contrastText: '#ffffff'
+        contrastText: '#ffffff',
+        light: '#E1F1FD'
       },
       success: {
         main: '#4dd970',
@@ -1826,6 +1829,11 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
         },
         label: {
           fontWeight: 600
+        }
+      },
+      MuiToggleButton: {
+        label: {
+          pointerEvents: 'none'
         }
       },
       MuiFormControl: {
@@ -27968,6 +27976,43 @@ function IconWithCircle({
   }, /*#__PURE__*/React__default.createElement("i", props, children));
 }
 
+function InputDate({
+  name,
+  id,
+  rules,
+  ...props
+}) {
+  const _useForm = reactHookForm.useForm(),
+        control = _useForm.control;
+
+  return /*#__PURE__*/React__default.createElement(pickers.MuiPickersUtilsProvider, {
+    utils: DateFnsUtils
+  }, /*#__PURE__*/React__default.createElement(reactHookForm.Controller, {
+    name: name,
+    id: id,
+    control: control,
+    rules: rules,
+    render: controllerProps => /*#__PURE__*/React__default.createElement("div", {
+      style: {
+        position: "relative"
+      }
+    }, /*#__PURE__*/React__default.createElement(pickers.DatePicker, _extends({}, props, {
+      value: controllerProps.value,
+      onChange: e => controllerProps.onChange(e)
+    })), /*#__PURE__*/React__default.createElement(core.Typography, {
+      color: "textPrimary"
+    }, /*#__PURE__*/React__default.createElement("i", {
+      className: "material-icons",
+      style: {
+        position: "absolute",
+        bottom: "17px",
+        fontSize: "17px",
+        right: "-5px"
+      }
+    }, "calendar_today")))
+  }));
+}
+
 ResponsiveDialog.propTypes = {
   loading: PropTypes__default.bool,
   displayCondition: PropTypes__default.bool,
@@ -28966,6 +29011,7 @@ exports.CircularProgressWithLabel = CircularProgressWithLabel;
 exports.ConditionalWrapper = ConditionalWrapper;
 exports.Header = Header;
 exports.IconWithCircle = IconWithCircle;
+exports.InputDate = InputDate;
 exports.InputRange = InputRange;
 exports.InputRangeMobile = InputRangeMobile;
 exports.NemuruSnackbar = NemuruSnackbar;
