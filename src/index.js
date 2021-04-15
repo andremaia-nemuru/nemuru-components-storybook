@@ -8,6 +8,7 @@ export CircularProgressWithLabel from './modules/CircularProgressWithLabel';
 export BarChart from './modules/BarChart';
 export ConditionalWrapper from './modules/ConditionalWrapper';
 export IconWithCircle from './modules/IconWithCircle';
+export InputDate from './modules/InputDate';
 export ResponsiveDialog from './modules/ResponsiveDialog';
 export NemuruSnackbar from './modules/NemuruSnackbar';
 export TextValue from './modules/TextValue';
