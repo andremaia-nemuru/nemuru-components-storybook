@@ -18,6 +18,7 @@ export ResponsiveButton from './modules/ResponsiveButton';
 export PasswordTextfield from './modules/PasswordTextfield';
 export Pricing from './modules/Pricing';
 export SingleLinearStatBar from './modules/SingleLinearStatBar';
+export InformationMessage from './modules/InformationMessage';
 export { getIconName } from './utils';
 import { RalewayFont } from './assets/style/index.js';
 import { NemuruIconFont } from './assets/style/index.js';
