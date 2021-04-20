@@ -20,6 +20,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             warning: {
                 main: '#ffca28',
                 contrastText: '#ffffff',
+                light: 'rgba(255, 202, 40, 0.15)',
             },
             info: {
                 main: '#36a3f7',
@@ -29,6 +30,12 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             success: {
                 main: '#4dd970',
                 contrastText: '#ffffff',
+                light: 'rgba(73,217,106,0.15)',
+            },
+            error: {
+                main: '#ef5957',
+                contrastText: '#ffffff',
+                light: 'rgba(239,87,87,0.15)',
             },
             text: {
                 accent: '#4dd970',
@@ -149,7 +156,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             },
             MuiToggleButton: {
                 label: {
-                    pointerEvents: 'none'
+                    pointerEvents: 'none',
                 },
             },
             MuiFormControl: {
