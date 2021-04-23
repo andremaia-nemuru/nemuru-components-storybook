@@ -222,7 +222,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
             },
             MuiDialog: {
                 paper: {
-                    padding: '10px',
+                    padding: '0px',
                 },
             },
             MuiGrid: {

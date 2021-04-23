@@ -1906,7 +1906,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiDialog: {
         paper: {
-          padding: '10px'
+          padding: '0px'
         }
       },
       MuiGrid: {
@@ -27987,11 +27987,12 @@ function InputDate({
   name,
   id,
   rules,
+  control,
   ...props
 }) {
-  const _useForm = reactHookForm.useForm(),
-        control = _useForm.control;
-
+  const _props = { ...props
+  },
+        error = _props.error;
   return /*#__PURE__*/React__default.createElement(pickers.MuiPickersUtilsProvider, {
     utils: DateFnsUtils
   }, /*#__PURE__*/React__default.createElement(reactHookForm.Controller, {
@@ -28004,7 +28005,7 @@ function InputDate({
         position: "relative"
       }
     }, /*#__PURE__*/React__default.createElement(pickers.DatePicker, _extends({}, props, {
-      value: controllerProps.value,
+      value: controllerProps.value || null,
       onChange: e => controllerProps.onChange(e)
     })), /*#__PURE__*/React__default.createElement(core.Typography, {
       color: "textPrimary"
@@ -28012,7 +28013,7 @@ function InputDate({
       className: "material-icons",
       style: {
         position: "absolute",
-        bottom: "17px",
+        bottom: error ? "40px" : "17px",
         fontSize: "17px",
         right: "-5px"
       }

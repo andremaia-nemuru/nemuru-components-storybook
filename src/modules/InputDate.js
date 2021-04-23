@@ -2,19 +2,18 @@ import React from "react";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {Typography} from "@material-ui/core";
-import {Controller, useForm} from "react-hook-form";
+import {Controller} from "react-hook-form";
 
 export default function InputDate(
     {
         name,
         id,
         rules,
+        control,
         ...props
     }
 ) {
-    const {
-        control,
-    } = useForm();
+    const {error} = {...props};
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Controller
@@ -26,16 +25,15 @@ export default function InputDate(
                     <div style={{position: "relative"}}>
                         <DatePicker
                             {...props}
-                            value={controllerProps.value}
+                            value={controllerProps.value || null}
                             onChange={(e) => controllerProps.onChange(e)}
-                        />
-
+                        /> 
                         <Typography color={"textPrimary"}>
                             <i
                                 className="material-icons"
                                 style={{
                                     position: "absolute",
-                                    bottom: "17px",
+                                    bottom: error ? "40px" : "17px",
                                     fontSize: "17px",
                                     right: "-5px"
                                 }}>

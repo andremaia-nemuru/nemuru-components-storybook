@@ -16,7 +16,7 @@ import '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import Alert from '@material-ui/lab/Alert';
 import { getIconName as getIconName$1, IconWithCircle as IconWithCircle$1 } from 'nemuru-components';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -1898,7 +1898,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiDialog: {
         paper: {
-          padding: '10px'
+          padding: '0px'
         }
       },
       MuiGrid: {
@@ -27979,11 +27979,12 @@ function InputDate({
   name,
   id,
   rules,
+  control,
   ...props
 }) {
-  const _useForm = useForm(),
-        control = _useForm.control;
-
+  const _props = { ...props
+  },
+        error = _props.error;
   return /*#__PURE__*/React.createElement(MuiPickersUtilsProvider, {
     utils: DateFnsUtils
   }, /*#__PURE__*/React.createElement(Controller, {
@@ -27996,7 +27997,7 @@ function InputDate({
         position: "relative"
       }
     }, /*#__PURE__*/React.createElement(DatePicker, _extends({}, props, {
-      value: controllerProps.value,
+      value: controllerProps.value || null,
       onChange: e => controllerProps.onChange(e)
     })), /*#__PURE__*/React.createElement(Typography, {
       color: "textPrimary"
@@ -28004,7 +28005,7 @@ function InputDate({
       className: "material-icons",
       style: {
         position: "absolute",
-        bottom: "17px",
+        bottom: error ? "40px" : "17px",
         fontSize: "17px",
         right: "-5px"
       }
