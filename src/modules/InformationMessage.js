@@ -55,7 +55,6 @@ export default function InformationMessage({
                   style={{
                     color: themePalette.secondary.main,
                     paddingInline: "20px",
-                    paddingTop: "5px",
                   }}
                 >
                   <strong>{messageContent?.title}</strong>

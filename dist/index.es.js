@@ -29048,8 +29048,7 @@ function InformationMessage({
     align: "center",
     style: {
       color: themePalette.secondary.main,
-      paddingInline: "20px",
-      paddingTop: "5px"
+      paddingInline: "20px"
     }
   }, /*#__PURE__*/React.createElement("strong", null, messageContent?.title)), /*#__PURE__*/React.createElement(Grid, {
     item: true,
