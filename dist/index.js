@@ -29024,12 +29024,12 @@ function InformationMessage({
   }, /*#__PURE__*/React__default.createElement(core.Box, {
     style: {
       top: isScreenXs ? 16 : 24,
-      position: "relative"
+      position: 'relative'
     }
   }, /*#__PURE__*/React__default.createElement(nemuruComponents.IconWithCircle, {
     backgroundColor: themePalette[variant.type].main,
-    height: isScreenXs ? 26 : 40,
-    width: isScreenXs ? 26 : 40,
+    height: isScreenXs ? 26 : 44,
+    width: isScreenXs ? 26 : 44,
     className: "material-icons",
     style: {
       fontSize: isScreenXs ? 16 : 24,
@@ -29041,33 +29041,31 @@ function InformationMessage({
     bgcolor: themePalette[variant.type].light,
     style: {
       borderRadius: 8,
-      paddingTop: isScreenXs ? 10 : 24,
-      paddingBottom: 10,
-      width: "100%"
+      paddingTop: isScreenXs ? 10 : 24
     }
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
     container: true,
-    justify: "center",
-    spacing: 0
+    spacing: 8,
+    style: {
+      textAlign: 'center'
+    }
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true
   }, isScreenXs ? null : /*#__PURE__*/React__default.createElement(core.Typography, {
     variant: "subtitle2",
-    align: "center",
     style: {
       color: themePalette.secondary.main,
-      paddingInline: "20px"
+      paddingInline: '20px',
+      paddingTop: '5px'
     }
   }, /*#__PURE__*/React__default.createElement("strong", null, messageContent?.title)), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     style: {
-      paddingInline: "20px",
-      paddingBlock: "13px",
-      textAlign: "center"
+      paddingInline: '20px',
+      paddingBlock: '13px'
     }
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     variant: "caption",
-    align: "center",
     style: {
       color: themePalette.secondary.main
     }
