@@ -1845,7 +1845,8 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiFormControl: {
         root: {
-          margin: targetThemeValues.spacing[1]
+          margin: targetThemeValues.spacing[1],
+          marginLeft: 0
         }
       },
       MuiInputBase: {
