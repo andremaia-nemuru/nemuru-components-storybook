@@ -2094,39 +2094,39 @@ _defineProperty(TableMui, "propTypes", {
 });
 
 _defineProperty(TableMui, "defaultProps", {
-  title: '',
+  title: "",
   style: {
-    borderRadius: '15px',
-    padding: '0px 15px'
+    borderRadius: "15px",
+    padding: "0px 15px"
   },
   options: {
     headerStyle: {
-      fontWeight: 'bold'
+      fontWeight: "bold"
     },
     searchFieldStyle: {
       "& MuiInputunderline:after": {
-        display: 'none'
+        display: "none"
       }
     }
   },
   localization: {
     body: {
-      emptyDataSourceMessage: 'No hay resultados que mostrar'
+      emptyDataSourceMessage: "No hay resultados que mostrar"
     },
     toolbar: {
-      searchTooltip: 'Buscar',
-      searchPlaceholder: 'Buscar'
+      searchTooltip: "Buscar",
+      searchPlaceholder: "Buscar"
     },
     header: {
-      actions: ''
+      actions: ""
     },
     pagination: {
-      labelRowsSelect: 'filas',
-      labelDisplayedRows: ' {from}-{to} de {count}',
-      firstTooltip: 'Primera página',
-      previousTooltip: 'Página anterior',
-      nextTooltip: 'Página siguiente',
-      lastTooltip: 'Última página'
+      labelRowsSelect: "filas",
+      labelDisplayedRows: " {from}-{to} de {count}",
+      firstTooltip: "Primera página",
+      previousTooltip: "Página anterior",
+      nextTooltip: "Página siguiente",
+      lastTooltip: "Última página"
     }
   }
 });
