@@ -1805,7 +1805,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       }
     },
     typography: {
-      fontFamily: ['Raleway', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"'].join(',')
+      fontFamily: ['Raleway', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', '"Open sans"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"'].join(',')
     },
     overrides: {
       MuiButton: {
@@ -29013,7 +29013,8 @@ function InformationMessage({
   messageContent
 }) {
   const _useTheme = styles.useTheme(),
-        themePalette = _useTheme.palette;
+        palette = _useTheme.palette,
+        customBorderRadius = _useTheme.customBorderRadius;
 
   return variant && messageContent && /*#__PURE__*/React__default.createElement(core.Box, {
     container: true,
@@ -29028,21 +29029,20 @@ function InformationMessage({
       position: "relative"
     }
   }, /*#__PURE__*/React__default.createElement(nemuruComponents.IconWithCircle, {
-    backgroundColor: themePalette[variant.type].main,
+    backgroundColor: palette[variant.type].main,
     height: isScreenXs ? 26 : 40,
     width: isScreenXs ? 26 : 40,
-    className: "material-icons",
     style: {
       fontSize: isScreenXs ? 16 : 24,
-      color: themePalette.secondary.contrastText
+      color: palette.secondary.contrastText
     }
   }, variant.icon)), /*#__PURE__*/React__default.createElement(core.Box, {
     container: true,
     fullWidth: true,
-    bgcolor: themePalette[variant.type].light,
+    bgcolor: palette[variant.type].light,
     style: {
-      borderRadius: 8,
-      paddingTop: isScreenXs ? 10 : 24,
+      borderRadius: customBorderRadius.paper,
+      paddingTop: isScreenXs ? 14 : 26,
       paddingBottom: 10,
       width: "100%"
     }
@@ -29056,22 +29056,22 @@ function InformationMessage({
     variant: "subtitle2",
     align: "center",
     style: {
-      color: themePalette.secondary.main,
-      paddingInline: "20px",
-      paddingTop: "5px"
+      color: palette.secondary.main,
+      paddingInline: "16px",
+      paddingTop: "4px"
     }
   }, /*#__PURE__*/React__default.createElement("strong", null, messageContent.title)), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     style: {
-      paddingInline: "20px",
-      paddingBlock: "13px",
+      paddingInline: "16px",
+      paddingBlock: "4px",
       textAlign: "center"
     }
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     variant: "caption",
     align: "center",
     style: {
-      color: themePalette.secondary.main
+      color: palette.secondary.main
     }
   }, messageContent.body))))));
 }

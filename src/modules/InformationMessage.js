@@ -9,10 +9,11 @@ export default function InformationMessage({
   isScreenXs,
   messageContent,
 }) {
-  const { palette: themePalette } = useTheme();
+  const { palette, customBorderRadius } = useTheme();
 
   return (
-    variant && messageContent && (
+    variant &&
+    messageContent && (
       <Box
         container
         display="flex"
@@ -23,13 +24,12 @@ export default function InformationMessage({
       >
         <Box style={{ top: isScreenXs ? 16 : 24, position: "relative" }}>
           <IconWithCircle
-            backgroundColor={themePalette[variant.type].main}
+            backgroundColor={palette[variant.type].main}
             height={isScreenXs ? 26 : 40}
             width={isScreenXs ? 26 : 40}
-            className="material-icons"
             style={{
               fontSize: isScreenXs ? 16 : 24,
-              color: themePalette.secondary.contrastText,
+              color: palette.secondary.contrastText,
             }}
           >
             {variant.icon}
@@ -38,10 +38,10 @@ export default function InformationMessage({
         <Box
           container
           fullWidth
-          bgcolor={themePalette[variant.type].light}
+          bgcolor={palette[variant.type].light}
           style={{
-            borderRadius: 8,
-            paddingTop: isScreenXs ? 10 : 24,
+            borderRadius: customBorderRadius.paper,
+            paddingTop: isScreenXs ? 14 : 26,
             paddingBottom: 10,
             width: "100%",
           }}
@@ -53,9 +53,9 @@ export default function InformationMessage({
                   variant="subtitle2"
                   align="center"
                   style={{
-                    color: themePalette.secondary.main,
-                    paddingInline: "20px",
-                    paddingTop: "5px",
+                    color: palette.secondary.main,
+                    paddingInline: "16px",
+                    paddingTop: "4px",
                   }}
                 >
                   <strong>{messageContent.title}</strong>
@@ -64,8 +64,8 @@ export default function InformationMessage({
               <Grid
                 item
                 style={{
-                  paddingInline: "20px",
-                  paddingBlock: "13px",
+                  paddingInline: "16px",
+                  paddingBlock: "4px",
                   textAlign: "center",
                 }}
               >
@@ -73,7 +73,7 @@ export default function InformationMessage({
                   variant="caption"
                   align="center"
                   style={{
-                    color: themePalette.secondary.main,
+                    color: palette.secondary.main,
                   }}
                 >
                   {messageContent.body}

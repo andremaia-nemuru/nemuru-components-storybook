@@ -116,6 +116,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 'Roboto',
                 '"Helvetica Neue"',
                 'Arial',
+                '"Open sans"',
                 'sans-serif',
                 '"Apple Color Emoji"',
                 '"Segoe UI Emoji"',

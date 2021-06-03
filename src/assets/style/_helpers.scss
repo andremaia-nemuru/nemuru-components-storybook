@@ -1,4 +1,3 @@
-
 @import "./helpers/_align.scss";
 @import "./helpers/_borders.scss";
 @import "./helpers/_display.scss";
@@ -10,6 +9,7 @@
 @import "./helpers/_spacing.scss";
 @import "./helpers/_text.scss";
 
-html, body{
-  font-family: "Raleway", "Arial", sans-serif;
+html,
+body {
+  font-family: "Raleway", "Arial", "Open sans", sans-serif;
 }
