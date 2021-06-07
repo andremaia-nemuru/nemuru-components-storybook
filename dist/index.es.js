@@ -1837,8 +1837,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
       },
       MuiFormControl: {
         root: {
-          margin: targetThemeValues.spacing[1],
-          marginLeft: 0
+          margin: `${targetThemeValues.spacing[1]} 0`
         }
       },
       MuiInputBase: {
@@ -28008,7 +28007,7 @@ function InputDate({
         position: "absolute",
         bottom: error ? "40px" : "17px",
         fontSize: "17px",
-        right: "-5px"
+        right: "3px"
       }
     }, "calendar_today")))
   }));

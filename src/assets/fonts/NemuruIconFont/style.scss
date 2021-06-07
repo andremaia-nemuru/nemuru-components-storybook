@@ -9,7 +9,7 @@
     font-style: normal;
     font-display: block;
   }
-  
+
   [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'nemuru-icon-font' !important;
@@ -19,12 +19,12 @@
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-  
+
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   .icon-blog-logo:before {
     content: "\e914";
   }
@@ -61,10 +61,16 @@
   .icon-health_accent:before {
     content: "\e903";
   }
-  .icon-home_accent:before {
+  .icon-home_accent:before { // TODO change to icon-home_improvement_accent in nemuru-app
     content: "\e904";
   }
-  .icon-home:before {
+  .icon-home:before { // TODO change to icon-home_improvement in nemuru-app
+    content: "\e905";
+  }
+  .icon-home_improvement_accent:before {
+    content: "\e904";
+  }
+  .icon-home_improvement:before {
     content: "\e905";
   }
   .icon-other_accent:before {
@@ -100,4 +106,3 @@
   .icon-progress_dark:before {
     content: "\e90f";
   }
-  

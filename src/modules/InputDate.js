@@ -27,7 +27,7 @@ export default function InputDate(
                             {...props}
                             value={controllerProps.value || null}
                             onChange={(e) => controllerProps.onChange(e)}
-                        /> 
+                        />
                         <Typography color={"textPrimary"}>
                             <i
                                 className="material-icons"
@@ -35,7 +35,7 @@ export default function InputDate(
                                     position: "absolute",
                                     bottom: error ? "40px" : "17px",
                                     fontSize: "17px",
-                                    right: "-5px"
+                                    right: "3px"
                                 }}>
                                 calendar_today
                             </i>
