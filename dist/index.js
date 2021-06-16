@@ -28933,31 +28933,32 @@ function SingleLinearStatBar(props) {
     }
   }, nemuruComponents.getIconName(amountToShowPerChannel.channelType))), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
-    xs: 4,
-    sm: 2
+    xs: 6,
+    sm: 4
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
-    className: "text-overflow"
+    className: "text-overflow",
+    variant: "body2"
   }, amountToShowPerChannel.channelDescription)), amountToShowPerChannel !== undefined ? /*#__PURE__*/React__default.createElement(React__default.Fragment, null, /*#__PURE__*/React__default.createElement(core.Grid, {
     className: "stat-results",
     item: true,
-    xs: 7,
-    sm: 4
+    xs: 5,
+    sm: 3
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     className: "stat-strong-value",
-    xs: 7
+    xs: 6
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     className: "amount"
   }, /*#__PURE__*/React__default.createElement("strong", null, filterMetrics === 'AMOUNT' ? formatAmountForDisplay(amountToShowPerChannel.amount) : amountToShowPerChannel.number))), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
-    xs: 5,
+    xs: 6,
     className: 'stat-strong-value'
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     className: "percentage"
   }, percentage !== 100 ? `${percentage.toFixed(1)}%` : `${percentage.toFixed(0)}%`))), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     xs: 12,
-    sm: 5
+    sm: 4
   }, /*#__PURE__*/React__default.createElement(LinearProgress, {
     className: isScreenXs ? filterSalesChannel == amountToShowPerChannel.channelDescription ? 'stat-bar thin selected' : 'stat-bar thin' : filterSalesChannel == amountToShowPerChannel.channelDescription ? 'stat-bar selected' : 'stat-bar',
     variant: "determinate",
@@ -28971,34 +28972,35 @@ function SingleLinearStatBar(props) {
     }
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
-    xs: 5,
-    sm: 3
+    xs: 7,
+    sm: 5
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
-    className: "text-overflow"
+    className: "text-overflow",
+    variant: "body2"
   }, agent.agentName)), /*#__PURE__*/React__default.createElement(core.Grid, {
     className: "stat-results",
     style: {
       cursor: 'default'
     },
     item: true,
-    xs: 7,
-    sm: 4
+    xs: 5,
+    sm: 3
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     className: "stat-strong-value",
-    xs: 7
+    xs: 6
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     className: "amount"
   }, /*#__PURE__*/React__default.createElement("strong", null, filterMetrics === 'AMOUNT' ? formatAmountForDisplay(amountToShowPerAgent.amount) : amountToShowPerAgent.number))), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
-    xs: 5,
+    xs: 6,
     className: 'stat-strong-value'
   }, /*#__PURE__*/React__default.createElement(core.Typography, {
     className: "percentage"
   }, percentage !== 100 ? `${percentage.toFixed(1)}%` : `${percentage.toFixed(0)}%`))), /*#__PURE__*/React__default.createElement(core.Grid, {
     item: true,
     xs: 12,
-    sm: 5
+    sm: 4
   }, /*#__PURE__*/React__default.createElement(LinearProgress, {
     className: isScreenXs ? 'stat-bar thin' : 'stat-bar',
     variant: "determinate",

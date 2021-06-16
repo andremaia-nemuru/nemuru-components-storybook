@@ -121,8 +121,8 @@ export default function SingleLinearStatBar(props) {
                                     )}
                                 </i>
                             </Grid>
-                            <Grid item xs={4} sm={2}>
-                                <Typography className="text-overflow">
+                            <Grid item xs={6} sm={4}>
+                                <Typography className="text-overflow" variant="body2">
                                     {amountToShowPerChannel.channelDescription}
                                 </Typography>
                             </Grid>
@@ -131,13 +131,13 @@ export default function SingleLinearStatBar(props) {
                                     <Grid
                                         className="stat-results"
                                         item
-                                        xs={7}
-                                        sm={4}
+                                        xs={5}
+                                        sm={3}
                                     >
                                         <Grid
                                             item
                                             className="stat-strong-value"
-                                            xs={7}
+                                            xs={6}
                                         >
                                             <Typography className="amount">
                                                 <strong>
@@ -151,7 +151,7 @@ export default function SingleLinearStatBar(props) {
                                         </Grid>
                                         <Grid
                                             item
-                                            xs={5}
+                                            xs={6}
                                             className={'stat-strong-value'}
                                         >
                                             <Typography className="percentage">
@@ -166,7 +166,7 @@ export default function SingleLinearStatBar(props) {
                                         </Grid>
                                     </Grid>
 
-                                    <Grid item xs={12} sm={5}>
+                                    <Grid item xs={12} sm={4}>
                                         <LinearProgress
                                             className={
                                                 isScreenXs
@@ -198,13 +198,13 @@ export default function SingleLinearStatBar(props) {
                             key={i}
                             style={{ cursor: 'default' }}
                         >
-                            <Grid item xs={5} sm={3}>
-                                <Typography className="text-overflow">
+                            <Grid item xs={7} sm={5}>
+                                <Typography className="text-overflow" variant="body2">
                                     {agent.agentName}
                                 </Typography>
                             </Grid>
-                            <Grid className="stat-results"   style={{ cursor: 'default' }} item xs={7} sm={4}>
-                                <Grid item className="stat-strong-value" xs={7}>
+                            <Grid className="stat-results"   style={{ cursor: 'default' }} item xs={5} sm={3}>
+                                <Grid item className="stat-strong-value" xs={6}>
                                     <Typography className="amount">
                                         <strong>
                                             {filterMetrics === 'AMOUNT'
@@ -217,7 +217,7 @@ export default function SingleLinearStatBar(props) {
                                 </Grid>
                                 <Grid
                                     item
-                                    xs={5}
+                                    xs={6}
                                     className={'stat-strong-value'}
                                 >
                                     <Typography className="percentage">
@@ -228,7 +228,7 @@ export default function SingleLinearStatBar(props) {
                                 </Grid>
                             </Grid>
 
-                            <Grid item xs={12} sm={5}>
+                            <Grid item xs={12} sm={4}>
                                 <LinearProgress
                                     className={
                                         isScreenXs
