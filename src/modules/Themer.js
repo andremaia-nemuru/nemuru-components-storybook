@@ -1,11 +1,8 @@
-import React, {Component, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 
-import useTheme from "@material-ui/core/styles/useTheme";
-
-import {createCustomTheme, createDefaultTheme, nemuruMuiTheme} from "../config/material";
-import { ThemeProvider } from '@material-ui/styles';
-
+import {createCustomTheme} from "../config/material";
+import {ThemeProvider} from '@material-ui/styles';
+import AssetPackDefiner from "./AssetPackDefiner";
 
 
 export default function Themer(props) {
@@ -16,10 +13,13 @@ export default function Themer(props) {
 
     return (
         <ThemeProvider theme={createCustomTheme(theme)}>
-            {children}
+            <AssetPackDefiner id={theme && theme.assetPackDefsId}>
+                {children}
+            </AssetPackDefiner>
         </ThemeProvider>
     )
 }
+
 
 
 
