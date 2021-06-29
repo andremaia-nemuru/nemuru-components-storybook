@@ -5,7 +5,7 @@ import {ThemeProvider} from '@material-ui/styles';
 import AssetPackDefiner from "./AssetPackDefiner";
 
 
-export default function Themer(props) {
+export function Themer(props) {
     const {
         children,
         theme,
@@ -19,6 +19,8 @@ export default function Themer(props) {
         </ThemeProvider>
     )
 }
+
+export default React.memo(Themer);
 
 
 
