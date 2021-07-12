@@ -14,7 +14,7 @@ export default function InputDate(
         ...props
     }
 ) {
-    const {error} = {...props};
+    const {error, locale} = {...props};
 
     const inputDateTheme = useTheme();
 
@@ -26,7 +26,7 @@ export default function InputDate(
 
     return (
         <ThemeProvider theme={createCustomTheme(inputDateTheme)}>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
                 <Controller
                     name={name}
                     id={id}

@@ -29214,7 +29214,8 @@ function InputDate({
 }) {
   const _props = { ...props
   },
-        error = _props.error;
+        error = _props.error,
+        locale = _props.locale;
   const inputDateTheme = styles.useTheme();
   inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
   inputDateTheme.palette.type = "dark";
@@ -29223,7 +29224,8 @@ function InputDate({
   return /*#__PURE__*/React__default.createElement(styles.ThemeProvider, {
     theme: createCustomTheme(inputDateTheme)
   }, /*#__PURE__*/React__default.createElement(pickers.MuiPickersUtilsProvider, {
-    utils: DateFnsUtils
+    utils: DateFnsUtils,
+    locale: locale
   }, /*#__PURE__*/React__default.createElement(reactHookForm.Controller, {
     name: name,
     id: id,
