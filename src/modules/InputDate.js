@@ -19,6 +19,8 @@ export default function InputDate(
     const inputDateTheme = useTheme();
 
     inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+    inputDateTheme.palette.primary.contrastText = '#fff';
+    inputDateTheme.palette.secondary.contrastText = '#fff';
     inputDateTheme.palette.type = "dark";
     inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100]
     inputDateTheme.shadows[24] =

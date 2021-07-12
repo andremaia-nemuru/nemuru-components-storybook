@@ -29216,8 +29216,16 @@ function InputDate({
   },
         error = _props.error,
         locale = _props.locale;
-  const inputDateTheme = styles.useTheme();
+  const inputDateTheme = styles.useTheme(); // inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  // inputDateTheme.palette.primary.contrastText = '#fff';
+  // inputDateTheme.palette.text.primary = inputDateTheme.palette.text.title;
+  // inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  // inputDateTheme.palette.type = "dark";
+  // inputDateTheme.palette.background.default = '#f1f1f1';
+
   inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  inputDateTheme.palette.primary.contrastText = '#fff';
+  inputDateTheme.palette.secondary.contrastText = '#fff';
   inputDateTheme.palette.type = "dark";
   inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100];
   inputDateTheme.shadows[24] = "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
