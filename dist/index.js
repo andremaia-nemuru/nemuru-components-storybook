@@ -29215,7 +29215,14 @@ function InputDate({
   const _props = { ...props
   },
         error = _props.error;
-  return /*#__PURE__*/React__default.createElement(pickers.MuiPickersUtilsProvider, {
+  const inputDateTheme = styles.useTheme();
+  inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  inputDateTheme.palette.type = "dark";
+  inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100];
+  inputDateTheme.shadows[24] = "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
+  return /*#__PURE__*/React__default.createElement(styles.ThemeProvider, {
+    theme: createCustomTheme(inputDateTheme)
+  }, /*#__PURE__*/React__default.createElement(pickers.MuiPickersUtilsProvider, {
     utils: DateFnsUtils
   }, /*#__PURE__*/React__default.createElement(reactHookForm.Controller, {
     name: name,
@@ -29229,9 +29236,7 @@ function InputDate({
     }, /*#__PURE__*/React__default.createElement(pickers.DatePicker, _extends({}, props, {
       value: controllerProps.value || null,
       onChange: e => controllerProps.onChange(e)
-    })), /*#__PURE__*/React__default.createElement(core.Typography, {
-      color: "textPrimary"
-    }, /*#__PURE__*/React__default.createElement("i", {
+    })), /*#__PURE__*/React__default.createElement("i", {
       className: "material-icons",
       style: {
         position: "absolute",
@@ -29239,8 +29244,8 @@ function InputDate({
         fontSize: "17px",
         right: "3px"
       }
-    }, "calendar_today")))
-  }));
+    }, "calendar_today"))
+  })));
 }
 
 ResponsiveDialog.propTypes = {
@@ -30257,7 +30262,7 @@ function InformationMessage({
     width: isScreenXs ? 26 : 40,
     style: {
       fontSize: isScreenXs ? 16 : 24,
-      color: palette.secondary.contrastText
+      color: palette[variant.type].contrastText
     }
   }, variant.icon)), /*#__PURE__*/React__default.createElement(core.Box, {
     container: true,
@@ -30279,7 +30284,7 @@ function InformationMessage({
     variant: "subtitle2",
     align: "center",
     style: {
-      color: palette.secondary.main,
+      color: palette.text.neutral,
       paddingInline: "16px",
       paddingTop: "4px"
     }
@@ -30294,7 +30299,7 @@ function InformationMessage({
     variant: "caption",
     align: "center",
     style: {
-      color: palette.secondary.main
+      color: palette.text.neutral
     }
   }, messageContent.body))))));
 }

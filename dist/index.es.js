@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import Slider from '@material-ui/core/Slider';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { Box, Typography, Dialog, IconButton, Snackbar, useMediaQuery, Button, useTheme as useTheme$2, TextField as TextField$1, Paper as Paper$1, Grid } from '@material-ui/core';
+import { Box, Dialog, IconButton, Snackbar, Typography, useMediaQuery, Button, useTheme as useTheme$2, TextField as TextField$1, Paper as Paper$1, Grid } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import AppBar from '@material-ui/core/AppBar';
 import Container from '@material-ui/core/Container';
@@ -29207,7 +29207,14 @@ function InputDate({
   const _props = { ...props
   },
         error = _props.error;
-  return /*#__PURE__*/React.createElement(MuiPickersUtilsProvider, {
+  const inputDateTheme = useTheme();
+  inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  inputDateTheme.palette.type = "dark";
+  inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100];
+  inputDateTheme.shadows[24] = "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
+  return /*#__PURE__*/React.createElement(ThemeProvider, {
+    theme: createCustomTheme(inputDateTheme)
+  }, /*#__PURE__*/React.createElement(MuiPickersUtilsProvider, {
     utils: DateFnsUtils
   }, /*#__PURE__*/React.createElement(Controller, {
     name: name,
@@ -29221,9 +29228,7 @@ function InputDate({
     }, /*#__PURE__*/React.createElement(DatePicker, _extends({}, props, {
       value: controllerProps.value || null,
       onChange: e => controllerProps.onChange(e)
-    })), /*#__PURE__*/React.createElement(Typography, {
-      color: "textPrimary"
-    }, /*#__PURE__*/React.createElement("i", {
+    })), /*#__PURE__*/React.createElement("i", {
       className: "material-icons",
       style: {
         position: "absolute",
@@ -29231,8 +29236,8 @@ function InputDate({
         fontSize: "17px",
         right: "3px"
       }
-    }, "calendar_today")))
-  }));
+    }, "calendar_today"))
+  })));
 }
 
 ResponsiveDialog.propTypes = {
@@ -30249,7 +30254,7 @@ function InformationMessage({
     width: isScreenXs ? 26 : 40,
     style: {
       fontSize: isScreenXs ? 16 : 24,
-      color: palette.secondary.contrastText
+      color: palette[variant.type].contrastText
     }
   }, variant.icon)), /*#__PURE__*/React.createElement(Box, {
     container: true,
@@ -30271,7 +30276,7 @@ function InformationMessage({
     variant: "subtitle2",
     align: "center",
     style: {
-      color: palette.secondary.main,
+      color: palette.text.neutral,
       paddingInline: "16px",
       paddingTop: "4px"
     }
@@ -30286,7 +30291,7 @@ function InformationMessage({
     variant: "caption",
     align: "center",
     style: {
-      color: palette.secondary.main
+      color: palette.text.neutral
     }
   }, messageContent.body))))));
 }

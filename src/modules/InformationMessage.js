@@ -29,7 +29,7 @@ export default function InformationMessage({
             width={isScreenXs ? 26 : 40}
             style={{
               fontSize: isScreenXs ? 16 : 24,
-              color: palette.secondary.contrastText,
+              color: palette[variant.type].contrastText,
             }}
           >
             {variant.icon}
@@ -53,7 +53,7 @@ export default function InformationMessage({
                   variant="subtitle2"
                   align="center"
                   style={{
-                    color: palette.secondary.main,
+                    color: palette.text.neutral,
                     paddingInline: "16px",
                     paddingTop: "4px",
                   }}
@@ -73,7 +73,7 @@ export default function InformationMessage({
                   variant="caption"
                   align="center"
                   style={{
-                    color: palette.secondary.main,
+                    color: palette.text.neutral,
                   }}
                 >
                   {messageContent.body}
