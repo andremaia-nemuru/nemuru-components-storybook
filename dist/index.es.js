@@ -29197,6 +29197,8 @@ function IconWithCircle({
   }, /*#__PURE__*/React.createElement("i", props, children));
 }
 
+// import {createCustomTheme} from "../config/material";
+
 function InputDate({
   name,
   id,
@@ -29207,47 +29209,46 @@ function InputDate({
   const _props = { ...props
   },
         error = _props.error,
-        locale = _props.locale;
-  const inputDateTheme = useTheme(); // inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
-  // inputDateTheme.palette.primary.contrastText = '#fff';
-  // inputDateTheme.palette.text.primary = inputDateTheme.palette.text.title;
+        locale = _props.locale; // const inputDateTheme = useTheme();
+  //
   // inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+  // inputDateTheme.palette.primary.contrastText = '#fff';
+  // inputDateTheme.palette.secondary.contrastText = '#fff';
   // inputDateTheme.palette.type = "dark";
-  // inputDateTheme.palette.background.default = '#f1f1f1';
+  // inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100]
+  // inputDateTheme.shadows[24] =
+  //     "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
 
-  inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
-  inputDateTheme.palette.primary.contrastText = '#fff';
-  inputDateTheme.palette.secondary.contrastText = '#fff';
-  inputDateTheme.palette.type = "dark";
-  inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100];
-  inputDateTheme.shadows[24] = "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
-  return /*#__PURE__*/React.createElement(ThemeProvider, {
-    theme: createCustomTheme(inputDateTheme)
-  }, /*#__PURE__*/React.createElement(MuiPickersUtilsProvider, {
-    utils: DateFnsUtils,
-    locale: locale
-  }, /*#__PURE__*/React.createElement(Controller, {
-    name: name,
-    id: id,
-    control: control,
-    rules: rules,
-    render: controllerProps => /*#__PURE__*/React.createElement("div", {
-      style: {
-        position: "relative"
-      }
-    }, /*#__PURE__*/React.createElement(DatePicker, _extends({}, props, {
-      value: controllerProps.value || null,
-      onChange: e => controllerProps.onChange(e)
-    })), /*#__PURE__*/React.createElement("i", {
-      className: "material-icons",
-      style: {
-        position: "absolute",
-        bottom: error ? "40px" : "17px",
-        fontSize: "17px",
-        right: "3px"
-      }
-    }, "calendar_today"))
-  })));
+  return (
+    /*#__PURE__*/
+    // <ThemeProvider theme={createCustomTheme(inputDateTheme)}>
+    React.createElement(MuiPickersUtilsProvider, {
+      utils: DateFnsUtils,
+      locale: locale
+    }, /*#__PURE__*/React.createElement(Controller, {
+      name: name,
+      id: id,
+      control: control,
+      rules: rules,
+      render: controllerProps => /*#__PURE__*/React.createElement("div", {
+        style: {
+          position: "relative"
+        }
+      }, /*#__PURE__*/React.createElement(DatePicker, _extends({}, props, {
+        value: controllerProps.value || null,
+        onChange: e => controllerProps.onChange(e)
+      })), /*#__PURE__*/React.createElement("i", {
+        className: "material-icons",
+        style: {
+          position: "absolute",
+          bottom: error ? "40px" : "17px",
+          fontSize: "17px",
+          right: "3px"
+        }
+      }, "calendar_today"))
+    })) // </ThemeProvider>
+
+  );
 }
 
 ResponsiveDialog.propTypes = {

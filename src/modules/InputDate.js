@@ -2,8 +2,8 @@ import React from "react";
 import {DatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import {Controller} from "react-hook-form";
-import {ThemeProvider, useTheme} from "@material-ui/styles";
-import {createCustomTheme} from "../config/material";
+// import {ThemeProvider, useTheme} from "@material-ui/styles";
+// import {createCustomTheme} from "../config/material";
 
 export default function InputDate(
     {
@@ -16,18 +16,18 @@ export default function InputDate(
 ) {
     const {error, locale} = {...props};
 
-    const inputDateTheme = useTheme();
-
-    inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
-    inputDateTheme.palette.primary.contrastText = '#fff';
-    inputDateTheme.palette.secondary.contrastText = '#fff';
-    inputDateTheme.palette.type = "dark";
-    inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100]
-    inputDateTheme.shadows[24] =
-        "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
+    // const inputDateTheme = useTheme();
+    //
+    // inputDateTheme.palette.primary.main = inputDateTheme.palette.text.title;
+    // inputDateTheme.palette.primary.contrastText = '#fff';
+    // inputDateTheme.palette.secondary.contrastText = '#fff';
+    // inputDateTheme.palette.type = "dark";
+    // inputDateTheme.palette.background.default = inputDateTheme.palette.grey[100]
+    // inputDateTheme.shadows[24] =
+    //     "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
 
     return (
-        <ThemeProvider theme={createCustomTheme(inputDateTheme)}>
+        // <ThemeProvider theme={createCustomTheme(inputDateTheme)}>
             <MuiPickersUtilsProvider utils={DateFnsUtils} locale={locale}>
                 <Controller
                     name={name}
@@ -55,6 +55,6 @@ export default function InputDate(
                     )}
                 />
             </MuiPickersUtilsProvider>
-        </ThemeProvider>
+        // </ThemeProvider>
     );
 }
