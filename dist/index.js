@@ -30114,18 +30114,18 @@ function SingleLinearStatBar(props) {
 
   const calculatePercentage = (value, maxReference, maxValue, maxAgent) => {
     if (filterSalesChannel !== '' && amountToShowPerAgent !== undefined) {
-      if (maxReference === 0) {
+      if (!maxReference) {
         linearBar = 0;
         percentage = 0;
       } else {
-        const calcLinearBar = value / maxReference * 100;
-        const calcPercentage = value / maxAgent * 100;
+        const calcLinearBar = !maxReference ? 0 : value / maxReference * 100;
+        const calcPercentage = !maxAgent ? 0 : value / maxAgent * 100;
         linearBar = calcLinearBar;
         percentage = calcPercentage;
       }
     } else {
-      const calcLinearBar = value / maxReference * 100;
-      const calcPercentage = value / maxValue * 100;
+      const calcLinearBar = !maxReference ? 0 : value / maxReference * 100;
+      const calcPercentage = !maxValue ? 0 : value / maxValue * 100;
       linearBar = calcLinearBar;
       percentage = calcPercentage;
     }
