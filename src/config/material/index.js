@@ -1,5 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { nominalTypeHack } from 'prop-types';
 import { mergeDeep } from '../../utils';
 
 const setThemeWithCustomizableValues = (newCustomizableValues) => {
@@ -183,6 +182,25 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                     },
                 },
             },
+            MuiSwitch: {
+                root: {
+                    padding: 9,
+                    top: -9,
+                    left: -9,
+                },
+                track: {
+                    backgroundColor: targetThemeValues.palette.grey[100],
+                    opacity: 1,
+                    height: 20,
+                    borderRadius: 10,
+                },
+                switchBase: {
+                    '&.Mui-checked + .MuiSwitch-track': {
+                        backgroundColor: `${targetThemeValues.palette.grey[100]} !important`,
+                        opacity: 1,
+                    },
+                },
+            },
             MuiInput: {
                 root: {
                     color: 'inherit',
@@ -356,8 +374,8 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
         },
         shadows: [
             'none',
-            '0px 2px 1px -1px rgba(0,0,0,0.1),0px 1px 1px 0px rgba(0,0,0,0.05),0px 1px 3px 0px rgba(0,0,0,0.08)',
-            '0px 3px 1px -2px rgba(0,0,0,0.1),0px 2px 2px 0px rgba(0,0,0,0.05),0px 1px 5px 0px rgba(0,0,0,0.08)',
+            '0px 2px 1px -1px rgba(0,0,0,0.1),0px 0px 1px 0px rgba(0,0,0,0.05),0px 1px 3px 0px rgba(0,0,0,0.08)',
+            '0px 3px 1px -2px rgba(0,0,0,0.1),0px 0px 1px 0px rgba(0,0,0,0.05),0px 1px 5px 0px rgba(0,0,0,0.08)',
             '0px 3px 3px -2px rgba(0,0,0,0.1),0px 3px 4px 0px rgba(0,0,0,0.05),0px 1px 8px 0px rgba(0,0,0,0.08)',
             '0px 2px 4px -1px rgba(0,0,0,0.1),0px 4px 5px 0px rgba(0,0,0,0.05),0px 1px 10px 0px rgba(0,0,0,0.08)',
             '0px 3px 5px -1px rgba(0,0,0,0.1),0px 5px 8px 0px rgba(0,0,0,0.05),0px 1px 14px 0px rgba(0,0,0,0.08)',
