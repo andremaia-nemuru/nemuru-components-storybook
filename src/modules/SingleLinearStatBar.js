@@ -25,18 +25,22 @@ export default function SingleLinearStatBar(props) {
 
     const calculatePercentage = (value, maxReference, maxValue, maxAgent) => {
         if (filterSalesChannel !== '' && amountToShowPerAgent !== undefined) {
-            if (maxReference === 0) {
+            if (!maxReference) {
                 linearBar = 0;
                 percentage = 0;
             } else {
-                const calcLinearBar = (value / maxReference) * 100;
-                const calcPercentage = (value / maxAgent) * 100;
+                const calcLinearBar = !maxReference
+                    ? 0
+                    : (value / maxReference) * 100;
+                const calcPercentage = !maxAgent ? 0 : (value / maxAgent) * 100;
                 linearBar = calcLinearBar;
                 percentage = calcPercentage;
             }
         } else {
-            const calcLinearBar = (value / maxReference) * 100;
-            const calcPercentage = (value / maxValue) * 100;
+            const calcLinearBar = !maxReference
+                ? 0
+                : (value / maxReference) * 100;
+            const calcPercentage = !maxValue ? 0 : (value / maxValue) * 100;
             linearBar = calcLinearBar;
             percentage = calcPercentage;
         }
@@ -122,7 +126,10 @@ export default function SingleLinearStatBar(props) {
                                 </i>
                             </Grid>
                             <Grid item xs={6} sm={4}>
-                                <Typography className="text-overflow" variant="body2">
+                                <Typography
+                                    className="text-overflow"
+                                    variant="body2"
+                                >
                                     {amountToShowPerChannel.channelDescription}
                                 </Typography>
                             </Grid>
@@ -199,11 +206,20 @@ export default function SingleLinearStatBar(props) {
                             style={{ cursor: 'default' }}
                         >
                             <Grid item xs={7} sm={5}>
-                                <Typography className="text-overflow" variant="body2">
+                                <Typography
+                                    className="text-overflow"
+                                    variant="body2"
+                                >
                                     {agent.agentName}
                                 </Typography>
                             </Grid>
-                            <Grid className="stat-results"   style={{ cursor: 'default' }} item xs={5} sm={3}>
+                            <Grid
+                                className="stat-results"
+                                style={{ cursor: 'default' }}
+                                item
+                                xs={5}
+                                sm={3}
+                            >
                                 <Grid item className="stat-strong-value" xs={6}>
                                     <Typography className="amount">
                                         <strong>
