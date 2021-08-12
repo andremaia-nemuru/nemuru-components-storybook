@@ -221,6 +221,13 @@ body {
   }
 }
 
+.fade-in-anim {
+  -webkit-animation: fade-in-anim 0.3s; /* Safari 4.0 - 8.0 */
+  animation: fade-in-anim 0.3s; /* Safari 4.0 - 8.0 */
+  -webkit-animation-timing-function: ease-out;
+  animation-timing-function: ease-out;
+}
+
 .appear-anim {
   -webkit-animation: appear-anim 0.5s; /* Safari 4.0 - 8.0 */
   animation: appear-anim 0.5s; /* Safari 4.0 - 8.0 */
@@ -235,6 +242,15 @@ body {
   }
   50% {
     transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fade-in-anim {
+  0% {
+    opacity: 0;
   }
   100% {
     opacity: 1;
@@ -279,6 +295,7 @@ body {
     opacity: 0;
   }
 }
+
 
 .circle {
   border-radius: 100px;
