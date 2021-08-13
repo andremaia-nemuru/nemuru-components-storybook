@@ -37,7 +37,7 @@ export default class Header extends Component {
             </AppBar>
             <Paper
               square
-              elevation={6}
+              elevation={elevation !== undefined ? elevation : 4}
               style={{
                 height: "80px",
                 display: "flex",
