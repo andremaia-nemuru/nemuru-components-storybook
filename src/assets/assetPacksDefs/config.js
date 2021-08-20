@@ -25,6 +25,7 @@ export const assetIds = {
     ICON_ID_BACK: "icon_id_back",
     ICON_BANK: "icon_bank",
     ICON_CLOUD_UPLOAD: "icon_cloud_upload",
+    ICON_DOC_SIGNATURE: "icon_doc_signature",
 
     /*/////////// DEFAULT ICONS ( OLD NEMURU ICON FONT) //////////////////////////*/
 
