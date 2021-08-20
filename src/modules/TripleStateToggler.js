@@ -50,6 +50,7 @@ export default function TripleStateToggler({ name, value, handleChange }) {
         paper: {
             display: 'flex',
             flexWrap: 'wrap',
+            borderRadius: '10px !important',
         },
         divider: {},
     }));
@@ -120,7 +121,7 @@ export default function TripleStateToggler({ name, value, handleChange }) {
                 <>
                     <Paper
                         elevation={state === null ? 2 : 0}
-                        style={{ marginRight: 18 }}
+                        style={{ marginRight: 18, borderRadius: 10 }}
                     >
                         <StyledToggleButtonGroup
                             onChange={handleToggleChange}
