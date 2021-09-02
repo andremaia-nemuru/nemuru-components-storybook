@@ -11,6 +11,7 @@ export default function TextValue(props) {
     dynamicDataTexts,
     capitalized,
     trueResult,
+    originalTextId,
     typography,
     strong,
     small,
@@ -19,6 +20,9 @@ export default function TextValue(props) {
   const { palette: themePalette } = useTheme();
   if (!translation && trueResult) {
     return null;
+  }
+  if (!translation && originalTextId) {
+    return tId;
   }
   let result = translation || tId;
   if (upperCased) result = formatSnakecaseToSpaces(result).toUpperCase();

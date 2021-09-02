@@ -29510,6 +29510,7 @@ function TextValue(props) {
         dynamicDataTexts = props.dynamicDataTexts,
         capitalized = props.capitalized,
         trueResult = props.trueResult,
+        originalTextId = props.originalTextId,
         typography = props.typography,
         strong = props.strong,
         small = props.small,
@@ -29520,6 +29521,10 @@ function TextValue(props) {
 
   if (!translation && trueResult) {
     return null;
+  }
+
+  if (!translation && originalTextId) {
+    return tId;
   }
 
   let result = translation || tId;
