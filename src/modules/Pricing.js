@@ -14,10 +14,9 @@ const PricingRangeType = {
 };
 
 export default function Pricing(props) {
-
-
   const { palette: themePalette, customBorderRadius } = useTheme();
   const { pricingData } = props;
+  console.log("pricingData", pricingData);
   return (
     <Paper elevation={6}>
       <Box p={3}>
@@ -55,7 +54,10 @@ export default function Pricing(props) {
                         >{`money`}</i>
                       </Grid>
                       <Grid item>
-                        <Typography variant="caption" color={themePalette.text.title}>
+                        <Typography
+                          variant="caption"
+                          color={themePalette.text.title}
+                        >
                           Importe
                         </Typography>
                         <br />
@@ -94,9 +96,7 @@ export default function Pricing(props) {
                         >{`date_range`}</i>
                       </Grid>
                       <Grid item>
-                        <Typography variant="caption">
-                          Plazo
-                        </Typography>
+                        <Typography variant="caption">Plazo</Typography>
                         <br />
                         <Typography
                           variant="caption"
@@ -125,7 +125,10 @@ export default function Pricing(props) {
                         >{`account_circle_outlined`}</i>
                       </Grid>
                       <Grid item>
-                        <Typography variant="caption" color={themePalette.text.title}>
+                        <Typography
+                          variant="caption"
+                          color={themePalette.text.title}
+                        >
                           Comisión apertura
                         </Typography>
                         <br />
@@ -171,7 +174,10 @@ export default function Pricing(props) {
                           >{`account_circle_outlined`}</i>
                         </Grid>
                         <Grid item>
-                          <Typography variant="caption" color={themePalette.text.title}>
+                          <Typography
+                            variant="caption"
+                            color={themePalette.text.title}
+                          >
                             Interés cliente
                           </Typography>
                           <br />
@@ -208,7 +214,10 @@ export default function Pricing(props) {
                           >{`storefront_outlined`}</i>
                         </Grid>
                         <Grid item>
-                          <Typography variant="caption"  color={themePalette.text.title}>
+                          <Typography
+                            variant="caption"
+                            color={themePalette.text.title}
+                          >
                             Coste soportado
                           </Typography>
                           <br />
@@ -255,7 +264,10 @@ export default function Pricing(props) {
                           >{`drive_eta`}</i>
                         </Grid>
                         <Grid item>
-                          <Typography variant="caption"  color={themePalette.text.title}>
+                          <Typography
+                            variant="caption"
+                            color={themePalette.text.title}
+                          >
                             Antigüedad vehículo
                           </Typography>
                           <br />
@@ -290,7 +302,10 @@ export default function Pricing(props) {
                           >{`security`}</i>
                         </Grid>
                         <Grid item>
-                          <Typography variant="caption" color={themePalette.text.title}>
+                          <Typography
+                            variant="caption"
+                            color={themePalette.text.title}
+                          >
                             Seguro
                           </Typography>
                           <br />
@@ -312,6 +327,27 @@ export default function Pricing(props) {
             </Grid>
             {pricingData.range_type === PricingRangeType.principal && (
               <Grid item sm={12} md={8}>
+                {pricingData.range_grace_period_max > 0 && (
+                  <Box
+                    mb={1}
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
+                    <i
+                      className="material-icons-outlined mr-1"
+                      style={{ fontSize: 14, color: themePalette.primary.main }}
+                    >
+                      check
+                    </i>
+                    <Typography
+                      variant="caption"
+                      style={{ color: themePalette.primary.main }}
+                    >
+                      <strong>Campaña con carencia activa</strong>
+                    </Typography>
+                  </Box>
+                )}
                 <Box>
                   <Grid container direction="row">
                     <Grid item style={{ flexGrow: 1, maxWidth: 120 }}>
@@ -446,6 +482,27 @@ export default function Pricing(props) {
             )}
             {pricingData.range_type === PricingRangeType.period && (
               <Grid item sm={12} md={8}>
+                {pricingData.range_grace_period_max > 0 && (
+                  <Box
+                    mb={1}
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center"
+                  >
+                    <i
+                      className="material-icons-outlined mr-1"
+                      style={{ fontSize: 14, color: themePalette.primary.main }}
+                    >
+                      check
+                    </i>
+                    <Typography
+                      variant="caption"
+                      style={{ color: themePalette.primary.main }}
+                    >
+                      <strong>Campaña con carencia activa</strong>
+                    </Typography>
+                  </Box>
+                )}
                 <Box>
                   <Grid container direction="row">
                     <Grid item style={{ flexGrow: 1, maxWidth: 120 }}>
