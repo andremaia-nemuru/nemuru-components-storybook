@@ -29789,6 +29789,7 @@ function Pricing(props) {
         customBorderRadius = _useTheme.customBorderRadius;
 
   const pricingData = props.pricingData;
+  console.log("pricingData", pricingData);
   return /*#__PURE__*/React__default.createElement(core.Paper, {
     elevation: 6
   }, /*#__PURE__*/React__default.createElement(core.Box, {
@@ -30015,7 +30016,23 @@ function Pricing(props) {
     item: true,
     sm: 12,
     md: 8
-  }, /*#__PURE__*/React__default.createElement(core.Box, null, /*#__PURE__*/React__default.createElement(core.Grid, {
+  }, pricingData.range_grace_period_max > 0 && /*#__PURE__*/React__default.createElement(core.Box, {
+    mb: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  }, /*#__PURE__*/React__default.createElement("i", {
+    className: "material-icons-outlined mr-1",
+    style: {
+      fontSize: 14,
+      color: themePalette.primary.main
+    }
+  }, "check"), /*#__PURE__*/React__default.createElement(core.Typography, {
+    variant: "caption",
+    style: {
+      color: themePalette.primary.main
+    }
+  }, /*#__PURE__*/React__default.createElement("strong", null, "Campa\xF1a con carencia activa"))), /*#__PURE__*/React__default.createElement(core.Box, null, /*#__PURE__*/React__default.createElement(core.Grid, {
     container: true,
     direction: "row"
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
@@ -30125,7 +30142,23 @@ function Pricing(props) {
     item: true,
     sm: 12,
     md: 8
-  }, /*#__PURE__*/React__default.createElement(core.Box, null, /*#__PURE__*/React__default.createElement(core.Grid, {
+  }, pricingData.range_grace_period_max > 0 && /*#__PURE__*/React__default.createElement(core.Box, {
+    mb: 1,
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  }, /*#__PURE__*/React__default.createElement("i", {
+    className: "material-icons-outlined mr-1",
+    style: {
+      fontSize: 14,
+      color: themePalette.primary.main
+    }
+  }, "check"), /*#__PURE__*/React__default.createElement(core.Typography, {
+    variant: "caption",
+    style: {
+      color: themePalette.primary.main
+    }
+  }, /*#__PURE__*/React__default.createElement("strong", null, "Campa\xF1a con carencia activa"))), /*#__PURE__*/React__default.createElement(core.Box, null, /*#__PURE__*/React__default.createElement(core.Grid, {
     container: true,
     direction: "row"
   }, /*#__PURE__*/React__default.createElement(core.Grid, {
