@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'nemuru-icon-font';
-  src:  url('fonts/nemuru-icon-font.eot?vqkqn1');
-  src:  url('fonts/nemuru-icon-font.eot?vqkqn1#iefix') format('embedded-opentype'),
-    url('fonts/nemuru-icon-font.ttf?vqkqn1') format('truetype'),
-    url('fonts/nemuru-icon-font.woff?vqkqn1') format('woff'),
-    url('fonts/nemuru-icon-font.svg?vqkqn1#nemuru-icon-font') format('svg');
+  src:  url('fonts/nemuru-icon-font.eot?9iqxfy');
+  src:  url('fonts/nemuru-icon-font.eot?9iqxfy#iefix') format('embedded-opentype'),
+    url('fonts/nemuru-icon-font.ttf?9iqxfy') format('truetype'),
+    url('fonts/nemuru-icon-font.woff?9iqxfy') format('woff'),
+    url('fonts/nemuru-icon-font.svg?9iqxfy#nemuru-icon-font') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-utilities_supply_accent:before {
+  content: "\e915";
+}
+.icon-utilities_supply:before {
+  content: "\e916";
+}
 .icon-blog-logo:before {
   content: "\e914";
 }

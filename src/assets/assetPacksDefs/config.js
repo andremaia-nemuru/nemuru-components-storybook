@@ -38,6 +38,7 @@ export const assetIds = {
     ICON_OTHER: "icon_other",
     ICON_AUTO: "icon_auto",
     ICON_TRAVEL: "icon_travel",
+    ICON_UTILITIES_SUPPLY:'icon_utilities_supply',
     ICON_NEW_LOAN_DARK: "icon_newLoan_dark",
     ICON_HAND_SIMPLE: "icon_hand_simple",
     ICON_NOTIFICATION_BELL: "icon_notification_bell",

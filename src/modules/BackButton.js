@@ -30,7 +30,7 @@ export default function BackButton({
             className="material-icons"
             style={{ verticalAlign: "text-top", fontSize: mobileIconFontSize }}
           >
-            chevron_left
+            arrow_back
           </i>
         </IconButton>
       ) : (
@@ -41,13 +41,13 @@ export default function BackButton({
           {...props}
           className={`${propClassName} min-width-button`}
         >
-          {children}
           <i
-            className="material-icons ml-2"
+            className="material-icons mr-2"
             style={{ verticalAlign: "text-top", fontSize: "15px" }}
           >
-            chevron_left
+            arrow_back
           </i>
+          {children}
         </Button>
       )}
     </Fragment>
