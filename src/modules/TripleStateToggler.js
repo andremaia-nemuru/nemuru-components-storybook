@@ -5,7 +5,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { useTheme } from '@material-ui/styles';
 
-export default function TripleStateToggler({ name, value, handleChange }) {
+export default function TripleStateToggler({ name, value, handleChange, disabled }) {
     const { palette } = useTheme();
     const [state, setState] = useState(value);
     const [switchState, setSwitchState] = useState(value);
@@ -79,6 +79,10 @@ export default function TripleStateToggler({ name, value, handleChange }) {
                         className={'Mui-checked'}
                         checked={state === null ? false : switchState}
                         onChange={(e) => handleSwitchChange(e)}
+                        disabled={disabled}
+                        style={{
+                            opacity: disabled ? 0.5 : 1
+                        }}
                         icon={
                             <i
                                 className="material-icons-outlined"
@@ -135,6 +139,7 @@ export default function TripleStateToggler({ name, value, handleChange }) {
                                     borderRadius: 16,
                                     margin: -6,
                                 }}
+                                // disabled={disabled}
                             >
                                 <i
                                     className="material-icons-outlined"
@@ -150,6 +155,8 @@ export default function TripleStateToggler({ name, value, handleChange }) {
                                     borderRadius: 16,
                                     margin: '-6px -7px',
                                 }}
+
+                              // disabled={disabled}
                             >
                                 <i
                                     className="material-icons-outlined"

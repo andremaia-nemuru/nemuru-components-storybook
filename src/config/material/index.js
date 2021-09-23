@@ -1,5 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import { mergeDeep } from '../../utils';
+import {createMuiTheme} from '@material-ui/core/styles';
+import {mergeDeep} from '../../utils';
 
 const setThemeWithCustomizableValues = (newCustomizableValues) => {
     const mainDefaultReusableValues = {
@@ -77,7 +77,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 A100: '#d5d5d5',
                 A200: '#aaaaaa',
                 A400: '#303030',
-                A700: '#616161',                
+                A700: '#616161',
                 background: '#F1F1F1',
                 selected: '#d8d8d8',
             },
@@ -202,16 +202,10 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                     left: -9,
                 },
                 track: {
-                    backgroundColor: targetThemeValues.palette.grey[100],
-                    opacity: 1,
+                    backgroundColor: `${targetThemeValues.palette.grey[100]} !important`,
+                    opacity: '1 !important',
                     height: 20,
                     borderRadius: 10,
-                },
-                switchBase: {
-                    '&.Mui-checked + .MuiSwitch-track': {
-                        backgroundColor: `${targetThemeValues.palette.grey[100]} !important`,
-                        opacity: 1,
-                    },
                 },
             },
             MuiInput: {
@@ -282,7 +276,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                         '&.selected': {
                             transition: 'all 0.3s ease',
                             backgroundColor:
-                                targetThemeValues.palette.grey.background,
+                            targetThemeValues.palette.grey.background,
                             color: targetThemeValues.palette.text.active,
                         },
                         '&.opacity': {
@@ -355,11 +349,11 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                         transition: 'all 0.3s ease',
                         color: targetThemeValues.palette.text.active,
                         backgroundColor:
-                            targetThemeValues.palette.grey.selected,
+                        targetThemeValues.palette.grey.selected,
                     },
                     '&.stat-bar.thin.selected': {
                         backgroundColor:
-                            targetThemeValues.palette.grey.selected,
+                        targetThemeValues.palette.grey.selected,
                     },
                 },
             },

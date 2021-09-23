@@ -1957,16 +1957,10 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
           left: -9
         },
         track: {
-          backgroundColor: targetThemeValues.palette.grey[100],
-          opacity: 1,
+          backgroundColor: `${targetThemeValues.palette.grey[100]} !important`,
+          opacity: '1 !important',
           height: 20,
           borderRadius: 10
-        },
-        switchBase: {
-          '&.Mui-checked + .MuiSwitch-track': {
-            backgroundColor: `${targetThemeValues.palette.grey[100]} !important`,
-            opacity: 1
-          }
         }
       },
       MuiInput: {
@@ -30552,7 +30546,8 @@ function ThemedAsset({
 function TripleStateToggler({
   name,
   value,
-  handleChange
+  handleChange,
+  disabled
 }) {
   const _useTheme = styles.useTheme(),
         palette = _useTheme.palette;
@@ -30632,6 +30627,10 @@ function TripleStateToggler({
     className: 'Mui-checked',
     checked: state === null ? false : switchState,
     onChange: e => handleSwitchChange(e),
+    disabled: disabled,
+    style: {
+      opacity: disabled ? 0.5 : 1
+    },
     icon: /*#__PURE__*/React__default.createElement("i", {
       className: "material-icons-outlined",
       style: {
@@ -30677,7 +30676,8 @@ function TripleStateToggler({
       padding: 16,
       borderRadius: 16,
       margin: -6
-    }
+    } // disabled={disabled}
+
   }, /*#__PURE__*/React__default.createElement("i", {
     className: "material-icons-outlined",
     style: {
@@ -30689,7 +30689,8 @@ function TripleStateToggler({
       padding: 16,
       borderRadius: 16,
       margin: '-6px -7px'
-    }
+    } // disabled={disabled}
+
   }, /*#__PURE__*/React__default.createElement("i", {
     className: "material-icons-outlined",
     style: {
