@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'nemuru-icon-font';
-  src:  url('fonts/nemuru-icon-font.eot?9iqxfy');
-  src:  url('fonts/nemuru-icon-font.eot?9iqxfy#iefix') format('embedded-opentype'),
-    url('fonts/nemuru-icon-font.ttf?9iqxfy') format('truetype'),
-    url('fonts/nemuru-icon-font.woff?9iqxfy') format('woff'),
-    url('fonts/nemuru-icon-font.svg?9iqxfy#nemuru-icon-font') format('svg');
+  src:  url('fonts/nemuru-icon-font.eot?8i4bz');
+  src:  url('fonts/nemuru-icon-font.eot?8i4bz#iefix') format('embedded-opentype'),
+    url('fonts/nemuru-icon-font.ttf?8i4bz') format('truetype'),
+    url('fonts/nemuru-icon-font.woff?8i4bz') format('woff'),
+    url('fonts/nemuru-icon-font.svg?8i4bz#nemuru-icon-font') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -67,10 +67,10 @@
 .icon-health_accent:before {
   content: "\e903";
 }
-.icon-home_accent:before {
+.icon-home_improvement_accent:before {
   content: "\e904";
 }
-.icon-home:before {
+.icon-home_improvement:before {
   content: "\e905";
 }
 .icon-other_accent:before {
