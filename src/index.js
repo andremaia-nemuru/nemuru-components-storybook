@@ -28,8 +28,6 @@ import { NemuruIconFont } from './assets/style/index.js';
 import TripleStateToggler from './modules/TripleStateToggler';
 
 //EXPORT UTILS
-export { devConsoleLog } from './utils/devConsoleLog';
-
 export {
     getNumberOfWeek,
     getNumberOfPeriodInDate,
@@ -61,7 +59,6 @@ export {
 
 //EXPORT MAPPERS
 export { FormatDateMapper } from './utils/mappers/FormatDateMapper';
-export { RegistryMapper } from './utils/mappers/RegistryMapper';
 export { NotificationsMapper } from './utils/mappers/NotificationsMapper';
 
 //EXPORT VALIDATIONS
