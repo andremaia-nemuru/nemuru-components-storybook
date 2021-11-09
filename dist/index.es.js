@@ -1725,13 +1725,37 @@ function getIconName(str) {
 function isObject(item) {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
+function formatDeleteSpacesInStringAndUpperCase(str) {
+  if (str) {
+    return str.replace(/\s/g, '').toUpperCase();
+  }
+}
 function formatSnakecaseToSpaces(text) {
   return text && text.replace(/_/g, ' ');
 }
+function normalizeText(text) {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
 function formatNumber(num) {
-  return new Intl.NumberFormat('es-ES', {
-    maximumSignificantDigits: 3
+  return new Intl.NumberFormat('ca-CA', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(num);
+}
+function formatMoney(num, forcedDec) {
+  const numIsInteger = Number((num % 1).toFixed(2)) === 0;
+  const defaultDec = numIsInteger ? 0 : 2;
+  const dec = forcedDec === undefined ? defaultDec : forcedDec;
+  return new Intl.NumberFormat('ca-CA', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: dec,
+    maximumFractionDigits: dec
+  }).format(num);
+}
+function formatMoneyNum(num, forcedDec) {
+  const money = formatMoney(num, forcedDec);
+  return money.replace('€', '').trim();
 }
 function formatPercent(num) {
   return new Intl.NumberFormat('es-ES', {
@@ -1740,16 +1764,8 @@ function formatPercent(num) {
     maximumFractionDigits: 2
   }).format(num);
 }
-function formatMoney(num, forcedDec) {
-  const numIsInteger = num % 1 === 0;
-  const defaultDec = numIsInteger ? 0 : 2;
-  const dec = forcedDec === undefined ? defaultDec : forcedDec;
-  return new Intl.NumberFormat('es-ES', {
-    style: 'currency',
-    currency: 'EUR',
-    minimumFractionDigits: dec,
-    maximumFractionDigits: dec
-  }).format(num);
+function parseStringAmountWithUnitToNumber(str) {
+  return str ? Number(str.replace(/\./g, '').replace(/,/g, '.').slice(0, -2)) : null;
 }
 function mergeDeep(target, ...sources) {
   if (!sources.length) return target;
@@ -1772,6 +1788,18 @@ function mergeDeep(target, ...sources) {
 
   return mergeDeep(target, ...sources);
 }
+const formatAmountForDisplay = (amt, digits = 1) => {
+  const Ks = amt / 1000;
+
+  if (Ks >= 1000) {
+    return `${(Ks / 1000).toFixed(digits)}M`;
+  }
+
+  return `${Ks.toFixed(digits)}K`;
+};
+const capitalizeEachWord = text => text.split(' ').map(word => {
+  return word[0].toUpperCase() + word.substring(1);
+}).join(' ');
 
 const setThemeWithCustomizableValues = newCustomizableValues => {
   const mainDefaultReusableValues = {
@@ -30701,4 +30729,230 @@ styleInject(css$2);
 var css$3 = "@font-face {\n    font-family: 'nemuru-icon-font';\n    src: url(data:font/ttf;base64,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)\n        format('truetype');\n    font-weight: normal;\n    font-style: normal;\n    font-display: block;\n}\n";
 styleInject(css$3);
 
-export { AccentIcon, BackButton, BarChart, CircularProgressWithLabel, ConditionalWrapper, Header, IconWithCircle, InformationMessage, InputDate, InputRange, InputRangeMobile, NemuruSnackbar, PasswordTextfield, Pricing, ResponsiveButton, ResponsiveDialog, RichTextfield, SingleLinearStatBar, TableMui, TextValue, ThemedAsset, Themer$1 as Themer, TripleStateToggler, assetIds, assetPackIds, getIconName };
+const getNumberOfWeek = d => {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  return `${weekNo}/${d.getUTCFullYear()}`;
+};
+const getNumberOfPeriodInDate = (date, period) => {
+  const MILLI_SECS_IN_A_DAY = 86400000;
+  const todayPeriod = Math.ceil(new Date().getTime() / MILLI_SECS_IN_A_DAY / period);
+  const datePeriod = Math.ceil(date.getTime() / MILLI_SECS_IN_A_DAY / period);
+  return todayPeriod - datePeriod;
+};
+const getCurrentWeekMonday = (date = null) => {
+  const currentWeekMonday = date && new Date(date.valueOf()) || new Date();
+  currentWeekMonday.setDate(currentWeekMonday.getDate() - (currentWeekMonday.getDay() + 6) % 7);
+  return currentWeekMonday;
+};
+const getYearMonthAndDay = date => {
+  return {
+    year: date.getFullYear(),
+    month: String(date.getMonth() + 1).padStart(2, '0'),
+    day: String(date.getDate()).padStart(2, '0')
+  };
+};
+const getMonthYearString = date => `${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+const getMonthAbbrName = date => `${date.toLocaleString('default', {
+  month: 'long'
+}).toUpperCase().replace('.', '').substr(0, 3)} ${date.getFullYear().toString().substr(-2)}`;
+const getDayAbbrName = date => ` ${date.getDate().toString()} ${date.toLocaleString('default', {
+  month: 'long'
+}).toUpperCase().replace('.', '').substr(0, 3)}`;
+const getPeriodAbbrName = (initDate, endDate) => `${getDayAbbrName(initDate)}-${getDayAbbrName(endDate)}`;
+const addMonthsToDate = (date, months) => {
+  var d = date.getDate();
+  date.setMonth(date.getMonth() + +months);
+
+  if (date.getDate() != d) {
+    date.setDate(0);
+  }
+
+  return date;
+};
+const getYearsSinceAutoRegistration = date => {
+  const currentDate = new Date().getTime();
+  const autoRegistrationDate = FormatDateMapper.hydrate(date).isoFormat.getTime();
+  const timeDiff = currentDate - autoRegistrationDate;
+  const differenceInYears = timeDiff / (1000 * 3600 * 24 * 365);
+  return Math.ceil(differenceInYears);
+};
+
+const FormatDateMapper$1 = {
+  hydrate(date) {
+    const dateFormatISO = new Date(date);
+
+    if (Number.isNaN(dateFormatISO.getTime()) || !date) {
+      return {
+        isoFormat: undefined,
+        dateNumberFormat: undefined,
+        dayNumberFormat: undefined,
+        timeStamp: undefined,
+        sortableDate: undefined,
+        readableDate: undefined
+      };
+    }
+
+    const formattedMonth = dateFormatISO.getMonth() + 1;
+    const sortableMonth = String(dateFormatISO.getMonth() + 1).padStart(2, '0');
+    const sortableDay = String(dateFormatISO.getDate()).padStart(2, '0');
+    return {
+      isoFormat: dateFormatISO,
+      dateNumberFormat: dateFormatISO.getDate(),
+      dayNumberFormat: dateFormatISO.getDay(),
+      timeStamp: dateFormatISO.getTime(),
+      sortableDate: `${dateFormatISO.getFullYear()}/${sortableMonth}/${sortableDay}`,
+      readableDate: `${dateFormatISO.getDate()}/${formattedMonth}/${dateFormatISO.getFullYear()}`
+    };
+  },
+
+  dehydrate(date) {
+    if (!date) return undefined;
+    const dateFormatISO = new Date(date);
+    const formattedMonth = String(dateFormatISO.getMonth() + 1).padStart(2, '0');
+    const formattedDay = String(dateFormatISO.getDate()).padStart(2, '0');
+    return `${dateFormatISO.getFullYear()}-${formattedMonth}-${formattedDay}T00:00:00+00:00`;
+  },
+
+  dehydrateFromEuropeanShortDate(europeanShortDate) {
+    if (!europeanShortDate) return undefined;
+    const dateArray = europeanShortDate.split('/');
+    const year = dateArray[2].padStart(2, '0');
+    const month = dateArray[1].padStart(2, '0');
+    const day = dateArray[0].padStart(2, '0');
+    return `${year}-${month}-${day}T00:00:00+00:00`;
+  }
+
+};
+
+const NotificationsMapper = {
+  hydrate(data) {
+    return data.sort((a, b) => {
+      if (b.updated_at < a.updated_at) return -1;
+    }).map(notification => ({ ...notification,
+      created_at: new Date(notification.created_at),
+      updated_at: new Date(notification.updated_at),
+      time_elapsed: timeElapsed(new Date(notification.updated_at))
+    }));
+  }
+
+};
+
+const timeElapsed = datetime => {
+  const timeMinutes = (new Date() - datetime) / 1000 / 60 + 2 * 60;
+
+  if (timeMinutes < 60) {
+    if (Math.round(timeMinutes, 0) === 1) {
+      return `hace ${Math.round(timeMinutes, 0)} minuto`;
+    }
+
+    return `hace ${Math.round(timeMinutes, 0)} minutos`;
+  } else if (timeMinutes / 60 < 24) {
+    if (Math.round(timeMinutes / 60, 0) === 1) {
+      return `hace ${Math.round(timeMinutes / 60, 0)} hora`;
+    }
+
+    return `hace ${Math.round(timeMinutes / 60, 0)} horas`;
+  } else {
+    if (Math.round(timeMinutes / 60 / 24, 0) === 1) {
+      return `hace ${Math.round(timeMinutes / 60 / 24, 0)} día`;
+    } else if (Math.round(timeMinutes / 60 / 24, 0) < 7) {
+      return `hace ${Math.round(timeMinutes / 60 / 24, 0)} días`;
+    } else {
+      return datetime.toLocaleDateString('es-ES');
+    }
+  }
+};
+
+const DNI_REGEX = /^(\d{8})([A-Za-z])$/;
+const NIE_REGEX = /^[XYZxyz]\d{7,8}[A-Za-z]$/;
+const CUPS_REGEX = /^ES.{18,20}$/;
+const SPANISH_LICENSE_PLATE_REGEX = /^(\d{4})([B-DF-HJ-NP-TV-Zb-df-hj-np-tv-z]{3})$/;
+const spainIdType = str => {
+  if (str) {
+    if (str.match(DNI_REGEX)) {
+      return 'dni';
+    }
+
+    if (str.match(NIE_REGEX)) {
+      return 'nie';
+    }
+  }
+
+  return false;
+};
+const validDNI = dni => {
+  const dniLetters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+  const letter = dniLetters.charAt(parseInt(dni, 10) % 23);
+  return letter === dni.charAt(8);
+};
+const validNIE = nie => {
+  // Change the initial letter for the corresponding number and validate as DNI
+  let niePrefix = nie.charAt(0);
+
+  switch (niePrefix) {
+    case 'X':
+      niePrefix = 0;
+      break;
+
+    case 'Y':
+      niePrefix = 1;
+      break;
+
+    case 'Z':
+      niePrefix = 2;
+      break;
+
+  }
+
+  return validDNI(niePrefix + nie.substr(1));
+};
+const validateDNIorNIE = document => {
+  let valid = false;
+
+  if (document) {
+    // Ensure upcase and remove whitespace
+    const documentUp = document.toUpperCase().replace(/\s/, '');
+    const type = spainIdType(documentUp);
+
+    switch (type) {
+      case 'dni':
+        valid = validDNI(documentUp);
+        break;
+
+      case 'nie':
+        valid = validNIE(documentUp);
+        break;
+
+    }
+  }
+
+  return valid;
+};
+const validatePhoneWithPrefix = num => {
+  if (!num) {
+    return false;
+  }
+
+  let validatedNum = num;
+
+  if (validatedNum.substring(0, 2) === '00' || validatedNum.substring(0, 1) === '+' || validatedNum.length === 9) {
+    if (validatedNum.substring(0, 2) === '00') {
+      validatedNum = '+'.concat(num.substring(2));
+    }
+
+    if (validatedNum.length === 9) {
+      validatedNum = '+34'.concat(num);
+    }
+
+    if (validatedNum.length < 9) {
+      return false;
+    }
+  } else return false;
+
+  return validatedNum;
+};
+
+export { AccentIcon, BackButton, BarChart, CUPS_REGEX, CircularProgressWithLabel, ConditionalWrapper, DNI_REGEX, FormatDateMapper$1 as FormatDateMapper, Header, IconWithCircle, InformationMessage, InputDate, InputRange, InputRangeMobile, NIE_REGEX, NemuruSnackbar, NotificationsMapper, PasswordTextfield, Pricing, ResponsiveButton, ResponsiveDialog, RichTextfield, SPANISH_LICENSE_PLATE_REGEX, SingleLinearStatBar, TableMui, TextValue, ThemedAsset, Themer$1 as Themer, TripleStateToggler, addMonthsToDate, assetIds, assetPackIds, capitalizeEachWord, formatAmountForDisplay, formatDeleteSpacesInStringAndUpperCase, formatMoney, formatMoneyNum, formatNumber, formatPercent, formatSnakecaseToSpaces, getCurrentWeekMonday, getDayAbbrName, getIconName, getMonthAbbrName, getMonthYearString, getNumberOfPeriodInDate, getNumberOfWeek, getPeriodAbbrName, getYearMonthAndDay, getYearsSinceAutoRegistration, isObject, mergeDeep, normalizeText, parseStringAmountWithUnitToNumber, spainIdType, validDNI, validNIE, validateDNIorNIE, validatePhoneWithPrefix };
