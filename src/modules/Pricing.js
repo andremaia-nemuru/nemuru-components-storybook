@@ -16,7 +16,6 @@ const PricingRangeType = {
 export default function Pricing(props) {
   const { palette: themePalette, customBorderRadius } = useTheme();
   const { pricingData } = props;
-  console.log("pricingData", pricingData);
   return (
     <Paper elevation={6}>
       <Box p={3}>
@@ -56,15 +55,15 @@ export default function Pricing(props) {
                       <Grid item>
                         <Typography
                           variant="caption"
-                          color={themePalette.text.title}
+                          style={{color:themePalette.text.title}}
                         >
                           Importe
                         </Typography>
                         <br />
                         <Typography
                           variant="caption"
-                          color={themePalette.text.title}
                           style={{
+                            color: themePalette.text.title,
                             fontWeight: 700,
                           }}
                         >{`${formatNumber(
@@ -100,8 +99,10 @@ export default function Pricing(props) {
                         <br />
                         <Typography
                           variant="caption"
-                          color={themePalette.text.title}
-                          style={{ fontWeight: 700 }}
+                          style={{
+                            color:themePalette.text.title,
+                            fontWeight: 700 
+                          }}
                         >{`${pricingData.range_period_min} a ${pricingData.range_period_max} meses`}</Typography>
                       </Grid>
                     </Grid>
@@ -127,15 +128,14 @@ export default function Pricing(props) {
                       <Grid item>
                         <Typography
                           variant="caption"
-                          color={themePalette.text.title}
+                          style={{ color: themePalette.text.title }}
                         >
                           Comisión apertura
                         </Typography>
                         <br />
                         <Typography
                           variant="caption"
-                          color={themePalette.text.title}
-                          style={{ fontWeight: 700 }}
+                          style={{ color: themePalette.text.title, fontWeight: 700 }}
                         >
                           {pricingData.range_setup_fee_max === undefined
                             ? "-"
@@ -176,15 +176,14 @@ export default function Pricing(props) {
                         <Grid item>
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                          >
+                            style={{ color: themePalette.text.title }}
+                            >
                             Interés cliente
                           </Typography>
                           <br />
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                            style={{ fontWeight: 700 }}
+                            style={{ color: themePalette.text.title, fontWeight: 700 }}
                           >
                             {/* FIXME: Find a more robust approach */}
                             {pricingData.product === PricingProduct.auto_loan
@@ -216,16 +215,15 @@ export default function Pricing(props) {
                         <Grid item>
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                          >
+                            style={{ color: themePalette.text.title }}
+                            >
                             Coste soportado
                           </Typography>
                           <br />
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                            style={{ fontWeight: 700 }}
-                          >
+                            style={{ color: themePalette.text.title, fontWeight: 700 }}
+                            >
                             {pricingData.range_merchant_discount_percentage_max ===
                             undefined
                               ? "-"
@@ -266,16 +264,15 @@ export default function Pricing(props) {
                         <Grid item>
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                          >
+                            style={{ color: themePalette.text.title }}
+                            >
                             Antigüedad vehículo
                           </Typography>
                           <br />
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                            style={{ fontWeight: 700 }}
-                          >
+                            style={{ color: themePalette.text.title, fontWeight: 700 }}
+                            >
                             {`${pricingData.range_auto_registration_min} a ${pricingData.range_auto_registration_max} años`}
                           </Typography>
                         </Grid>
@@ -304,16 +301,15 @@ export default function Pricing(props) {
                         <Grid item>
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                          >
+                            style={{ color: themePalette.text.title }}
+                            >
                             Seguro
                           </Typography>
                           <br />
                           <Typography
                             variant="caption"
-                            color={themePalette.text.title}
-                            style={{ fontWeight: 700 }}
-                          >
+                            style={{ color: themePalette.text.title, fontWeight: 700 }}
+                            >
                             {pricingData.insurance_value
                               ? pricingData.insurance_value
                               : "Sin seguro"}
@@ -371,9 +367,8 @@ export default function Pricing(props) {
                           >
                             <Typography
                               variant="caption"
-                              color={themePalette.text.title}
-                              style={{ fontWeight: 700 }}
-                            >
+                              style={{ color: themePalette.text.title, fontWeight: 700 }}
+                              >
                               Importe
                             </Typography>
                           </Box>
@@ -397,9 +392,8 @@ export default function Pricing(props) {
                           >
                             <Typography
                               variant="caption"
-                              color={themePalette.text.title}
-                              style={{ fontWeight: 700 }}
-                            >
+                              style={{ color: themePalette.text.title, fontWeight: 700 }}
+                              >
                               Interés cliente
                             </Typography>
                           </Box>
@@ -434,9 +428,8 @@ export default function Pricing(props) {
                                 >
                                   <Typography
                                     variant="caption"
-                                    color={themePalette.text.title}
-                                    style={{ fontWeight: 700 }}
-                                  >
+                                    style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                    >
                                     {`${formatNumber(
                                       range.range_start,
                                       0
@@ -463,10 +456,9 @@ export default function Pricing(props) {
                                 >
                                   <Typography
                                     variant="caption"
-                                    color={themePalette.text.title}
                                     align="center"
-                                    style={{ fontWeight: 700 }}
-                                  >
+                                    style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                    >
                                     {formatPercent(range.annual_interest, 2)}
                                   </Typography>
                                 </Box>
@@ -497,7 +489,7 @@ export default function Pricing(props) {
                     </i>
                     <Typography
                       variant="caption"
-                      style={{ color: themePalette.primary.main }}
+                      color={'primary'}
                     >
                       <strong>Campaña con carencia activa</strong>
                     </Typography>
@@ -526,9 +518,8 @@ export default function Pricing(props) {
                           >
                             <Typography
                               variant="caption"
-                              color={themePalette.text.title}
-                              style={{ fontWeight: 700 }}
-                            >
+                              style={{ color: themePalette.text.title, fontWeight: 700 }}
+                              >
                               Plazo
                             </Typography>
                           </Box>
@@ -554,9 +545,8 @@ export default function Pricing(props) {
                             >
                               <Typography
                                 variant="caption"
-                                color={themePalette.text.title}
-                                style={{ fontWeight: 700 }}
-                              >
+                                style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                >
                                 Coste soportado
                               </Typography>
                             </Box>
@@ -583,9 +573,8 @@ export default function Pricing(props) {
                               >
                                 <Typography
                                   variant="caption"
-                                  color={themePalette.text.title}
-                                  style={{ fontWeight: 700 }}
-                                >
+                                  style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                  >
                                   Comisión
                                 </Typography>
                               </Box>
@@ -621,9 +610,8 @@ export default function Pricing(props) {
                                 >
                                   <Typography
                                     variant="caption"
-                                    color={themePalette.text.title}
-                                    style={{ fontWeight: 700 }}
-                                  >
+                                    style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                    >
                                     {`${formatNumber(
                                       range.range_start,
                                       0
@@ -652,10 +640,9 @@ export default function Pricing(props) {
                                   >
                                     <Typography
                                       variant="caption"
-                                      color={themePalette.text.title}
                                       align="center"
-                                      style={{ fontWeight: 700 }}
-                                    >
+                                      style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                      >
                                       {formatPercent(
                                         range.merchant_discount_percentage,
                                         2
@@ -686,10 +673,9 @@ export default function Pricing(props) {
                                     >
                                       <Typography
                                         variant="caption"
-                                        color={themePalette.text.title}
                                         align="center"
-                                        style={{ fontWeight: 700 }}
-                                      >
+                                        style={{ color: themePalette.text.title, fontWeight: 700 }}
+                                        >
                                         {formatPercent(
                                           range.merchant_fee_value,
                                           2

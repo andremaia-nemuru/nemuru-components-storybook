@@ -1,108 +1,110 @@
 @font-face {
-  font-family: 'nemuru-icon-font';
-  src:  url('fonts/nemuru-icon-font.eot?8i4bz');
-  src:  url('fonts/nemuru-icon-font.eot?8i4bz#iefix') format('embedded-opentype'),
-    url('fonts/nemuru-icon-font.ttf?8i4bz') format('truetype'),
-    url('fonts/nemuru-icon-font.woff?8i4bz') format('woff'),
-    url('fonts/nemuru-icon-font.svg?8i4bz#nemuru-icon-font') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: 'nemuru-icon-font';
+    src: url('fonts/nemuru-icon-font.eot?8i4bz');
+    src: url('fonts/nemuru-icon-font.eot?8i4bz#iefix')
+            format('embedded-opentype'),
+        url('fonts/nemuru-icon-font.ttf?8i4bz') format('truetype'),
+        url('fonts/nemuru-icon-font.woff?8i4bz') format('woff'),
+        url('fonts/nemuru-icon-font.svg?8i4bz#nemuru-icon-font') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'nemuru-icon-font' !important;
-  speak: never;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+[class^='icon-'],
+[class*=' icon-'] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'nemuru-icon-font' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-utilities_supply_accent:before {
-  content: "\e915";
+    content: '\e915';
 }
 .icon-utilities_supply:before {
-  content: "\e916";
+    content: '\e916';
 }
 .icon-blog-logo:before {
-  content: "\e914";
+    content: '\e914';
 }
 .icon-twitter-logo:before {
-  content: "\ea96";
+    content: '\ea96';
 }
 .icon-linkedin-logo:before {
-  content: "\eaca";
+    content: '\eaca';
 }
 .icon-facebook-logo:before {
-  content: "\ea90";
+    content: '\ea90';
 }
 .icon-instagram-logo:before {
-  content: "\ea92";
+    content: '\ea92';
 }
 .icon-nemuru-logo:before {
-  content: "\e912";
+    content: '\e912';
 }
 .icon-edit-input:before {
-  content: "\e910";
+    content: '\e910';
 }
 .icon-user_default:before {
-  content: "\e911";
+    content: '\e911';
 }
 .icon-education:before {
-  content: "\e900";
+    content: '\e900';
 }
 .icon-education_accent:before {
-  content: "\e901";
+    content: '\e901';
 }
 .icon-health:before {
-  content: "\e902";
+    content: '\e902';
 }
 .icon-health_accent:before {
-  content: "\e903";
+    content: '\e903';
 }
 .icon-home_improvement_accent:before {
-  content: "\e904";
+    content: '\e904';
 }
 .icon-home_improvement:before {
-  content: "\e905";
+    content: '\e905';
 }
 .icon-other_accent:before {
-  content: "\e906";
+    content: '\e906';
 }
 .icon-other:before {
-  content: "\e907";
+    content: '\e907';
 }
 .icon-auto:before {
-  content: "\e908";
+    content: '\e908';
 }
 .icon-auto_accent:before {
-  content: "\e909";
+    content: '\e909';
 }
 .icon-travel:before {
-  content: "\e90a";
+    content: '\e90a';
 }
 .icon-travel_accent:before {
-  content: "\e90b";
+    content: '\e90b';
 }
 .icon-newLoan_dark:before {
-  content: "\e90c";
+    content: '\e90c';
 }
 .icon-hand:before {
-  content: "\e913";
+    content: '\e913';
 }
 .icon-notification-bell:before {
-  content: "\e90d";
+    content: '\e90d';
 }
 .icon-operations_dark:before {
-  content: "\e90e";
+    content: '\e90e';
 }
 .icon-progress_dark:before {
-  content: "\e90f";
+    content: '\e90f';
 }

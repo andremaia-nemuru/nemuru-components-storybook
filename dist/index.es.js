@@ -3,7 +3,7 @@ import { useTheme, ThemeProvider } from '@material-ui/styles';
 import TextField from '@material-ui/core/TextField';
 import PropTypes from 'prop-types';
 import Slider from '@material-ui/core/Slider';
-import { createMuiTheme, withStyles, makeStyles } from '@material-ui/core/styles';
+import { createTheme, withStyles, makeStyles } from '@material-ui/core/styles';
 import { Box, Dialog, IconButton, Snackbar, Typography, useMediaQuery, Button, useTheme as useTheme$2, TextField as TextField$1, Paper as Paper$1, Grid, Switch } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import AppBar from '@material-ui/core/AppBar';
@@ -2157,7 +2157,7 @@ const setThemeWithCustomizableValues = newCustomizableValues => {
 };
 
 const createCustomTheme = newCustomizableValues => {
-  return createMuiTheme(setThemeWithCustomizableValues(newCustomizableValues));
+  return createTheme(setThemeWithCustomizableValues(newCustomizableValues));
 };
 
 function styleInject(css, ref) {
@@ -2216,44 +2216,44 @@ class TableMui extends Component {
 }
 
 _defineProperty(TableMui, "propTypes", {
-  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired
+  columns: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.arrayOf(PropTypes.object).isRequired]),
+  data: PropTypes.oneOfType([PropTypes.func.isRequired, PropTypes.arrayOf(PropTypes.object).isRequired])
 });
 
 _defineProperty(TableMui, "defaultProps", {
-  title: "",
+  title: '',
   style: {
-    borderRadius: "15px",
-    padding: "0px 15px"
+    borderRadius: '15px',
+    padding: '0px 15px'
   },
   options: {
     headerStyle: {
-      fontWeight: "bold"
+      fontWeight: 'bold'
     },
     searchFieldStyle: {
-      "& MuiInputunderline:after": {
-        display: "none"
+      '& MuiInputunderline:after': {
+        display: 'none'
       }
     }
   },
   localization: {
     body: {
-      emptyDataSourceMessage: "No hay resultados que mostrar"
+      emptyDataSourceMessage: 'No hay resultados que mostrar'
     },
     toolbar: {
-      searchTooltip: "Buscar",
-      searchPlaceholder: "Buscar"
+      searchTooltip: 'Buscar',
+      searchPlaceholder: 'Buscar'
     },
     header: {
-      actions: ""
+      actions: ''
     },
     pagination: {
-      labelRowsSelect: "filas",
-      labelDisplayedRows: " {from}-{to} de {count}",
-      firstTooltip: "Primera página",
-      previousTooltip: "Página anterior",
-      nextTooltip: "Página siguiente",
-      lastTooltip: "Última página"
+      labelRowsSelect: 'filas',
+      labelDisplayedRows: ' {from}-{to} de {count}',
+      firstTooltip: 'Primera página',
+      previousTooltip: 'Página anterior',
+      nextTooltip: 'Página siguiente',
+      lastTooltip: 'Última página'
     }
   }
 });
@@ -29414,7 +29414,7 @@ function InputDate({
   //     "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c";
 
   return /*#__PURE__*/React.createElement(ThemeProvider, {
-    theme: theme => createMuiTheme({ ...theme,
+    theme: theme => createTheme({ ...theme,
       palette: { ...outerTheme.palette,
         primary: {
           main: outerTheme.palette.text.title,
@@ -29425,7 +29425,7 @@ function InputDate({
           contrastText: '#fff'
         }
       },
-      shadows: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c", "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c", "0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c"]
+      shadows: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c', '0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c', '0px 1px 5px 0px #0000001a, 0 20px 80px 5px #0a202d1c']
     })
   }, /*#__PURE__*/React.createElement(MuiPickersUtilsProvider, {
     utils: DateFnsUtils,
@@ -29437,7 +29437,7 @@ function InputDate({
     rules: rules,
     render: controllerProps => /*#__PURE__*/React.createElement("div", {
       style: {
-        position: "relative"
+        position: 'relative'
       }
     }, /*#__PURE__*/React.createElement(DatePicker, _extends({}, props, {
       value: controllerProps.value || null,
@@ -29445,10 +29445,10 @@ function InputDate({
     })), /*#__PURE__*/React.createElement("i", {
       className: "material-icons",
       style: {
-        position: "absolute",
-        bottom: error ? "40px" : "17px",
-        fontSize: "17px",
-        right: "3px"
+        position: 'absolute',
+        bottom: error ? '40px' : '17px',
+        fontSize: '17px',
+        right: '3px'
       }
     }, "calendar_today"))
   })));
@@ -29805,7 +29805,6 @@ function Pricing(props) {
         customBorderRadius = _useTheme.customBorderRadius;
 
   const pricingData = props.pricingData;
-  console.log("pricingData", pricingData);
   return /*#__PURE__*/React.createElement(Paper$1, {
     elevation: 6
   }, /*#__PURE__*/React.createElement(Box, {
@@ -29848,11 +29847,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Importe"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, `${formatNumber(pricingData.range_principal_min)} a ${formatMoney(pricingData.range_principal_max, 0)}`))))), /*#__PURE__*/React.createElement(Grid, {
@@ -29880,8 +29881,8 @@ function Pricing(props) {
     variant: "caption"
   }, "Plazo"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, `${pricingData.range_period_min} a ${pricingData.range_period_max} meses`))))), /*#__PURE__*/React.createElement(Grid, {
@@ -29907,11 +29908,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Comisi\xF3n apertura"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, pricingData.range_setup_fee_max === undefined ? "-" : pricingData.range_setup_fee_max > 0 && pricingData.range_setup_fee_max > pricingData.range_setup_fee_min ? `desde ${formatPercent(pricingData.range_setup_fee_min)}` : `${formatPercent(pricingData.range_setup_fee_min)}`))))), /*#__PURE__*/React.createElement(Grid, {
@@ -29937,11 +29940,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Inter\xE9s cliente"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, pricingData.product === PricingProduct.auto_loan ? `${formatPercent(pricingData.ranges[0].annual_interest)}` : `${formatPercent(0)}`))), pricingData.range_type === PricingRangeType.principal && /*#__PURE__*/React.createElement(Grid, {
@@ -29961,11 +29966,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Coste soportado"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, pricingData.range_merchant_discount_percentage_max === undefined ? "-" : pricingData.range_merchant_discount_percentage_max > 0 ? `desde ${formatPercent(pricingData.range_merchant_discount_percentage_min)}` : `${formatPercent(pricingData.range_merchant_discount_percentage_min)}`))))), pricingData.product === PricingProduct.auto_loan && /*#__PURE__*/React.createElement(Grid, {
@@ -29991,11 +29998,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Antig\xFCedad veh\xEDculo"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, `${pricingData.range_auto_registration_min} a ${pricingData.range_auto_registration_max} años`))))), pricingData.product === PricingProduct.auto_loan && /*#__PURE__*/React.createElement(Grid, {
@@ -30021,11 +30030,13 @@ function Pricing(props) {
     item: true
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title
+    style: {
+      color: themePalette.text.title
+    }
   }, "Seguro"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, pricingData.insurance_value ? pricingData.insurance_value : "Sin seguro"))))))), pricingData.range_type === PricingRangeType.principal && /*#__PURE__*/React.createElement(Grid, {
@@ -30075,8 +30086,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, "Importe"))), /*#__PURE__*/React.createElement(Grid, {
@@ -30094,8 +30105,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, "Inter\xE9s cliente"))))), /*#__PURE__*/React.createElement(Grid, {
@@ -30130,8 +30141,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, `${formatNumber(range.range_start)} - ${formatNumber(range.range_end)}`))), /*#__PURE__*/React.createElement(Grid, {
@@ -30149,9 +30160,9 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     align: "center",
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, formatPercent(range.annual_interest)))))))))))), pricingData.range_type === PricingRangeType.period && /*#__PURE__*/React.createElement(Grid, {
@@ -30171,9 +30182,7 @@ function Pricing(props) {
     }
   }, "check"), /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    style: {
-      color: themePalette.primary.main
-    }
+    color: 'primary'
   }, /*#__PURE__*/React.createElement("strong", null, "Campa\xF1a con carencia activa"))), /*#__PURE__*/React.createElement(Box, null, /*#__PURE__*/React.createElement(Grid, {
     container: true,
     direction: "row"
@@ -30201,8 +30210,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, "Plazo"))), pricingData.product === PricingProduct.consumer_loan && /*#__PURE__*/React.createElement(Grid, {
@@ -30220,8 +30229,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, "Coste soportado"))), pricingData.product === PricingProduct.auto_loan && pricingData.range_merchant_fee_max > 0 && /*#__PURE__*/React.createElement(Grid, {
@@ -30239,8 +30248,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, "Comisi\xF3n"))))), /*#__PURE__*/React.createElement(Grid, {
@@ -30275,8 +30284,8 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, `${formatNumber(range.range_start)} - ${formatNumber(range.range_end)}`))), pricingData.product === PricingProduct.consumer_loan && /*#__PURE__*/React.createElement(Grid, {
@@ -30294,9 +30303,9 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     align: "center",
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, formatPercent(range.merchant_discount_percentage)))), pricingData.product === PricingProduct.auto_loan && pricingData.range_merchant_fee_max > 0 && /*#__PURE__*/React.createElement(Grid, {
@@ -30314,9 +30323,9 @@ function Pricing(props) {
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",
-    color: themePalette.text.title,
     align: "center",
     style: {
+      color: themePalette.text.title,
       fontWeight: 700
     }
   }, formatPercent(range.merchant_fee_value))))))))))))))));
@@ -30488,16 +30497,16 @@ function InformationMessage({
         customBorderRadius = _useTheme.customBorderRadius;
 
   return variant && messageContent && /*#__PURE__*/React.createElement(Box, {
-    container: true,
+    container: "true",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    fullWidth: true
+    width: 1
   }, /*#__PURE__*/React.createElement(Box, {
     style: {
       top: isScreenXs ? 16 : 24,
-      position: "relative"
+      position: 'relative'
     }
   }, /*#__PURE__*/React.createElement(IconWithCircle$1, {
     backgroundColor: palette[variant.type].main,
@@ -30508,18 +30517,18 @@ function InformationMessage({
       color: palette[variant.type].contrastText
     }
   }, variant.icon)), /*#__PURE__*/React.createElement(Box, {
-    container: true,
-    fullWidth: true,
+    container: "true",
+    width: 1,
     bgcolor: palette[variant.type].light,
     style: {
       borderRadius: customBorderRadius.paper,
       paddingTop: isScreenXs ? 14 : 26,
       paddingBottom: 10,
-      width: "100%"
+      width: '100%'
     }
   }, /*#__PURE__*/React.createElement(Grid, {
     container: true,
-    justify: "center",
+    justifyContent: "center",
     spacing: 0
   }, /*#__PURE__*/React.createElement(Grid, {
     item: true
@@ -30528,15 +30537,15 @@ function InformationMessage({
     align: "center",
     style: {
       color: palette.text.neutral,
-      paddingInline: "16px",
-      paddingTop: "4px"
+      paddingInline: '16px',
+      paddingTop: '4px'
     }
   }, /*#__PURE__*/React.createElement("strong", null, messageContent.title)), /*#__PURE__*/React.createElement(Grid, {
     item: true,
     style: {
-      paddingInline: "16px",
-      paddingBlock: "4px",
-      textAlign: "center"
+      paddingInline: '16px',
+      paddingBlock: '4px',
+      textAlign: 'center'
     }
   }, /*#__PURE__*/React.createElement(Typography, {
     variant: "caption",

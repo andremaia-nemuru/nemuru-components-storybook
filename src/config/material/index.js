@@ -1,5 +1,5 @@
-import {createMuiTheme} from '@material-ui/core/styles';
-import {mergeDeep} from '../../utils';
+import { createTheme } from '@material-ui/core/styles';
+import { mergeDeep } from '../../utils';
 
 const setThemeWithCustomizableValues = (newCustomizableValues) => {
     const mainDefaultReusableValues = {
@@ -276,7 +276,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                         '&.selected': {
                             transition: 'all 0.3s ease',
                             backgroundColor:
-                            targetThemeValues.palette.grey.background,
+                                targetThemeValues.palette.grey.background,
                             color: targetThemeValues.palette.text.active,
                         },
                         '&.opacity': {
@@ -349,11 +349,11 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                         transition: 'all 0.3s ease',
                         color: targetThemeValues.palette.text.active,
                         backgroundColor:
-                        targetThemeValues.palette.grey.selected,
+                            targetThemeValues.palette.grey.selected,
                     },
                     '&.stat-bar.thin.selected': {
                         backgroundColor:
-                        targetThemeValues.palette.grey.selected,
+                            targetThemeValues.palette.grey.selected,
                     },
                 },
             },
@@ -411,7 +411,5 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
 };
 
 export const createCustomTheme = (newCustomizableValues) => {
-    return createMuiTheme(
-        setThemeWithCustomizableValues(newCustomizableValues)
-    );
+    return createTheme(setThemeWithCustomizableValues(newCustomizableValues));
 };
