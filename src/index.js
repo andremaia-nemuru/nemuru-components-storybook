@@ -1,31 +1,48 @@
-export RichTextfield from './modules/RichTextfield';
-export InputRange from './modules/InputRange';
-export InputRangeMobile from './modules/InputRangeMobile';
-export TableMui from './modules/TableMui';
-export Header from './modules/Header';
-export Themer from './modules/Themer';
-export CircularProgressWithLabel from './modules/CircularProgressWithLabel';
-export BarChart from './modules/BarChart';
-export ConditionalWrapper from './modules/ConditionalWrapper';
-export IconWithCircle from './modules/IconWithCircle';
-export InputDate from './modules/InputDate';
-export ResponsiveDialog from './modules/ResponsiveDialog';
-export NemuruSnackbar from './modules/NemuruSnackbar';
-export TextValue from './modules/TextValue';
-export BackButton from './modules/BackButton';
-export AccentIcon from './modules/AccentIcon';
-export ResponsiveButton from './modules/ResponsiveButton';
-export PasswordTextfield from './modules/PasswordTextfield';
-export Pricing from './modules/Pricing';
-export SingleLinearStatBar from './modules/SingleLinearStatBar';
-export InformationMessage from './modules/InformationMessage';
-export ThemedAsset from './modules/ThemedAsset';
-export TripleStateToggler from './modules/TripleStateToggler';
-export { assetPackIds } from './assets/assetPacksDefs/config';
-export { assetIds } from './assets/assetPacksDefs/config';
+
+
+export {useEventDispatcher} from "./utils/events/useEventDispatcher";
+export {ContextEventCatcher} from "./components/kernel/ContextEventCatcher";
+export {requestApi} from "./utils/request";
+export {dispatchMiddleware} from "./utils/contexts/dispatchMiddleWare";
+export {enrichContextState} from "./utils/contexts/enrichContextState";
+export {requestAndDispatch} from "./utils/contexts/requestAndDispatch";
+
+export {
+    dispatchEventToParentWindow
+} from "./utils/events/channelFunctions/dispatchEventToParentWindow";
+export {dispatchEventToDevConsole} from "./utils/events/channelFunctions/dispatchEventToDevConsole";
+export {pushEventToGTMDataLayer} from "./utils/events/channelFunctions/pushEventToGTMDataLayer";
+export {EVENT_TYPES} from "./utils/events/config";
+export {sendEventForEachChannelOfTypeActive} from "./utils/events/sendEventForEachChannelOfTypeActive";
+
+
+export InputRange from './components/InputRange';
+export RichTextfield from './components/RichTextfield';
+export InputRangeMobile from './components/InputRangeMobile';
+export TableMui from './components/TableMui';
+export Header from './components/Header';
+export Themer from './components/kernel/Themer';
+export CircularProgressWithLabel from './components/CircularProgressWithLabel';
+export BarChart from './components/BarChart';
+export ConditionalWrapper from './components/ConditionalWrapper';
+export IconWithCircle from './components/IconWithCircle';
+export InputDate from './components/InputDate';
+export ResponsiveDialog from './components/ResponsiveDialog';
+export NemuruSnackbar from './components/NemuruSnackbar';
+export TextValue from './components/TextValue';
+export BackButton from './components/BackButton';
+export AccentIcon from './components/AccentIcon';
+export ResponsiveButton from './components/ResponsiveButton';
+export PasswordTextfield from './components/PasswordTextfield';
+export Pricing from './components/Pricing';
+export SingleLinearStatBar from './components/SingleLinearStatBar';
+export InformationMessage from './components/InformationMessage';
+export ThemedAsset from './components/ThemedAsset';
+export TripleStateToggler from './components/TripleStateToggler';
+export {assetPackIds} from './assets/assetPacksDefs/config';
+export {assetIds} from './assets/assetPacksDefs/config';
 import { RalewayFont } from './assets/style/index.js';
 import { NemuruIconFont } from './assets/style/index.js';
-import TripleStateToggler from './modules/TripleStateToggler';
 
 //EXPORT UTILS
 export {
@@ -58,8 +75,8 @@ export {
 } from './utils';
 
 //EXPORT MAPPERS
-export { FormatDateMapper } from './utils/mappers/FormatDateMapper';
-export { NotificationsMapper } from './utils/mappers/NotificationsMapper';
+export {FormatDateMapper} from './utils/mappers/FormatDateMapper';
+export {NotificationsMapper} from './utils/mappers/NotificationsMapper';
 
 //EXPORT VALIDATIONS
 export {
@@ -73,3 +90,5 @@ export {
     validateDNIorNIE,
     validatePhoneWithPrefix,
 } from './utils/validations';
+
+// const a = EVENT_TYPES()

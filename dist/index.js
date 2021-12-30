@@ -6,9 +6,10 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var React = require('react');
 var React__default = _interopDefault(React);
+var axios = _interopDefault(require('axios'));
+var PropTypes = _interopDefault(require('prop-types'));
 var styles = require('@material-ui/styles');
 var TextField = _interopDefault(require('@material-ui/core/TextField'));
-var PropTypes = _interopDefault(require('prop-types'));
 var Slider = _interopDefault(require('@material-ui/core/Slider'));
 var styles$1 = require('@material-ui/core/styles');
 var core = require('@material-ui/core');
@@ -28,6 +29,541 @@ var useTheme = _interopDefault(require('@material-ui/core/styles/useTheme'));
 var nemuruComponents = require('nemuru-components');
 var LinearProgress = _interopDefault(require('@material-ui/core/LinearProgress'));
 var lab = require('@material-ui/lab');
+
+const getChannelsWithActiveType = (type, channels) => {
+  const channelsWithActiveType = [];
+  Object.keys(channels).forEach(channelName => {
+    isEventTypeActiveByChannel(type, channelName, channels) && channelsWithActiveType.push(channels[channelName]);
+  });
+  return channelsWithActiveType;
+};
+
+const sendEventForEachChannelOfTypeActive = ({
+  name,
+  type,
+  idParams,
+  payload,
+  createdAt,
+  config
+}) => {
+  const channelsWithActiveType = getChannelsWithActiveType(type, config.EVENT_CHANNELS);
+  const eventParams = {
+    name,
+    type,
+    idParams,
+    payload,
+    createdAt: createdAt || Date.now()
+  };
+  channelsWithActiveType.forEach(channel => {
+    config.EVENT_CHANNELS_FUNCTIONS[channel.id](eventParams);
+  });
+};
+
+const isEventTypeActiveByChannel = (type, channel, channels) => {
+  return channels[channel].activeEventTypes.find(el => el === type);
+};
+
+// import { useContext, useState } from "react";
+
+const useEventDispatcher = (config, commonIdParams) => {
+  const createdAt = Date.now();
+
+  const dispatchEvent = ({
+    name,
+    type,
+    payload,
+    idParams
+  }) => {
+    sendEventForEachChannelOfTypeActive({
+      name,
+      type,
+      idParams: idParams || commonIdParams,
+      payload,
+      createdAt,
+      config
+    });
+  };
+  return {
+    dispatchEvent
+  };
+};
+
+const EVENT_TYPES = {
+  milestoneCompleted: "milestoneCompleted",
+  error: "error",
+  progress: "progress",
+  requestDispatch: "requestDispatch",
+  requestFulfilled: "requestFulfilled",
+  requestRejected: "requestRejected",
+  action: "action",
+  snackbar: "snackbar"
+};
+
+function ContextEventCatcher({
+  context,
+  eventsConfig,
+  dispatchEventFunction
+}) {
+  // const {dispatchEvent} = useEventDispatcher(eventsConfig);
+  const criticalError = context.criticalError,
+        lastAction = context.lastAction,
+        lastActionsReference = context.lastActionsReference;
+  React.useEffect(() => {
+    const error = criticalError;
+    error && dispatchEventFunction({
+      name: `${error.type}`,
+      type: EVENT_TYPES.error,
+      payload: error
+    });
+  }, [criticalError]);
+  React.useEffect(() => {
+    const catchedActions = lastActionsReference && [...lastActionsReference];
+    if (catchedActions) catchedActions.forEach(action => dispatchActionRelatedEvents(action)); // Se edita directamente la referencia y en ningún caso se pasa por el context a través de un dispatch,
+    // evitando así renders innecesarios ya que no se detectan los cambios por el context
+
+    if (lastActionsReference) lastActionsReference.length = 0;
+  }, [lastAction]);
+
+  const dispatchActionRelatedEvents = action => {
+    dispatchActionEvent(action);
+    dispatchEventsLinkedToSpecificActions(action);
+    dispatchRequestEvent(action);
+  };
+
+  const dispatchActionEvent = action => {
+    dispatchEventFunction({
+      name: action.type,
+      type: EVENT_TYPES.action,
+      payload: action
+    });
+  };
+
+  const dispatchRequestEvent = action => {
+    if (action.hasRequest) {
+      let eventType = "";
+
+      switch (action.requestResult) {
+        case "_FULFILLED":
+          eventType = EVENT_TYPES.requestFulfilled;
+          break;
+
+        case "_REJECTED":
+          eventType = EVENT_TYPES.requestRejected;
+          break;
+
+        default:
+          eventType = EVENT_TYPES.requestDispatch;
+      }
+
+      dispatchEventFunction({
+        name: action.type,
+        type: eventType,
+        payload: action
+      });
+    }
+  };
+
+  const dispatchEventsLinkedToSpecificActions = action => {
+    const linkedEvent = eventsConfig.EVENTS_LINKED_BY_ACTION_TYPES(action, context)[action.type];
+    linkedEvent && dispatchEventFunction(linkedEvent);
+  };
+
+  return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
+}
+
+const LoginMapper = {
+  dehydrate(data) {
+    const getFormData = object => Object.keys(object).reduce((formData, key) => {
+      formData.append(key, object[key]);
+      return formData;
+    }, new FormData());
+
+    return getFormData(data);
+  },
+
+  hydrate(data) {
+    return {
+      token: `${data.token_type} ${data.access_token}`,
+      expires: data.expires_in,
+      refresh_token: data.refresh_token
+    };
+  },
+
+  refresh(refreshToken) {
+    return {
+      username: "admin@gocleer.com",
+      refresh_token: refreshToken
+    };
+  }
+
+};
+
+const ENV_COOKIE_LOGIN_NAME = window.RUNTIME_COOKIE_NAME || COOKIE_LOGIN_NAME;
+const ENV_API_URL = window.RUNTIME_API_URL || API_URL;
+
+const apiUrl = ENV_API_URL;
+const refreshPath = 'auth/refresh/';
+const apiBase = ENV_API_URL;
+const apiTokenRefresh = `${apiBase}/${refreshPath}`;
+
+const getAuthorizationConfig = () => {
+  let apiToken = localStorage.getItem(ENV_COOKIE_LOGIN_NAME);
+
+  if (apiToken) {
+    apiToken = JSON.parse(apiToken);
+    return {
+      "Access-Control-Allow-Origin": "*",
+      Authorization: apiToken.access_token
+    };
+  }
+
+  return {};
+};
+
+const requestRefreshAuthorization = ({
+  service
+}) => {
+  let apiToken = localStorage.getItem(ENV_COOKIE_LOGIN_NAME);
+  apiToken = JSON.parse(apiToken);
+  const configRequest = {
+    method: "post",
+    credentials: "same-origin",
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    },
+    name: "account:refreshToken",
+    url: apiTokenRefresh,
+    data: LoginMapper.refresh(apiToken.refresh_token)
+  };
+  return axios(configRequest.url, configRequest).then(res => {
+    const token = LoginMapper.hydrate(res.data);
+    localStorage.removeItem(ENV_COOKIE_LOGIN_NAME);
+    localStorage.setItem(ENV_COOKIE_LOGIN_NAME, JSON.stringify(token));
+    return requestApi(service);
+  }).catch(error => {
+    if (error.response.status === 401) {
+      localStorage.removeItem(ENV_COOKIE_LOGIN_NAME);
+      window.location = "/application/unauthorized";
+    } else {
+      throw error;
+    }
+  });
+};
+
+const request = (url, isJSON, service) => {
+  const configRequest = {
+    method: service.method,
+    credentials: "same-origin",
+    "Access-Control-Allow-Origin": "*",
+    headers: Object.assign(isJSON && !service.formData ? {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    } : {}, getAuthorizationConfig(), service.headers),
+    name: service.name,
+    url: service.extern ? `${service.route}` : service.public ? `${apiBase}${service.route}` : `${apiUrl}${service.route}`
+  };
+
+  if (service.method === "post" || service.method === "put" || service.method === "patch") {
+    configRequest.data = isJSON && !service.formData ? JSON.stringify(service.body) : service.body;
+  }
+
+  return axios(configRequest.url, configRequest).then(response => response).catch(error => {
+    if (error.response && error.response.status === 401) {
+      return Promise.resolve(requestRefreshAuthorization({
+        service
+      })).then(response => {
+        return response;
+      });
+    }
+
+    throw error;
+  });
+};
+
+const requestApi = (...requestProps) => request(apiUrl, true, ...requestProps);
+
+function requestAndDispatch(service, dispatch, action, actionsObject, fakeResponsesByActionTypeDictionary) {
+  const promise = requestApi(service(action.payload));
+  promise.then(response => {
+    const type = `${action.type}_FULFILLED`;
+    const originalNewAction = { ...action,
+      type,
+      payload: response.data,
+      requestPayload: action.payload
+    }; // const fakeResponse =
+    //   fakeResponsesByActionTypeDictionary?.[action.type]?.onFulfilled; // TODO
+
+    const fakeResponse = fakeResponsesByActionTypeDictionary && fakeResponsesByActionTypeDictionary[action.type] && fakeResponsesByActionTypeDictionary[action.type].onFulfilled;
+    const fakeNewAction = fakeResponse && { ...fakeResponse,
+      requestPayload: action.payload
+    };
+    const newAction = fakeResponse ? fakeNewAction : originalNewAction;
+    const middlewareDispatch = dispatchMiddleware(dispatch, actionsObject);
+    actionTypeExistsOnActionsObject(type, actionsObject) && middlewareDispatch(newAction);
+  }).catch(error => {
+    const type = `${action.type}_REJECTED`;
+    const originalNewAction = { ...action,
+      type,
+      payload: error.response,
+      requestPayload: action.payload
+    }; // const fakeResponse =
+    //   fakeResponsesByActionTypeDictionary?.[action.type]?.onRejected; // TODO
+
+    const fakeResponse = fakeResponsesByActionTypeDictionary && fakeResponsesByActionTypeDictionary[action.type] && fakeResponsesByActionTypeDictionary[action.type].onRejected;
+    const fakeNewAction = fakeResponse && { ...fakeResponse,
+      requestPayload: action.payload
+    };
+    const newAction = fakeResponse ? fakeNewAction : originalNewAction;
+    const middlewareDispatch = dispatchMiddleware(dispatch, actionsObject);
+    actionTypeExistsOnActionsObject(type, actionsObject) && middlewareDispatch(newAction);
+  });
+}
+function actionTypeExistsOnActionsObject(actionType, actionsObject) {
+  if (actionsObject[actionType] && actionsObject[actionType].changeState) {
+    return true;
+  }
+
+  devConsoleLog(actionType, "DOES NOT EXIST");
+  return false;
+}
+
+function dispatchMiddleware(dispatch, actionsObject) {
+  return action => {
+    if (actionsObject[action.type]) {
+      if (actionsObject[action.type].operation) {
+        function oldResult() {
+          actionsObject[action.type].operation(dispatch, action);
+          actionTypeExistsOnActionsObject(action.type, actionsObject) && dispatch(action);
+        }
+
+        return oldResult();
+      } ///////////
+
+
+      const launchRequest = () => {
+        requestAndDispatch(actionsObject[action.type].request, dispatch, action, actionsObject);
+      };
+
+      const launchRequestIfNecessary = () => actionsObject[action.type].request && launchRequest();
+
+      const launchActionIfNecessary = () => {
+        actionTypeExistsOnActionsObject(action.type, actionsObject) && dispatch(action);
+      };
+
+      const launchChainActionIfNecessary = () => {
+        // const chainAction = actionsObject[action.type]?.chainAction; // TODO
+        const chainAction = actionsObject[action.type] && actionsObject[action.type].chainAction;
+
+        if (chainAction) {
+          const middlewareDispatch = dispatchMiddleware(dispatch, actionsObject);
+          middlewareDispatch(chainAction(action));
+          actionTypeExistsOnActionsObject(action.type, actionsObject) && dispatch(action);
+        }
+      };
+
+      const result = () => {
+        launchRequestIfNecessary();
+        launchChainActionIfNecessary();
+        launchActionIfNecessary();
+      };
+
+      return result();
+    }
+  };
+}
+
+const areLastCharactersOfStringEqualTo = (string, stringToCompare) => {
+  const lastCharacters = string.substr(string.length - stringToCompare.length, string.length);
+  return lastCharacters === stringToCompare;
+};
+
+const typeVariations = {
+  FULFILLED: "_FULFILLED",
+  REJECTED: "_REJECTED"
+};
+const MAX_LAST_ACTIONS_REFERENCE_LENGTH = 40;
+
+const getActionTypeRequestSuffix = type => {
+  if (areLastCharactersOfStringEqualTo(type, typeVariations.FULFILLED)) {
+    return typeVariations.FULFILLED;
+  }
+
+  if (areLastCharactersOfStringEqualTo(type, typeVariations.REJECTED)) {
+    return typeVariations.REJECTED;
+  }
+
+  return undefined;
+};
+
+const getUpdatedPendingRequestsBySuffix = (actionRequestSuffix, state, action) => {
+  const actionType = action.type;
+  let newPendingRequests = state.pendingRequests || [];
+
+  const addActionTypeToPendingRequests = () => {
+    newPendingRequests.push({ ...action,
+      createdAt: Date.now()
+    });
+  };
+
+  const removeActionTypeFromPendingRequests = requestTypeSuffix => {
+    const indexToRemove = newPendingRequests.findIndex(el => el.type === requestTypeSuffix);
+    newPendingRequests.splice(indexToRemove, 1);
+  };
+
+  switch (actionRequestSuffix) {
+    case typeVariations.FULFILLED:
+      removeActionTypeFromPendingRequests(actionType.replace(typeVariations.FULFILLED, ""));
+      break;
+
+    case typeVariations.REJECTED:
+      removeActionTypeFromPendingRequests(actionType.replace(typeVariations.REJECTED, ""));
+      break;
+
+    default:
+      addActionTypeToPendingRequests();
+  }
+
+  return newPendingRequests;
+};
+
+function enrichContextState(actionDefinition, state, action) {
+  const actionRequestSuffix = getActionTypeRequestSuffix(action.type);
+  const isActionARequest = actionRequestSuffix || actionDefinition.operation;
+  const requestRelatedProps = isActionARequest && {
+    pendingRequests: getUpdatedPendingRequestsBySuffix(actionRequestSuffix, state, action),
+    lastRequest: { ...action,
+      createdAt: Date.now(),
+      result: actionRequestSuffix
+    }
+  };
+  const lastAction = { ...action,
+    createdAt: Date.now(),
+    hasRequest: isActionARequest,
+    requestResult: actionRequestSuffix
+  }; // state.lastActionsReference?.push(lastAction); // TODO
+
+  if (state) {
+    const removeOldestAction = () => {
+      state.lastActionsReference.shift();
+    };
+
+    if (!state.lastActionsReference) {
+      state.lastActionsReference = [lastAction];
+    } else {
+      const isLastActionsMaxed = state.lastActionsReference.length > MAX_LAST_ACTIONS_REFERENCE_LENGTH;
+      state.lastActionsReference.push(lastAction);
+      if (isLastActionsMaxed) removeOldestAction();
+    }
+  }
+
+  return { ...state,
+    lastAction,
+    ...requestRelatedProps
+  };
+}
+
+const dispatchEventToParentWindow = ({
+  name,
+  type,
+  payload,
+  createdAt
+}) => {
+  window.parent.postMessage({
+    name,
+    type,
+    payload,
+    createdAt
+  }, "*"); // TODO check if '*' is necessary
+};
+
+const dispatchEventToDevConsole = ({
+  name,
+  type,
+  payload
+}) => {
+  // if (developOptions?.SHOW_DEV_CONSOLE_LOG) { // TODO
+  const logOrnamentsByEventType = {
+    [EVENT_TYPES.action]: {
+      text: "%cACTION",
+      style: "color: #1A88A1"
+    },
+    [EVENT_TYPES.requestDispatch]: {
+      text: "    ╭ %cop ▶️",
+      style: "color: #36a3f7"
+    },
+    [EVENT_TYPES.requestFulfilled]: {
+      text: "   ╰ %cop ✔️",
+      style: "color: #4dd970"
+    },
+    [EVENT_TYPES.requestRejected]: {
+      text: "    ╰ %cop ✖️",
+      style: "color: #ef5957"
+    },
+    [EVENT_TYPES.error]: {
+      text: "%cCRITICAL ERROR ✖️",
+      style: "color: #ef5957"
+    },
+    [EVENT_TYPES.milestoneCompleted]: {
+      text: "%c========== MILESTONE ==========",
+      style: "color: #a5479a"
+    },
+    default: {
+      text: `%c${type}`,
+      style: "color: #bada55"
+    }
+  };
+  const logTitle = logOrnamentsByEventType[type] || logOrnamentsByEventType.default;
+  console.log(logTitle.text, logTitle.style, name, payload || "∅"); // }
+};
+
+const pushEventToGTMDataLayer = ({
+  name,
+  type,
+  idParams,
+  payload,
+  createdAt
+}) => {
+  const dataLayer = window.dataLayer || [];
+  const commonData = {
+    event: type,
+    created_at: createdAt,
+    ...idParams
+  };
+
+  const dataByType = () => {
+    switch (type) {
+      case EVENT_TYPES.milestone:
+        if (payload?.requestPayload) {
+          return {
+            milestone: name,
+            detail: payload?.detail,
+            requestPayload: JSON.stringify(payload.requestPayload)
+          };
+        } else {
+          return {
+            milestone: name,
+            detail: payload?.detail
+          };
+        }
+
+      case EVENT_TYPES.progress:
+        return {
+          module: payload.module,
+          screen_path: payload.screenPath,
+          status: payload.status
+        };
+
+      case EVENT_TYPES.error:
+        return {
+          action: payload
+        };
+    }
+  };
+
+  dataLayer.push({ ...commonData,
+    ...dataByType()
+  });
+};
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -158,7 +694,7 @@ function _nonIterableRest() {
 }
 
 /**
- * react-number-format - 4.7.3
+ * react-number-format - 4.8.0
  * Author : Sudhanshu Yadav
  * Copyright (c) 2016, 2021 to Sudhanshu Yadav, released under the MIT license.
  * https://github.com/s-yadav/react-number-format
@@ -516,7 +1052,13 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
         //set state always when not in focus and formatted value is changed
         (focusedElm === null && formattedValue !== stateValue)
       ) {
-        this.updateValue({ formattedValue: formattedValue, numAsString: numAsString, input: focusedElm });
+        this.updateValue({
+          formattedValue: formattedValue,
+          numAsString: numAsString,
+          input: focusedElm,
+          source: 'prop',
+          event: null,
+        });
       }
     }
   };
@@ -1172,12 +1714,16 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
                         
                        
                             
+                               
+                   
                      
                               
    ) {
     var formattedValue = params.formattedValue;
     var input = params.input;
     var setCaretPosition = params.setCaretPosition; if ( setCaretPosition === void 0 ) setCaretPosition = true;
+    var source = params.source;
+    var event = params.event;
     var numAsString = params.numAsString;
     var caretPos = params.caretPos;
     var ref = this.props;
@@ -1226,7 +1772,7 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
       this.setState({ value: formattedValue, numAsString: numAsString });
 
       // trigger onValueChange synchronously, so parent is updated along with the number format. Fix for #277, #287
-      onValueChange(this.getValueObject(formattedValue, numAsString));
+      onValueChange(this.getValueObject(formattedValue, numAsString), { event: event, source: source });
     }
   };
 
@@ -1253,7 +1799,14 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
       formattedValue = lastValue;
     }
 
-    this.updateValue({ formattedValue: formattedValue, numAsString: numAsString, inputValue: inputValue, input: el });
+    this.updateValue({
+      formattedValue: formattedValue,
+      numAsString: numAsString,
+      inputValue: inputValue,
+      input: el,
+      event: e,
+      source: 'event',
+    });
 
     if (isChangeAllowed) {
       props.onChange(e);
@@ -1294,6 +1847,8 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
           numAsString: numAsString,
           input: e.target,
           setCaretPosition: false,
+          event: e,
+          source: 'event',
         });
         onBlur(e);
         return;
@@ -1368,6 +1923,8 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
           formattedValue: newValue,
           caretPos: newCaretPosition,
           input: el,
+          event: e,
+          source: 'event',
         });
       } else if (!negativeRegex.test(value[expectedCaretPosition])) {
         while (!numRegex.test(value[newCaretPosition - 1]) && newCaretPosition > leftBound) {
@@ -2194,7 +2751,7 @@ function styleInject(css, ref) {
   }
 }
 
-var css = ".styles_table__2y8yf.styles_sortable__1cuKh thead {\n  cursor: pointer; }\n\n.styles_table__2y8yf td {\n  vertical-align: middle !important; }\n\n.styles_MuiTableCell-root__2ZK-z {\n  -webkit-font-feature-settings: \"lnum\";\n  -moz-font-feature-settings: \"lnum\";\n  font-feature-settings: \"lnum\"; }\n  .styles_MuiTableCell-root__2ZK-z .styles_detailsPanel__3Euvb {\n    background: #f5f5f5;\n    position: relative;\n    padding: 20px 20px 20px 60px; }\n  .styles_MuiTableCell-root__2ZK-z .styles_detailsPanel__3Euvb:after {\n    content: \" \";\n    position: absolute;\n    border-radius: 0 0 30px 30px;\n    width: 32px;\n    border-left: 15px solid transparent;\n    border-right: 15px solid transparent;\n    border-top: 12px solid white;\n    height: 0px;\n    left: 6px;\n    top: 0; }\n\n.styles_MuiToolbar-root__24kKN {\n  color: #08404d; }\n  .styles_MuiToolbar-root__24kKN h1, .styles_MuiToolbar-root__24kKN h2, .styles_MuiToolbar-root__24kKN h3, .styles_MuiToolbar-root__24kKN h4, .styles_MuiToolbar-root__24kKN h5, .styles_MuiToolbar-root__24kKN h6 {\n    font-weight: bold; }\n    .styles_MuiToolbar-root__24kKN h1 .styles_material-icons__2PCno, .styles_MuiToolbar-root__24kKN h2 .styles_material-icons__2PCno, .styles_MuiToolbar-root__24kKN h3 .styles_material-icons__2PCno, .styles_MuiToolbar-root__24kKN h4 .styles_material-icons__2PCno, .styles_MuiToolbar-root__24kKN h5 .styles_material-icons__2PCno, .styles_MuiToolbar-root__24kKN h6 .styles_material-icons__2PCno {\n      font-weight: lighter; }\n\n.styles_segment-color-gold__1VA9g {\n  color: #d2b77f; }\n\n.styles_segment-color-platinum__1oEEl {\n  color: #addacc; }\n\n.styles_segment-color-diamond__1aqKz {\n  color: #4ddbe9; }\n\n.styles_segment-color-super_diamond__1dc-i {\n  color: #46c2d1;\n  text-shadow: 0px 1px 10px #10eaff; }\n";
+var css = ".styles_table__14lZt.styles_sortable__utOtw thead {\n  cursor: pointer; }\n\n.styles_table__14lZt td {\n  vertical-align: middle !important; }\n\n.styles_MuiTableCell-root__1NMch {\n  -webkit-font-feature-settings: \"lnum\";\n  -moz-font-feature-settings: \"lnum\";\n  font-feature-settings: \"lnum\"; }\n  .styles_MuiTableCell-root__1NMch .styles_detailsPanel__33289 {\n    background: #f5f5f5;\n    position: relative;\n    padding: 20px 20px 20px 60px; }\n  .styles_MuiTableCell-root__1NMch .styles_detailsPanel__33289:after {\n    content: \" \";\n    position: absolute;\n    border-radius: 0 0 30px 30px;\n    width: 32px;\n    border-left: 15px solid transparent;\n    border-right: 15px solid transparent;\n    border-top: 12px solid white;\n    height: 0px;\n    left: 6px;\n    top: 0; }\n\n.styles_MuiToolbar-root__2iJXq {\n  color: #08404d; }\n  .styles_MuiToolbar-root__2iJXq h1, .styles_MuiToolbar-root__2iJXq h2, .styles_MuiToolbar-root__2iJXq h3, .styles_MuiToolbar-root__2iJXq h4, .styles_MuiToolbar-root__2iJXq h5, .styles_MuiToolbar-root__2iJXq h6 {\n    font-weight: bold; }\n    .styles_MuiToolbar-root__2iJXq h1 .styles_material-icons__3GlV1, .styles_MuiToolbar-root__2iJXq h2 .styles_material-icons__3GlV1, .styles_MuiToolbar-root__2iJXq h3 .styles_material-icons__3GlV1, .styles_MuiToolbar-root__2iJXq h4 .styles_material-icons__3GlV1, .styles_MuiToolbar-root__2iJXq h5 .styles_material-icons__3GlV1, .styles_MuiToolbar-root__2iJXq h6 .styles_material-icons__3GlV1 {\n      font-weight: lighter; }\n\n.styles_segment-color-gold__2oOeK {\n  color: #d2b77f; }\n\n.styles_segment-color-platinum__2x1oJ {\n  color: #addacc; }\n\n.styles_segment-color-diamond__2I6eW {\n  color: #4ddbe9; }\n\n.styles_segment-color-super_diamond__3i94T {\n  color: #46c2d1;\n  text-shadow: 0px 1px 10px #10eaff; }\n";
 styleInject(css);
 
 const _excluded$2 = ["columns", "data", "title", "options", "localization"];
@@ -27498,9 +28055,9 @@ var DataView = _getNative(_root, 'DataView');
 var _DataView = DataView;
 
 /* Built-in method references that are verified to be native. */
-var Promise = _getNative(_root, 'Promise');
+var Promise$1 = _getNative(_root, 'Promise');
 
-var _Promise = Promise;
+var _Promise = Promise$1;
 
 /* Built-in method references that are verified to be native. */
 var Set = _getNative(_root, 'Set');
@@ -30977,7 +31534,9 @@ exports.BarChart = BarChart;
 exports.CUPS_REGEX = CUPS_REGEX;
 exports.CircularProgressWithLabel = CircularProgressWithLabel;
 exports.ConditionalWrapper = ConditionalWrapper;
+exports.ContextEventCatcher = ContextEventCatcher;
 exports.DNI_REGEX = DNI_REGEX;
+exports.EVENT_TYPES = EVENT_TYPES;
 exports.FormatDateMapper = FormatDateMapper$1;
 exports.Header = Header;
 exports.IconWithCircle = IconWithCircle;
@@ -31004,6 +31563,10 @@ exports.addMonthsToDate = addMonthsToDate;
 exports.assetIds = assetIds;
 exports.assetPackIds = assetPackIds;
 exports.capitalizeEachWord = capitalizeEachWord;
+exports.dispatchEventToDevConsole = dispatchEventToDevConsole;
+exports.dispatchEventToParentWindow = dispatchEventToParentWindow;
+exports.dispatchMiddleware = dispatchMiddleware;
+exports.enrichContextState = enrichContextState;
 exports.formatAmountForDisplay = formatAmountForDisplay;
 exports.formatDeleteSpacesInStringAndUpperCase = formatDeleteSpacesInStringAndUpperCase;
 exports.formatMoney = formatMoney;
@@ -31025,7 +31588,12 @@ exports.isObject = isObject;
 exports.mergeDeep = mergeDeep;
 exports.normalizeText = normalizeText;
 exports.parseStringAmountWithUnitToNumber = parseStringAmountWithUnitToNumber;
+exports.pushEventToGTMDataLayer = pushEventToGTMDataLayer;
+exports.requestAndDispatch = requestAndDispatch;
+exports.requestApi = requestApi;
+exports.sendEventForEachChannelOfTypeActive = sendEventForEachChannelOfTypeActive;
 exports.spainIdType = spainIdType;
+exports.useEventDispatcher = useEventDispatcher;
 exports.validDNI = validDNI;
 exports.validNIE = validNIE;
 exports.validateDNIorNIE = validateDNIorNIE;

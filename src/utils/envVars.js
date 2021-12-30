@@ -1,0 +1,3 @@
+export const ENV_COOKIE_LOGIN_NAME =
+  window.RUNTIME_COOKIE_NAME || COOKIE_LOGIN_NAME;
+export const ENV_API_URL = window.RUNTIME_API_URL || API_URL;

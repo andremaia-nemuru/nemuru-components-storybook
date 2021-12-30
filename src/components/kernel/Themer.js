@@ -1,8 +1,8 @@
 import React from 'react'
 
-import {createCustomTheme} from "../config/material";
+import {createCustomTheme} from "../../config/material";
 import {ThemeProvider} from '@material-ui/styles';
-import AssetPackDefiner from "./AssetPackDefiner";
+import AssetPackDefiner from "../AssetPackDefiner";
 
 
 export function Themer(props) {
