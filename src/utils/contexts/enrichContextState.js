@@ -59,6 +59,7 @@ const getUpdatedPendingRequestsBySuffix = (
 export function enrichContextState(actionDefinition, state, action) {
     const actionRequestSuffix = getActionTypeRequestSuffix(action.type);
     const isActionARequest = actionRequestSuffix || actionDefinition.operation;
+    const dateNow = Date.now();
     const requestRelatedProps = isActionARequest && {
         pendingRequests: getUpdatedPendingRequestsBySuffix(
             actionRequestSuffix,
@@ -67,18 +68,20 @@ export function enrichContextState(actionDefinition, state, action) {
         ),
         lastRequest: {
             ...action,
-            createdAt: Date.now(),
+            createdAt: dateNow,
             result: actionRequestSuffix,
         },
     };
     const lastAction = {
         ...action,
-        createdAt: Date.now(),
+        createdAt: dateNow,
         hasRequest: isActionARequest,
         requestResult: actionRequestSuffix,
     };
-    // state.lastActionsReference?.push(lastAction); // TODO
-
+    const lastActionsReferenceChanged = {
+        lastChangeDate: dateNow,
+        id: Math.random(),
+    };
     if (state) {
         const removeOldestAction = () => {
             state.lastActionsReference.shift()
@@ -98,7 +101,8 @@ export function enrichContextState(actionDefinition, state, action) {
 
     return {
         ...state,
-        lastAction,
+        lastAction, // TODO elimiar al cerciorase que no se usa
+        lastActionsReferenceChanged,
         ...requestRelatedProps,
     };
 }

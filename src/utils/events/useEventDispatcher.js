@@ -1,6 +1,4 @@
-// import { useContext, useState } from "react";
 import {sendEventForEachChannelOfTypeActive} from "./sendEventForEachChannelOfTypeActive";
-// import { ProcessContext } from "../../contexts/ProcessContext";
 
 export const useEventDispatcher = (config, commonIdParams) => {
     const createdAt = Date.now();
@@ -13,6 +11,6 @@ export const useEventDispatcher = (config, commonIdParams) => {
             createdAt,
             config,
         });
-    };sendEventForEachChannelOfTypeActive
+    };
     return {dispatchEvent};
 };
