@@ -18,6 +18,8 @@ export function requestAndDispatch(
                 type,
                 payload: response.data,
                 requestPayload: action.payload,
+                requestStatus: response.status,
+                requestResolved: true,
             };
             // const fakeResponse =
             //   fakeResponsesByActionTypeDictionary?.[action.type]?.onFulfilled; // TODO
@@ -42,6 +44,8 @@ export function requestAndDispatch(
                 type,
                 payload: error.response,
                 requestPayload: action.payload,
+                requestStatus: response.status,
+                requestResolved: false,
             };
             // const fakeResponse =
             //   fakeResponsesByActionTypeDictionary?.[action.type]?.onRejected; // TODO

@@ -56,8 +56,6 @@ const isEventTypeActiveByChannel = (type, channel, channels) => {
   return channels[channel].activeEventTypes.find(el => el === type);
 };
 
-// import { useContext, useState } from "react";
-
 const useEventDispatcher = (config, commonIdParams) => {
   const createdAt = Date.now();
 
@@ -76,6 +74,7 @@ const useEventDispatcher = (config, commonIdParams) => {
       config
     });
   };
+
   return {
     dispatchEvent
   };
@@ -135,12 +134,12 @@ function ContextEventCatcher({
     if (action.hasRequest) {
       let eventType = "";
 
-      switch (action.requestResult) {
-        case "_FULFILLED":
+      switch (action.requestResolved) {
+        case true:
           eventType = EVENT_TYPES.requestFulfilled;
           break;
 
-        case "_REJECTED":
+        case false:
           eventType = EVENT_TYPES.requestRejected;
           break;
 
@@ -282,7 +281,9 @@ function requestAndDispatch(service, dispatch, action, actionsObject, fakeRespon
     const originalNewAction = { ...action,
       type,
       payload: response.data,
-      requestPayload: action.payload
+      requestPayload: action.payload,
+      requestStatus: response.status,
+      requestResolved: true
     }; // const fakeResponse =
     //   fakeResponsesByActionTypeDictionary?.[action.type]?.onFulfilled; // TODO
 
@@ -298,7 +299,9 @@ function requestAndDispatch(service, dispatch, action, actionsObject, fakeRespon
     const originalNewAction = { ...action,
       type,
       payload: error.response,
-      requestPayload: action.payload
+      requestPayload: action.payload,
+      requestStatus: response.status,
+      requestResolved: false
     }; // const fakeResponse =
     //   fakeResponsesByActionTypeDictionary?.[action.type]?.onRejected; // TODO
 
@@ -365,75 +368,70 @@ function dispatchMiddleware(dispatch, actionsObject) {
   };
 }
 
-const areLastCharactersOfStringEqualTo = (string, stringToCompare) => {
-  const lastCharacters = string.substr(string.length - stringToCompare.length, string.length);
-  return lastCharacters === stringToCompare;
-};
-
 const typeVariations = {
   FULFILLED: "_FULFILLED",
   REJECTED: "_REJECTED"
 };
 const MAX_LAST_ACTIONS_REFERENCE_LENGTH = 40;
 
-const getActionTypeRequestSuffix = type => {
-  if (areLastCharactersOfStringEqualTo(type, typeVariations.FULFILLED)) {
-    return typeVariations.FULFILLED;
-  }
-
-  if (areLastCharactersOfStringEqualTo(type, typeVariations.REJECTED)) {
-    return typeVariations.REJECTED;
-  }
-
-  return undefined;
-};
-
-const getUpdatedPendingRequestsBySuffix = (actionRequestSuffix, state, action) => {
+const updatedPendingRequestsReference = (state, action) => {
   const actionType = action.type;
-  let newPendingRequests = state.pendingRequests || [];
+  const requestAction = { ...action,
+    createdAt: Date.now()
+  };
+
+  if (!state.pendingRequestsReference) {
+    state.pendingRequestsReference = [];
+  }
 
   const addActionTypeToPendingRequests = () => {
-    newPendingRequests.push({ ...action,
-      createdAt: Date.now()
-    });
+    state.pendingRequestsReference.push(requestAction);
   };
 
   const removeActionTypeFromPendingRequests = requestTypeSuffix => {
-    const indexToRemove = newPendingRequests.findIndex(el => el.type === requestTypeSuffix);
-    newPendingRequests.splice(indexToRemove, 1);
+    const indexToRemove = state.pendingRequestsReference.findIndex(el => el.type === requestTypeSuffix);
+    state.pendingRequestsReference.splice(indexToRemove, 1);
   };
 
-  switch (actionRequestSuffix) {
-    case typeVariations.FULFILLED:
+  switch (action.requestResolved) {
+    case true:
       removeActionTypeFromPendingRequests(actionType.replace(typeVariations.FULFILLED, ""));
       break;
 
-    case typeVariations.REJECTED:
+    case false:
       removeActionTypeFromPendingRequests(actionType.replace(typeVariations.REJECTED, ""));
       break;
 
     default:
       addActionTypeToPendingRequests();
   }
-
-  return newPendingRequests;
 };
 
 function enrichContextState(actionDefinition, state, action) {
-  const actionRequestSuffix = getActionTypeRequestSuffix(action.type);
-  const isActionARequest = actionRequestSuffix || actionDefinition.operation;
+  const actionHasResponse = action.requestStatus;
+  const actionHasRequest = actionDefinition.operation || actionDefinition.request;
+  const isActionARequest = actionHasRequest || actionHasResponse;
+  const dateNow = Date.now();
+
+  if (isActionARequest) {
+    updatedPendingRequestsReference(state, action);
+  }
+
   const requestRelatedProps = isActionARequest && {
-    pendingRequests: getUpdatedPendingRequestsBySuffix(actionRequestSuffix, state, action),
     lastRequest: { ...action,
-      createdAt: Date.now(),
-      result: actionRequestSuffix
+      createdAt: dateNow,
+      requestResolved: action.requestResolved
     }
   };
   const lastAction = { ...action,
-    createdAt: Date.now(),
-    hasRequest: isActionARequest,
-    requestResult: actionRequestSuffix
-  }; // state.lastActionsReference?.push(lastAction); // TODO
+    createdAt: dateNow,
+    hasRequest: isActionARequest || false // requestResult: actionRequestSuffix,
+
+  };
+  const lastActionsReferenceLastChange = {
+    lastChangeDate: dateNow,
+    id: Math.random()
+  };
 
   if (state) {
     const removeOldestAction = () => {
@@ -451,6 +449,8 @@ function enrichContextState(actionDefinition, state, action) {
 
   return { ...state,
     lastAction,
+    // TODO elimiar despues de remplazar sus usos en front
+    lastActionsReferenceLastChange,
     ...requestRelatedProps
   };
 }

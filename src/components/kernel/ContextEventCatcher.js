@@ -47,11 +47,11 @@ export function ContextEventCatcher({context, eventsConfig, dispatchEventFunctio
     const dispatchRequestEvent = (action) => {
         if (action.hasRequest) {
             let eventType = "";
-            switch (action.requestResult) {
-                case "_FULFILLED":
+            switch (action.requestResolved) {
+                case true:
                     eventType = EVENT_TYPES.requestFulfilled;
                     break;
-                case "_REJECTED":
+                case false:
                     eventType = EVENT_TYPES.requestRejected;
                     break;
                 default:

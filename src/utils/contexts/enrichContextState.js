@@ -22,30 +22,33 @@ const getActionTypeRequestSuffix = (type) => {
     return undefined;
 };
 
-const getUpdatedPendingRequestsBySuffix = (
-    actionRequestSuffix,
+const updatedPendingRequestsReference = (
     state,
     action
 ) => {
+
     const actionType = action.type;
-    let newPendingRequests = state.pendingRequests || [];
+    const requestAction = {...action, createdAt: Date.now()}
+    if (!state.pendingRequestsReference) {
+        state.pendingRequestsReference = []
+    }
     const addActionTypeToPendingRequests = () => {
-        newPendingRequests.push({...action, createdAt: Date.now()});
+        state.pendingRequestsReference.push(requestAction);
     };
     const removeActionTypeFromPendingRequests = (requestTypeSuffix) => {
-        const indexToRemove = newPendingRequests.findIndex(
+        const indexToRemove = state.pendingRequestsReference.findIndex(
             (el) => el.type === requestTypeSuffix
         );
-        newPendingRequests.splice(indexToRemove, 1);
+        state.pendingRequestsReference.splice(indexToRemove, 1);
     };
 
-    switch (actionRequestSuffix) {
-        case typeVariations.FULFILLED:
+    switch (action.requestResolved) {
+        case true:
             removeActionTypeFromPendingRequests(
                 actionType.replace(typeVariations.FULFILLED, "")
             );
             break;
-        case typeVariations.REJECTED:
+        case false:
             removeActionTypeFromPendingRequests(
                 actionType.replace(typeVariations.REJECTED, "")
             );
@@ -53,32 +56,35 @@ const getUpdatedPendingRequestsBySuffix = (
         default:
             addActionTypeToPendingRequests();
     }
-    return newPendingRequests;
 };
 
 export function enrichContextState(actionDefinition, state, action) {
-    const actionRequestSuffix = getActionTypeRequestSuffix(action.type);
-    const isActionARequest = actionRequestSuffix || actionDefinition.operation;
+    const actionHasResponse = action.requestStatus;
+    const actionHasRequest = actionDefinition.operation || actionDefinition.request;
+    const isActionARequest = actionHasRequest || actionHasResponse;
     const dateNow = Date.now();
-    const requestRelatedProps = isActionARequest && {
-        pendingRequests: getUpdatedPendingRequestsBySuffix(
-            actionRequestSuffix,
+    if (isActionARequest) {
+        updatedPendingRequestsReference(
             state,
             action
-        ),
+        )
+    }
+
+
+    const requestRelatedProps = isActionARequest && {
         lastRequest: {
             ...action,
             createdAt: dateNow,
-            result: actionRequestSuffix,
+            requestResolved: action.requestResolved,
         },
     };
     const lastAction = {
         ...action,
         createdAt: dateNow,
-        hasRequest: isActionARequest,
-        requestResult: actionRequestSuffix,
+        hasRequest: isActionARequest || false,
+        // requestResult: actionRequestSuffix,
     };
-    const lastActionsReferenceChanged = {
+    const lastActionsReferenceLastChange = {
         lastChangeDate: dateNow,
         id: Math.random(),
     };
@@ -101,8 +107,8 @@ export function enrichContextState(actionDefinition, state, action) {
 
     return {
         ...state,
-        lastAction, // TODO elimiar al cerciorase que no se usa
-        lastActionsReferenceChanged,
+        lastAction, // TODO elimiar despues de remplazar sus usos en front
+        lastActionsReferenceLastChange,
         ...requestRelatedProps,
     };
 }
