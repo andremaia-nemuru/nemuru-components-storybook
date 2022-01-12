@@ -305,7 +305,7 @@ function requestAndDispatch(service, dispatch, action, actionsObject, fakeRespon
       type,
       payload: error.response,
       requestPayload: action.payload,
-      requestStatus: response.status,
+      requestStatus: error.response.status,
       requestResolved: false
     }; // const fakeResponse =
     //   fakeResponsesByActionTypeDictionary?.[action.type]?.onRejected; // TODO
@@ -324,7 +324,7 @@ function actionTypeExistsOnActionsObject(actionType, actionsObject) {
     return true;
   }
 
-  devConsoleLog(actionType, "DOES NOT EXIST");
+  devConsoleLog(actionType, 'DOES NOT EXIST');
   return false;
 }
 

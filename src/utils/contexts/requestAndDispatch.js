@@ -1,5 +1,5 @@
-import {dispatchMiddleware} from "./dispatchMiddleWare";
-import {requestApi} from "../request";
+import { dispatchMiddleware } from './dispatchMiddleWare';
+import { requestApi } from '../request';
 
 export function requestAndDispatch(
     service,
@@ -33,9 +33,12 @@ export function requestAndDispatch(
             };
             const newAction = fakeResponse ? fakeNewAction : originalNewAction;
 
-            const middlewareDispatch = dispatchMiddleware(dispatch, actionsObject);
+            const middlewareDispatch = dispatchMiddleware(
+                dispatch,
+                actionsObject
+            );
             actionTypeExistsOnActionsObject(type, actionsObject) &&
-            middlewareDispatch(newAction);
+                middlewareDispatch(newAction);
         })
         .catch((error) => {
             const type = `${action.type}_REJECTED`;
@@ -44,7 +47,7 @@ export function requestAndDispatch(
                 type,
                 payload: error.response,
                 requestPayload: action.payload,
-                requestStatus: response.status,
+                requestStatus: error.response.status,
                 requestResolved: false,
             };
             // const fakeResponse =
@@ -58,9 +61,12 @@ export function requestAndDispatch(
                 requestPayload: action.payload,
             };
             const newAction = fakeResponse ? fakeNewAction : originalNewAction;
-            const middlewareDispatch = dispatchMiddleware(dispatch, actionsObject);
+            const middlewareDispatch = dispatchMiddleware(
+                dispatch,
+                actionsObject
+            );
             actionTypeExistsOnActionsObject(type, actionsObject) &&
-            middlewareDispatch(newAction);
+                middlewareDispatch(newAction);
         });
 }
 
@@ -68,6 +74,6 @@ export function actionTypeExistsOnActionsObject(actionType, actionsObject) {
     if (actionsObject[actionType] && actionsObject[actionType].changeState) {
         return true;
     }
-    devConsoleLog(actionType, "DOES NOT EXIST");
+    devConsoleLog(actionType, 'DOES NOT EXIST');
     return false;
 }
