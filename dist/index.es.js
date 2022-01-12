@@ -175,16 +175,16 @@ const LoginMapper = {
 
   hydrate(data) {
     return {
-      token: `${data.token_type} ${data.access_token}`,
+      access_token: `${data.token_type} ${data.access_token}`,
       expires: data.expires_in,
       refresh_token: data.refresh_token
     };
   },
 
-  refresh(refreshToken) {
+  refresh(apiToken) {
     return {
-      username: "admin@gocleer.com",
-      refresh_token: refreshToken
+      username: apiToken?.username,
+      refresh_token: apiToken?.refresh_token
     };
   }
 
@@ -196,7 +196,7 @@ const ENV_API_URL = window.RUNTIME_API_URL || API_URL;
 const apiUrl = ENV_API_URL;
 const refreshPath = 'auth/refresh/';
 const apiBase = ENV_API_URL;
-const apiTokenRefresh = `${apiBase}/${refreshPath}`;
+const apiTokenRefreshUrl = `${apiBase}${refreshPath}`;
 
 const getAuthorizationConfig = () => {
   let apiToken = localStorage.getItem(ENV_COOKIE_LOGIN_NAME);
@@ -204,7 +204,7 @@ const getAuthorizationConfig = () => {
   if (apiToken) {
     apiToken = JSON.parse(apiToken);
     return {
-      "Access-Control-Allow-Origin": "*",
+      'Access-Control-Allow-Origin': '*',
       Authorization: apiToken.access_token
     };
   }
@@ -215,51 +215,56 @@ const getAuthorizationConfig = () => {
 const requestRefreshAuthorization = ({
   service
 }) => {
-  let apiToken = localStorage.getItem(ENV_COOKIE_LOGIN_NAME);
-  apiToken = JSON.parse(apiToken);
+  let loginCookie = localStorage.getItem(ENV_COOKIE_LOGIN_NAME);
+  loginCookie = JSON.parse(loginCookie);
   const configRequest = {
-    method: "post",
-    credentials: "same-origin",
+    method: 'post',
+    credentials: 'same-origin',
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      'Access-Control-Allow-Origin': '*'
     },
-    name: "account:refreshToken",
-    url: apiTokenRefresh,
-    data: LoginMapper.refresh(apiToken.refresh_token)
+    name: 'account:refreshToken',
+    url: apiTokenRefreshUrl,
+    data: LoginMapper.refresh(loginCookie)
   };
   return axios(configRequest.url, configRequest).then(res => {
     const token = LoginMapper.hydrate(res.data);
     localStorage.removeItem(ENV_COOKIE_LOGIN_NAME);
-    localStorage.setItem(ENV_COOKIE_LOGIN_NAME, JSON.stringify(token));
+    localStorage.setItem(ENV_COOKIE_LOGIN_NAME, JSON.stringify({ ...token,
+      username: loginCookie.username
+    }));
     return requestApi(service);
   }).catch(error => {
-    if (error.response.status === 401) {
-      localStorage.removeItem(ENV_COOKIE_LOGIN_NAME);
-      window.location = "/application/unauthorized";
-    } else {
-      throw error;
-    }
+    localStorage.removeItem(ENV_COOKIE_LOGIN_NAME);
   });
 };
 
 const request = (url, isJSON, service) => {
   const configRequest = {
     method: service.method,
-    credentials: "same-origin",
-    "Access-Control-Allow-Origin": "*",
+    credentials: 'same-origin',
+    'Access-Control-Allow-Origin': '*',
     headers: Object.assign(isJSON && !service.formData ? {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
     } : {}, getAuthorizationConfig(), service.headers),
     name: service.name,
     url: service.extern ? `${service.route}` : service.public ? `${apiBase}${service.route}` : `${apiUrl}${service.route}`
   };
 
-  if (service.method === "post" || service.method === "put" || service.method === "patch") {
+  if (service.method === 'post' || service.method === 'put' || service.method === 'patch') {
     configRequest.data = isJSON && !service.formData ? JSON.stringify(service.body) : service.body;
   }
 
-  return axios(configRequest.url, configRequest).then(response => response).catch(error => {
+  return axios(configRequest.url, configRequest).then(response => {
+    if (service.type === 'login') {
+      localStorage.setItem(ENV_COOKIE_LOGIN_NAME, JSON.stringify({ ...response.data,
+        username: service.body.username
+      }));
+    }
+
+    return response;
+  }).catch(error => {
     if (error.response && error.response.status === 401) {
       return Promise.resolve(requestRefreshAuthorization({
         service
@@ -272,7 +277,7 @@ const request = (url, isJSON, service) => {
   });
 };
 
-const requestApi = (...requestProps) => request(apiUrl, true, ...requestProps);
+const requestApi = (...requestProps) => request(apiUrl, true, ...requestProps); //esperar al request login y guardar el username en
 
 function requestAndDispatch(service, dispatch, action, actionsObject, fakeResponsesByActionTypeDictionary) {
   const promise = requestApi(service(action.payload));
@@ -687,9 +692,9 @@ function _nonIterableRest() {
 }
 
 /**
- * react-number-format - 4.8.0
+ * react-number-format - 4.9.1
  * Author : Sudhanshu Yadav
- * Copyright (c) 2016, 2021 to Sudhanshu Yadav, released under the MIT license.
+ * Copyright (c) 2016, 2022 to Sudhanshu Yadav, released under the MIT license.
  * https://github.com/s-yadav/react-number-format
  */
 
@@ -1360,7 +1365,7 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
       }
     }
 
-    return (numStr.match(/\d/g) || []).join('');
+    return (numStr.match(this.getNumberRegex(true)) || []).join('');
   };
 
   NumberFormat.prototype.removeFormatting = function removeFormatting (val        ) {
@@ -1378,7 +1383,7 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
       //condition need to be handled if format method is provide,
       val = removeFormatting(val);
     } else {
-      val = (val.match(/\d/g) || []).join('');
+      val = (val.match(this.getNumberRegex(true)) || []).join('');
     }
     return val;
   };
@@ -1725,33 +1730,33 @@ var NumberFormat = /*@__PURE__*/(function (superclass) {
     var lastValue = ref$1.value;
 
     if (input) {
-      //set caret position, and value imperatively when element is provided
-      if (setCaretPosition) {
-        //calculate caret position if not defined
-        if (!caretPos) {
-          var inputValue = params.inputValue || input.value;
+      //calculate caret position if not defined
+      if (caretPos === undefined && setCaretPosition) {
+        var inputValue = params.inputValue || input.value;
 
-          var currentCaretPosition = getCurrentCaretPosition(input);
+        var currentCaretPosition = getCurrentCaretPosition(input);
 
-          /**
-           * set the value imperatively, this is required for IE fix
-           * This is also required as if new caret position is beyond the previous value.
-           * Caret position will not be set correctly
-           */
-          input.value = formattedValue;
-
-          //get the caret position
-          caretPos = this.getCaretPosition(inputValue, formattedValue, currentCaretPosition);
-        }
-
-        //set caret position
-        this.setPatchedCaretPosition(input, caretPos, formattedValue);
-      } else {
         /**
-         * if we are not setting caret position set the value imperatively.
-         * This is required on onBlur method
+         * set the value imperatively, this is required for IE fix
+         * This is also required as if new caret position is beyond the previous value.
+         * Caret position will not be set correctly
          */
         input.value = formattedValue;
+
+        //get the caret position
+        caretPos = this.getCaretPosition(inputValue, formattedValue, currentCaretPosition);
+      }
+
+      /**
+       * set the value imperatively, as we set the caret position as well imperatively.
+       * This is to keep value and caret position in sync
+       */
+      input.value = formattedValue;
+
+      //set caret position, and value imperatively when element is provided
+      if (setCaretPosition) {
+        //set caret position
+        this.setPatchedCaretPosition(input, caretPos, formattedValue);
       }
     }
 
