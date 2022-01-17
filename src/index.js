@@ -1,20 +1,15 @@
+export { useEventDispatcher } from './utils/events/useEventDispatcher';
+export { ContextEventCatcher } from './components/kernel/ContextEventCatcher';
+export { requestApi } from './utils/request';
+export { dispatchMiddleware } from './utils/contexts/dispatchMiddleWare';
+export { enrichContextState } from './utils/contexts/enrichContextState';
+export { requestAndDispatch } from './utils/contexts/requestAndDispatch';
 
-
-export {useEventDispatcher} from "./utils/events/useEventDispatcher";
-export {ContextEventCatcher} from "./components/kernel/ContextEventCatcher";
-export {requestApi} from "./utils/request";
-export {dispatchMiddleware} from "./utils/contexts/dispatchMiddleWare";
-export {enrichContextState} from "./utils/contexts/enrichContextState";
-export {requestAndDispatch} from "./utils/contexts/requestAndDispatch";
-
-export {
-    dispatchEventToParentWindow
-} from "./utils/events/channelFunctions/dispatchEventToParentWindow";
-export {dispatchEventToDevConsole} from "./utils/events/channelFunctions/dispatchEventToDevConsole";
-export {pushEventToGTMDataLayer} from "./utils/events/channelFunctions/pushEventToGTMDataLayer";
-export {EVENT_TYPES} from "./utils/events/config";
-export {sendEventForEachChannelOfTypeActive} from "./utils/events/sendEventForEachChannelOfTypeActive";
-
+export { dispatchEventToParentWindow } from './utils/events/channelFunctions/dispatchEventToParentWindow';
+export { dispatchEventToDevConsole } from './utils/events/channelFunctions/dispatchEventToDevConsole';
+export { pushEventToGTMDataLayer } from './utils/events/channelFunctions/pushEventToGTMDataLayer';
+export { EVENT_TYPES } from './utils/events/config';
+export { sendEventForEachChannelOfTypeActive } from './utils/events/sendEventForEachChannelOfTypeActive';
 
 export InputRange from './components/InputRange';
 export RichTextfield from './components/RichTextfield';
@@ -39,8 +34,8 @@ export SingleLinearStatBar from './components/SingleLinearStatBar';
 export InformationMessage from './components/InformationMessage';
 export ThemedAsset from './components/ThemedAsset';
 export TripleStateToggler from './components/TripleStateToggler';
-export {assetPackIds} from './assets/assetPacksDefs/config';
-export {assetIds} from './assets/assetPacksDefs/config';
+export { assetPackIds } from './assets/assetPacksDefs/config';
+export { assetIds } from './assets/assetPacksDefs/config';
 import { RalewayFont } from './assets/style/index.js';
 import { NemuruIconFont } from './assets/style/index.js';
 
@@ -75,8 +70,8 @@ export {
 } from './utils';
 
 //EXPORT MAPPERS
-export {FormatDateMapper} from './utils/mappers/FormatDateMapper';
-export {NotificationsMapper} from './utils/mappers/NotificationsMapper';
+export { FormatDateMapper } from './utils/mappers/FormatDateMapper';
+export { NotificationsMapper } from './utils/mappers/NotificationsMapper';
 
 //EXPORT VALIDATIONS
 export {
