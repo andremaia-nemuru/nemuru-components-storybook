@@ -28,9 +28,8 @@ export function requestAndDispatch(
             // const fakeResponse =
             //   fakeResponsesByActionTypeDictionary?.[action.type]?.onFulfilled; // TODO
             const fakeResponse =
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY &&
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY[action.type] &&
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY[action.type].onFulfilled;
+                options.USE_FAKE_RESPONSES_ON_DEFINED_FAKE_ACTIONS &&
+                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY?.[action.type]?.onFulfilled;
             const fakeNewAction = fakeResponse && {
                 ...fakeResponse,
                 requestPayload: action.payload,
@@ -54,9 +53,8 @@ export function requestAndDispatch(
             // const fakeResponse =
             //   fakeResponsesByActionTypeDictionary?.[action.type]?.onRejected; // TODO
             const fakeResponse =
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY &&
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY[action.type] &&
-                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY[action.type].onRejected;
+                options.USE_FAKE_RESPONSES_ON_DEFINED_FAKE_ACTIONS &&
+                options.FAKE_GET_RESPONSES_BY_ACTION_TYPE_DICTIONARY?.[action.type]?.onRejected;
             const fakeNewAction = fakeResponse && {
                 ...fakeResponse,
                 requestPayload: action.payload,
