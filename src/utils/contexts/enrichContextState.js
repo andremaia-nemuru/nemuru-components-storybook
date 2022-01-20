@@ -92,8 +92,7 @@ export function enrichContextState(actionDefinition, state, action) {
         const removeOldestAction = () => {
             state.lastActionsReference.shift()
         }
-
-        if (!state.lastActionsReference) {
+        if (!state.lastActionsReference || !state.lastActionsReference.length) {
             state.lastActionsReference = [lastAction]
         } else {
             const isLastActionsMaxed = state.lastActionsReference.length > MAX_LAST_ACTIONS_REFERENCE_LENGTH
@@ -101,7 +100,6 @@ export function enrichContextState(actionDefinition, state, action) {
             if (isLastActionsMaxed)
                 removeOldestAction()
         }
-
 
     }
 

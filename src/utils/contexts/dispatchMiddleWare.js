@@ -1,11 +1,15 @@
 import {actionTypeExistsOnActionsObject, requestAndDispatch} from "./requestAndDispatch";
 
-export function dispatchMiddleware(dispatch, actionsObject) {
+export function dispatchMiddleware(dispatch, actionsObject, options) {
     return (action) => {
         if (actionsObject[action.type]) {
-            if (actionsObject[action.type].operation) {
+            const actionDefinition = actionsObject[action.type]
+            const oldTypeRequest = actionDefinition.operation;
+            const newTypeRequest = actionDefinition.request;
+
+            if (oldTypeRequest) {
                 function oldResult() {
-                    actionsObject[action.type].operation(dispatch, action);
+                    oldTypeRequest(dispatch, action);
                     actionTypeExistsOnActionsObject(action.type, actionsObject) &&
                     dispatch(action);
                 }
@@ -16,15 +20,16 @@ export function dispatchMiddleware(dispatch, actionsObject) {
             ///////////
             const launchRequest = () => {
                 requestAndDispatch(
-                    actionsObject[action.type].request,
+                    newTypeRequest,
                     dispatch,
                     action,
-                    actionsObject
+                    actionsObject,
+                    options
                 );
             };
 
             const launchRequestIfNecessary = () =>
-                actionsObject[action.type].request && launchRequest();
+                newTypeRequest && launchRequest();
             const launchActionIfNecessary = () => {
                 actionTypeExistsOnActionsObject(action.type, actionsObject) &&
                 dispatch(action);
@@ -36,11 +41,10 @@ export function dispatchMiddleware(dispatch, actionsObject) {
                 if (chainAction) {
                     const middlewareDispatch = dispatchMiddleware(
                         dispatch,
-                        actionsObject
+                        actionsObject,
+                        options
                     );
                     middlewareDispatch(chainAction(action));
-                    actionTypeExistsOnActionsObject(action.type, actionsObject) &&
-                    dispatch(action);
                 }
             };
 
