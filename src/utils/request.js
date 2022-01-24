@@ -96,7 +96,7 @@ const request = (url, isJSON, service) => {
             return response;
         })
         .catch((error) => {
-            if (error.response && error.response.status === 401) {
+            if (error?.response && error?.response?.status === 401) {
                 return Promise.resolve(
                     requestRefreshAuthorization({
                         service,

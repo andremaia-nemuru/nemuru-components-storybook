@@ -1,11 +1,22 @@
 import React from 'react';
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import {
+    DatePicker,
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker,
+} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { Controller } from 'react-hook-form';
 import { ThemeProvider, useTheme } from '@material-ui/styles';
 import { createTheme } from '@material-ui/core/styles';
 
-export default function InputDate({ name, id, rules, control, ...props }) {
+export default function InputDate({
+    name,
+    id,
+    rules,
+    control,
+    allowKeyboardPicking,
+    ...props
+}) {
     const { error, locale } = { ...props };
 
     const outerTheme = useTheme();
@@ -73,22 +84,37 @@ export default function InputDate({ name, id, rules, control, ...props }) {
                     rules={rules}
                     render={(controllerProps) => (
                         <div style={{ position: 'relative' }}>
-                            <DatePicker
-                                {...props}
-                                value={controllerProps.value || null}
-                                onChange={(e) => controllerProps.onChange(e)}
-                            />
-                            <i
-                                className="material-icons"
-                                style={{
-                                    position: 'absolute',
-                                    bottom: error ? '40px' : '17px',
-                                    fontSize: '17px',
-                                    right: '3px',
-                                }}
-                            >
-                                calendar_today
-                            </i>
+                            {allowKeyboardPicking ? (
+                                <KeyboardDatePicker
+                                    {...props}
+                                    clearable
+                                    value={controllerProps.value || null}
+                                    onChange={(e) =>
+                                        controllerProps.onChange(e)
+                                    }
+                                />
+                            ) : (
+                                <>
+                                    <DatePicker
+                                        {...props}
+                                        value={controllerProps.value || null}
+                                        onChange={(e) =>
+                                            controllerProps.onChange(e)
+                                        }
+                                    />
+                                    <i
+                                        className="material-icons"
+                                        style={{
+                                            position: 'absolute',
+                                            bottom: error ? '40px' : '17px',
+                                            fontSize: '17px',
+                                            right: '3px',
+                                        }}
+                                    >
+                                        calendar_today
+                                    </i>
+                                </>
+                            )}
                         </div>
                     )}
                 />
