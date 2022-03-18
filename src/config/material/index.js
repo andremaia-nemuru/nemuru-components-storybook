@@ -48,7 +48,7 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                 main: '#08404d',
                 accent: '#4dd970',
                 contrastText: '#ffffff',
-                imageBackgroundOpacity: 0.8,
+                imageBackgroundOpacity: 0.85,
             },
             light: {
                 main: '#f3f2ef',
@@ -240,6 +240,24 @@ const setThemeWithCustomizableValues = (newCustomizableValues) => {
                     borderRadius: targetThemeValues.customBorderRadius.paper,
                 },
                 root: {
+                    '&.dynamic-dark-opacity-filter': {
+                        position: 'relative',
+                        overflow: 'hidden',
+                        zIndex: 1,
+                    },
+                    '&.dynamic-dark-opacity-filter::before': {
+                        content: "''",
+                        backgroundColor: targetThemeValues.palette.dark.main,
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        zIndex: -1,
+                        opacity:
+                            targetThemeValues.palette.dark
+                                .imageBackgroundOpacity,
+                    },
                     '&.dark-variant': {
                         background: targetThemeValues.palette.dark.main,
                         color: targetThemeValues.palette.dark.contrastText,
