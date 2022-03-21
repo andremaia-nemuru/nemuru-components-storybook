@@ -15,6 +15,7 @@ export InputRange from './components/InputRange';
 export RichTextfield from './components/RichTextfield';
 export InputRangeMobile from './components/InputRangeMobile';
 export TableMui from './components/TableMui';
+export FetchingDataGrid from './components/DataGrid/FetchingDataGrid';
 export Header from './components/Header';
 export Themer from './components/kernel/Themer';
 export CircularProgressWithLabel from './components/CircularProgressWithLabel';
