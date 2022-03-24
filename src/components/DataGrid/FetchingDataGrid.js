@@ -19,7 +19,8 @@ const DEFAULT_OPTIONS = {
 };
 
 export default function FetchingDataGrid({
-    parentComponentSearchState,
+    parentComponentSearchString,
+    clearParentComponentSearchString,
     columns,
     fetch,
     defaultPageNumber,
@@ -132,9 +133,9 @@ export default function FetchingDataGrid({
     };
 
     useEffect(() => {
-        parentComponentSearchState &&
-            onChangeSearchText(parentComponentSearchState);
-    }, [parentComponentSearchState]);
+        parentComponentSearchString &&
+            onChangeSearchText(parentComponentSearchString);
+    }, [parentComponentSearchString]);
 
     const onChangeSearchText = (searchValue) => {
         const timeStamp = new Date();
@@ -221,6 +222,10 @@ export default function FetchingDataGrid({
             }));
             fetchData({ searchString: searchValue });
         };
+
+        if (searchValue === '') {
+            clearParentComponentSearchString();
+        }
 
         if (searchValue === undefined) {
             refresh();
