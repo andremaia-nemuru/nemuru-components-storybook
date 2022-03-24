@@ -19,8 +19,6 @@ const DEFAULT_OPTIONS = {
 };
 
 export default function FetchingDataGrid({
-    parentComponentSearchString,
-    clearParentComponentSearchString,
     columns,
     fetch,
     defaultPageNumber,
@@ -32,6 +30,7 @@ export default function FetchingDataGrid({
     showExport,
     showRefresh,
     filters,
+    onCellClick,
     ...props
 }) {
     const { breakpoints, palette: themePalette } = useTheme();
@@ -119,6 +118,17 @@ export default function FetchingDataGrid({
 
     const classes = useStyles();
 
+    const onCustomCellClick = (e) => {
+        const setSearchStringOnCellClick = e.colDef.setSearchStringOnCellClick;
+        if (
+            setSearchStringOnCellClick &&
+            setSearchStringOnCellClick(e) !== null
+        ) {
+            onChangeSearchText(setSearchStringOnCellClick(e));
+        }
+        onCellClick(e);
+    };
+
     const handleSorting = (sortParams) => {
         let params = sortParams[0];
         if (
@@ -131,11 +141,6 @@ export default function FetchingDataGrid({
                 orderDirection: sortParams[0]?.sort,
             });
     };
-
-    useEffect(() => {
-        parentComponentSearchString &&
-            onChangeSearchText(parentComponentSearchString);
-    }, [parentComponentSearchString]);
 
     const onChangeSearchText = (searchValue) => {
         const timeStamp = new Date();
@@ -222,11 +227,6 @@ export default function FetchingDataGrid({
             }));
             fetchData({ searchString: searchValue });
         };
-
-        if (searchValue === '') {
-            clearParentComponentSearchString();
-        }
-
         if (searchValue === undefined) {
             refresh();
         } else {
@@ -277,6 +277,7 @@ export default function FetchingDataGrid({
                     showRefresh: showRefresh,
                 },
             }}
+            onCellClick={onCustomCellClick}
             {...props}
         />
     );
