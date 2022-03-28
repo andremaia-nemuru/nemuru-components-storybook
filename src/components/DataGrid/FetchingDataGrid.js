@@ -30,7 +30,7 @@ export default function FetchingDataGrid({
     showExport,
     showRefresh,
     filters,
-    onCellClick,
+    onCellClick = () => {},
     ...props
 }) {
     const { breakpoints, palette: themePalette } = useTheme();
@@ -118,14 +118,20 @@ export default function FetchingDataGrid({
 
     const classes = useStyles();
 
-    const onCustomCellClick = (e) => {
-        const setSearchStringOnCellClick = e.colDef.setSearchStringOnCellClick;
+    const setCustomSearchStringIfRequiredByColumnDef = (columnEvent) => {
+        //on columns definition, the parent component will define a setSearchStringOnCellClick if required
+        const setSearchStringOnCellClick =
+            columnEvent.colDef.setSearchStringOnCellClick;
         if (
             setSearchStringOnCellClick &&
-            setSearchStringOnCellClick(e) !== null
+            setSearchStringOnCellClick(columnEvent) !== null
         ) {
-            onChangeSearchText(setSearchStringOnCellClick(e));
+            onChangeSearchText(setSearchStringOnCellClick(columnEvent));
         }
+    };
+
+    const cellClickHandler = (e) => {
+        setCustomSearchStringIfRequiredByColumnDef(e);
         onCellClick(e);
     };
 
@@ -277,7 +283,7 @@ export default function FetchingDataGrid({
                     showRefresh: showRefresh,
                 },
             }}
-            onCellClick={onCustomCellClick}
+            onCellClick={cellClickHandler}
             {...props}
         />
     );
