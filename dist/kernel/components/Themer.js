@@ -1,0 +1,1 @@
+import e from"react";import t from"../utils/createCustomTheme.js";import{ThemeProvider as r}from"@material-ui/styles";function m(m){var o=m.children,a=m.theme;return e.createElement(r,{theme:t(a)},o)}var o=e.memo(m);export{o as default};

@@ -1,0 +1,1 @@
+import{createCommonjsModule as r}from"../../../_virtual/_commonjsHelpers.js";import e from"./browser.js";import o from"./node.js";var s=r((function(r){"undefined"==typeof process||"renderer"===process.type||!0===process.browser||process.__nwjs?r.exports=e:r.exports=o}));export{s as default};

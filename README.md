@@ -1,51 +1,91 @@
 # nemuru-components
 
+## Tree Shaking
+### Components
+Import freely any component directly from ```'nemuru-components'``` in the parent repository and it will import only the strictly needed chunks of code
+### Styles
+The old ```main-theme.js``` is maintained for compatibility, but
+**it's NOT recommended** to use due to his heavy weight. (It imports all styles in a single chunk,
+all fonts and some css assets in base64)
 
-#### Local Development
+There are now 2 chunks of style that can be used separately
 
-Now you're ready to run a local version of rollup that will watch your `src/` component and automatically recompile it into `dist/` whenever you make changes.
+```style-global.js``` - Global styles of most common nemuru repositories
+
+```style-helpers.js``` - class helpers (mt-1, etc...)
+
+#### Removed extra styles
+
+Keep in mind that all styles in ```style/extra.scss``` are not considered to be part of this library and 
+have been removed from any chunk other than the deprecated ```main-theme.js```. **They have to be manually 
+pasted to the parent repository** if needed.
+
+
+### Assets and fonts
+Assets are currently work in progress.
+
+Common google fonts like  ```Raleway```, ```Material-Icons``` and ```Material-Icons-Outlined``` **are no more included** and had to be imported directly from fonts.google.com.
+
+It's recommended to migrate all ```Material-Icons``` to ```Material-Icons-Outlined``` and only use this last one, to reduce weight and gain coherence
+```css
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons+Outlined');
+```
+## Local Development
+
+Currently work in progress. Due to the inconsistencies in npm link and while a better solution is found, it is recommended to **create and test components directly in the parent repository**, and then extract them to this library. 
+
+When extracted, test them by packaging this repository, and then installing the resulting compressed file on parent repository.
 
 ```bash
-# run example to start developing your new component against
-npm link # the link commands are important for local development
-npm install # disregard any warnings about missing peer dependencies
-npm start # runs rollup with watch flag
+# (example when parent repo and library are on same folder,
+# starting on nemuru-components/ folder)
+npm pack
+cd ../parentRepository
+npm i ../nemuru-components/nemuru-components-xxx.tgz 
+npm start # will start parent repo with local changes of nemuru components
+```
+### Important
+Remember to **change the dependency back in package.json to a commited version tag of nemuru-components when testing is done!**
+```json
+    "nemuru-components": "git+ssh://git@bitbucket.org/nemuru/nemuru-components.git#x.x.x",
+```
+## Nemuru-Components v1 to v2 migration
+
+
+Unfortunately, webpack 5 requires these additional dependencies to be installed in the main repository for this tree-shaking library to work properly.
+```json
+//package.json (via npm install)
+{ 
+//    ... 
+    "browserify-zlib": "^0.2.0",
+    "https-browserify": "^1.0.0",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "tty-browserify": "0.0.1",
+}
 ```
 
-We'll also be running our `newmuru-merchant` create-react-app that's linked to the local version of your `nemuru-components` module.
+And additional configuration on webpack file:
+```js
+const webpack = require("webpack");
 
-```bash
-# (in another tab)
-cd newmuru-merchant
-npm link nemuru-components
-npm install
-npm start # runs create-react-app dev server
+...
+  resolve: {
+    ...
+    fallback: {
+      "tty": require.resolve("tty-browserify"),
+      "zlib": require.resolve("browserify-zlib"),
+      "stream": require.resolve("stream-browserify"),
+      "https": require.resolve("https-browserify"),
+      "http": require.resolve("stream-http")
+    }
+  },
+    plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+  ],
 ```
-
-Now, anytime you make a change to your component in `src/` or to the example app's `example/src`, `create-react-app` will live-reload your local dev server so you can iterate on your component in real-time.
-
-#### NPM Stuffs
-
-The only difference when publishing your component to **npm** is to make sure you add any npm modules you want as peer dependencies to the `external` array in `rollup.config.js`. Then publish as per usual.
-
-```bash
-# note this will build `commonjs` and `es`versions of your module to dist/
-npm publish
-```
-
-#### Github Pages
-
-Deploying the example to github pages is simple. We create a production build of our example `create-react-app` that showcases your library and then run `gh-pages` to deploy the resulting bundle. This can be done as follows:
-
-```bash
-npm run deploy
-```
-
-Note that it's important for your `example/package.json` to have the correct `homepage` property set, as `create-react-app` uses this value as a prefix for resolving static asset URLs.
-
-## Example Module
-
-Here is an example react module created from this guide: [react-background-slideshow](https://github.com/transitive-bullshit/react-background-slideshow), a sexy tiled background slideshow for React. It comes with an example create-react-app hosted on github pages and should give you a good idea of the type of module you’ll be able to create starting from this boilerplate.
 
 ## Icon font
 
@@ -61,5 +101,4 @@ You can import *selection.json* back to the IcoMoon app using the *Import Icons*
 
 When updating the font:
 - Update the font on IcoMoon website, download the zip file and extract it in ```/NemuruIconFont/source```.
-- Copy the contents of ```/source/style.css``` to ```../NemuruIconFont/style.scss```.
-- Encode ```/source/fonts/nemuru-icon-font.ttf``` as BASE64 and paste the string in ```/NemuruIconFont/NemuruIconFont.css```.
+- Encode ```/source/fonts/nemuru-icon-font.ttf``` as BASE64 and paste the string in ```/NemuruIconFont/index.scss``` as ```$fontData``` var

@@ -1,0 +1,1 @@
+import t from"./_hashClear.js";import o from"./_hashDelete.js";import r from"./_hashGet.js";import e from"./_hashHas.js";import s from"./_hashSet.js";function p(t){var o=-1,r=null==t?0:t.length;for(this.clear();++o<r;){var e=t[o];this.set(e[0],e[1])}}p.prototype.clear=t,p.prototype.delete=o,p.prototype.get=r,p.prototype.has=e,p.prototype.set=s;var a=p;export{a as default};

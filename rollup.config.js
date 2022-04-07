@@ -3,55 +3,97 @@ import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
-import { uglify } from 'rollup-plugin-uglify';
+import {terser} from "rollup-plugin-terser";
+import renameNodeModules from "rollup-plugin-rename-node-modules";
 
-import pkg from './package.json';
+const commonPlugins = [
+    external(),
+    postcss({
+        modules: true,
+    }),
+    babel({
+        babelHelpers: "runtime",
+        exclude: 'node_modules/**',
+        extensions: [".js", ".jsx", 'css', 'scss'],
+
+    }),
+    resolve({
+        extensions: ['.mjs', '.js', '.json', '.jsx',]
+    }),
+    commonjs(),
+    terser(),
+    renameNodeModules("ext")
+]
+
+const commonStylePlugins = [
+    external(),
+    postcss({
+        modules: false,
+    }),
+    babel({
+        babelHelpers: "runtime",
+        exclude: 'node_modules/**',
+        extensions: [".js", ".jsx", 'css', 'scss'],
+    }),
+    resolve(),
+    commonjs(),
+    terser(),
+]
 
 export default [
     {
         input: 'src/index.js',
-        output: [
-            {
-                file: pkg.main,
-                format: 'cjs',
-            },
-            {
-                file: pkg.module,
-                format: 'es',
-            },
-        ],
+        preserveEntrySignatures: 'strict',
+        output: [{
+            dir: 'dist',
+            format: 'esm',
+            preserveModules: true,
+            preserveModulesRoot: 'src',
+            exports: "named",
+            // sourcemap: true
+        },],
         plugins: [
-            external(),
-            postcss({
-                modules: true,
-            }),
-            babel({
-                exclude: 'node_modules/**',
-            }),
-            resolve(),
-            commonjs(),
-            uglify(),
+            ...commonPlugins
         ],
     },
     {
+        input: 'src/fonts/NemuruIconFont/index.scss',
+        output: [{
+            file: 'dist/fonts/NemuruIconFont/index.js',
+            format: 'cjs',
+        },],
+        plugins: [...commonStylePlugins],
+    },
+    {
         input: 'src/main-theme.scss',
-        output: [
-            {
-                file: 'dist/main-theme.js',
-                format: 'cjs',
-            },
-        ],
-        plugins: [
-            external(),
-            postcss({
-                modules: false,
-            }),
-            babel({
-                exclude: 'node_modules/**',
-            }),
-            resolve(),
-            commonjs(),
-            uglify(),
-        ],
+        output: [{
+            file: 'dist/main-theme.js',
+            format: 'cjs',
+        },],
+        plugins: [...commonStylePlugins],
+    },
+    {
+        input: 'src/style/global.scss',
+        output: [{
+            file: 'dist/style-global.js',
+            format: 'cjs',
+        },],
+        plugins: [...commonStylePlugins],
+    },
+    {
+        input: 'src/style/helpers.scss',
+        output: [{
+            file: 'dist/style-helpers.js',
+            format: 'cjs',
+        },],
+        plugins: [...commonStylePlugins],
+    },
+    {
+        input: 'src/style/extra.scss',
+        output: [{
+            file: 'dist/style-nemuru.js',
+            format: 'cjs',
+        },],
+        plugins: [...commonStylePlugins],
     },
 ];

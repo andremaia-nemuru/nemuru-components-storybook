@@ -1,0 +1,1 @@
+import e from"./_MapCache.js";function t(a,r){if("function"!=typeof a||null!=r&&"function"!=typeof r)throw new TypeError("Expected a function");var n=function(){var e=arguments,t=r?r.apply(this,e):e[0],c=n.cache;if(c.has(t))return c.get(t);var o=a.apply(this,e);return n.cache=c.set(t,o)||c,o};return n.cache=new(t.Cache||e),n}t.Cache=e;var a=t;export{a as default};

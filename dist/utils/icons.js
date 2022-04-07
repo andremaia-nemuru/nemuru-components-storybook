@@ -1,0 +1,1 @@
+var e={ICONS:{store:"storefront",web:"web",app:"apps",tpv:"contactless",social_media:"group_work",phone:"phone_iphone",marketplace:"ballot"}};function o(o){return e.ICONS[o]||""}export{o as getIconName,e as iconsConfig};

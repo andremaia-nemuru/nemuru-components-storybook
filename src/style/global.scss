@@ -1,0 +1,263 @@
+
+
+// Global style
+
+html,
+body {
+    //scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+html,
+body,
+#root > div {
+    height: 100%;
+}
+
+html,
+body,
+#root,
+#root > div,
+.App,
+.theme-wrapper {
+    min-height: 100%;
+}
+
+body {
+    -webkit-font-feature-settings: 'lnum';
+    -moz-font-feature-settings: 'lnum';
+    font-feature-settings: 'lnum';
+}
+
+.logo {
+    background-size: contain;
+}
+
+//@media only screen and (max-width: 960px) {
+//    // TODO link to MUI breakpoint
+//    body {
+//        padding-bottom: 90px;
+//    }
+//}
+
+.text-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: 'ellipsis';
+    font-weight: 600;
+}
+
+.simple-select {
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    -ms-user-select: all;
+    user-select: all;
+}
+
+.navbar {
+    a {
+        text-decoration: none;
+    }
+    .nav-item {
+        display: inline-block;
+    }
+}
+
+.MuiPaper-root.fade-bg {
+    transform: scale(1.02);
+    transform-origin: 50% 50%;
+    transition: all 0.3s ease-out;
+    box-shadow: 0 0 0px #0000;
+    background: transparent;
+}
+
+.header-show {
+    transition: opacity 0.4s ease-out;
+    opacity: 1;
+}
+
+.header-hide {
+    transition: opacity 0.4s ease-out;
+    opacity: 0;
+}
+
+.fade-in {
+    transition: opacity 0.4s ease, transform 1s ease-in;
+    transform: translate(0px, 0px);
+    opacity: 1;
+}
+
+.fade-out {
+    transition: opacity 1s ease, transform 1s ease;
+    transform: translate(0px, -5px);
+    opacity: 0;
+}
+
+.show-extend-anim {
+    transition: opacity 0.4s ease, max-height 1s ease-in;
+    opacity: 1;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.hide-extend-anim {
+    transition: opacity 1s ease, max-height 1s ease;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.circle-border-appear-anim {
+    border-radius: 30px;
+    box-shadow: 0px 0px 0px 2px;
+    padding: 8px;
+    margin: 0px;
+    -webkit-animation: border-appear-anim 0.7s; /* Safari 4.0 - 8.0 */
+    animation: border-appear-anim 0.7s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes border-appear-anim {
+    0% {
+        box-shadow: 0px -4px 0px -4px;
+        padding: 4px;
+        margin: 4px;
+    }
+    30% {
+        box-shadow: 3px 0px 0px -2px;
+    }
+    50% {
+        box-shadow: 1.5px 1.5px 0px 0px;
+    }
+    60% {
+        box-shadow: 0.5px 1px 0px 1.5px;
+    }
+    70% {
+        box-shadow: -0.5px 0.5px 0px 2px;
+    }
+    80% {
+        box-shadow: 0px 0px 0px 3px;
+        padding: 8px;
+        margin: 0px;
+    }
+    100% {
+        box-shadow: 0px 0px 0px 2px;
+    }
+}
+
+@keyframes border-appear-anim {
+    0% {
+        box-shadow: 0px -4px 0px -4px;
+        padding: 4px;
+        margin: 4px;
+    }
+    30% {
+        box-shadow: 3px 0px 0px -2px;
+    }
+    50% {
+        box-shadow: 1.5px 1.5px 0px 0px;
+    }
+    60% {
+        box-shadow: 0.5px 1px 0px 1.5px;
+    }
+    70% {
+        box-shadow: -0.5px 0.5px 0px 2px;
+    }
+    80% {
+        box-shadow: 0px 0px 0px 3px;
+        padding: 8px;
+        margin: 0px;
+    }
+    100% {
+        box-shadow: 0px 0px 0px 2px;
+    }
+}
+
+.fade-in-anim {
+    -webkit-animation: fade-in-anim 0.3s; /* Safari 4.0 - 8.0 */
+    animation: fade-in-anim 0.3s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+}
+
+.appear-anim {
+    -webkit-animation: appear-anim 0.5s; /* Safari 4.0 - 8.0 */
+    animation: appear-anim 0.5s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+}
+
+@-webkit-keyframes appear-anim {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade-in-anim {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes appear-anim {
+    0% {
+        transform: translateY(-10px);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.disappear-anim {
+    -webkit-animation: disappear-anim 0.4s; /* Safari 4.0 - 8.0 */
+    animation: disappear-anim 0.4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-timing-function: ease-out;
+    animation-timing-function: ease-out;
+    opacity: 0;
+}
+
+@-webkit-keyframes disappear-anim {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes disappear-anim {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.circle {
+    border-radius: 100px;
+    min-width: 14px;
+    min-height: 14px;
+    display: inline-block;
+}

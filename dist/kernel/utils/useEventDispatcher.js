@@ -1,0 +1,1 @@
+import{sendEventForEachChannelOfTypeActive as a}from"./sendEventForEachChannelOfTypeActive.js";var e=function(e,n){var t=Date.now();return{dispatchEvent:function(r){var o=r.name,i=r.type,p=r.payload,c=r.idParams;a({name:o,type:i,idParams:c||n,payload:p,createdAt:t,config:e})}}};export{e as useEventDispatcher};

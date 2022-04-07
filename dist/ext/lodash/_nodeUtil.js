@@ -1,0 +1,1 @@
+import{createCommonjsModule as r}from"../../_virtual/_commonjsHelpers.js";import e from"./_freeGlobal.js";var o=r((function(r,o){var t=o&&!o.nodeType&&o,i=t&&r&&!r.nodeType&&r,n=i&&i.exports===t&&e.process,p=function(){try{var r=i&&i.require&&i.require("util").types;return r||n&&n.binding&&n.binding("util")}catch(r){}}();r.exports=p}));export{o as default};

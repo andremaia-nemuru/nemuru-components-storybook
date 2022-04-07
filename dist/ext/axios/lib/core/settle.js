@@ -1,0 +1,1 @@
+import t from"./createError.js";var a=function(a,s,e){var r=e.config.validateStatus;e.status&&r&&!r(e.status)?s(t("Request failed with status code "+e.status,e.config,null,e.request,e)):a(e)};export{a as default};

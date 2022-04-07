@@ -1,0 +1,1 @@
+import t from"./_MapCache.js";import o from"./_setCacheAdd.js";import a from"./_setCacheHas.js";function r(o){var a=-1,r=null==o?0:o.length;for(this.__data__=new t;++a<r;)this.add(o[a])}r.prototype.add=r.prototype.push=o,r.prototype.has=a;var e=r;export{e as default};

@@ -1,0 +1,1 @@
+import o from"./_Symbol.js";import t from"./_getRawTag.js";import r from"./_objectToString.js";var e=o?o.toStringTag:void 0;var i=function(o){return null==o?void 0===o?"[object Undefined]":"[object Null]":e&&e in Object(o)?t(o):r(o)};export{i as default};

@@ -1,0 +1,1 @@
+import r from"./isArrayLike.js";var t=function(t,n){return function(e,u){if(null==e)return e;if(!r(e))return t(e,u);for(var f=e.length,i=n?f:-1,o=Object(e);(n?i--:++i<f)&&!1!==u(o[i],i,o););return e}};export{t as default};

@@ -1,0 +1,1 @@
+import r from"./_nativeCreate.js";var a=Object.prototype.hasOwnProperty;var t=function(t){var e=this.__data__;if(r){var _=e[t];return"__lodash_hash_undefined__"===_?void 0:_}return a.call(e,t)?e[t]:void 0};export{t as default};

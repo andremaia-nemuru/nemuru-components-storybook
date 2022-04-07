@@ -1,0 +1,1 @@
+import r,{Fragment as e}from"react";import o from"prop-types";function p(o){var p=o.condition,t=o.wrapper,n=o.children;return r.createElement(e,null,p?t(n):n)}p.propTypes={condition:o.bool,wrapper:o.func.isRequired};export{p as default};

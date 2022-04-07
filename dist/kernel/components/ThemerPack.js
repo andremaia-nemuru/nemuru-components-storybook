@@ -1,0 +1,1 @@
+import e from"react";import t from"../utils/createCustomTheme.js";import{ThemeProvider as r}from"@material-ui/styles";import m from"./AssetPackDefiner.js";function a(a){var o=a.children,s=a.theme;return e.createElement(r,{theme:t(s)},e.createElement(m,{id:s&&s.assetPackDefsId},o))}var o=e.memo(a);export{o as default};

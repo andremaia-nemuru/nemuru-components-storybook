@@ -2,7 +2,11 @@
     "plugins": [
         "@babel/plugin-proposal-export-default-from",
         "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-transform-destructuring"
+        "@babel/plugin-transform-destructuring",
+        ["@babel/plugin-transform-runtime", { "useESModules": true }]
     ],
-    "presets": ["@babel/preset-react"]
+    "presets": [
+        "@babel/preset-react",
+        ["@babel/env", { "modules": false }]
+    ]
 }

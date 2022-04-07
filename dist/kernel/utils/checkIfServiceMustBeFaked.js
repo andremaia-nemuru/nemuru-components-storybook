@@ -1,0 +1,1 @@
+var e=function(e,r,_){var T;if(null==_||!_.USE_FAKE_SERVICES_ON_POST_OR_PATCH)return!1;var d="get"===e().method||"GET"===(null===(T=e().headers)||void 0===T?void 0:T["X-HTTP-Method-Override"]),n=null==_?void 0:_.ACTION_TYPES_NOT_TO_BE_FAKED.includes(r);return!d&&!n};export{e as checkIfServiceMustBeFaked};

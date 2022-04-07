@@ -1,0 +1,1 @@
+import r from"./_arrayAggregator.js";import t from"./_baseAggregator.js";import o from"./_baseIteratee.js";import a from"./isArray.js";var e=function(e,m){return function(s,f){var i=a(s)?r:t,g=m?m():{};return i(s,e,o(f),g)}};export{e as default};

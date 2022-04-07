@@ -1,0 +1,1 @@
+import r from"./typeof.js";import o from"./assertThisInitialized.js";function t(t,e){if(e&&("object"===r(e)||"function"==typeof e))return e;if(void 0!==e)throw new TypeError("Derived constructors may only return object or undefined");return o(t)}export{t as default};

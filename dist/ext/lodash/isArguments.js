@@ -1,0 +1,1 @@
+import e from"./_baseIsArguments.js";import r from"./isObjectLike.js";var t=Object.prototype,o=t.hasOwnProperty,a=t.propertyIsEnumerable,l=e(function(){return arguments}())?e:function(e){return r(e)&&o.call(e,"callee")&&!a.call(e,"callee")};export{l as default};

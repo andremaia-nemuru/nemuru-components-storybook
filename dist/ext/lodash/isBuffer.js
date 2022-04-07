@@ -1,0 +1,1 @@
+import{createCommonjsModule as o}from"../../_virtual/_commonjsHelpers.js";import r from"./_root.js";import e from"./stubFalse.js";var s=o((function(o,s){var t=s&&!s.nodeType&&s,f=t&&o&&!o.nodeType&&o,p=f&&f.exports===t?r.Buffer:void 0,i=(p?p.isBuffer:void 0)||e;o.exports=i}));export{s as default};
