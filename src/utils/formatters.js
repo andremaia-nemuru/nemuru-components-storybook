@@ -55,6 +55,9 @@ export const formatAmountForDisplay = (amt, digits = 1) => {
     if (Ks >= 1000) {
         return `${(Ks / 1000).toFixed(digits)}M`;
     }
+    if (Ks < 1) {
+        return amt.toFixed(digits);
+    }
     return `${Ks.toFixed(digits)}K`;
 };
 export const capitalizeEachWord = (text) =>
