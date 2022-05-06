@@ -47,6 +47,8 @@ export {
 } from './validations';
 
 export {assetPackIds} from "../assets/assetPacksDefs/config";
+export {assetIds} from "../assets/assetPacksDefs/config";
+
 export {
     capitalizeEachWord,
     formatAmountForDisplay,
