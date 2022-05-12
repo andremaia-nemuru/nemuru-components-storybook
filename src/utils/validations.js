@@ -5,6 +5,9 @@ export const IBAN_REGEX =
 export const CUPS_REGEX = /^ES.{18,20}$/;
 export const SPANISH_LICENSE_PLATE_REGEX =
     /^(\d{4})([B-DF-HJ-NP-TV-Zb-df-hj-np-tv-z]{3})$/;
+export const emailPattern =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const phonePattern = /^\d{9}$/;
 
 export const spainIdType = (str) => {
     if (str) {

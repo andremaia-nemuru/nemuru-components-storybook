@@ -12,10 +12,11 @@ export default function /*#__PURE__*/ BackButton({
     children,
     onClick,
     mobileIconFontSize = '36px',
+    variant = 'outlined',
     className,
     ...props
 }) {
-    const theme = useTheme()
+    const theme = useTheme();
     const isScreenXs = theme && useMediaQuery(theme.breakpoints.down('xs'));
     const propClassName = className ? className : '';
     return (
@@ -44,7 +45,7 @@ export default function /*#__PURE__*/ BackButton({
             ) : (
                 <Button
                     size={'small'}
-                    variant={'outlined'}
+                    variant={variant}
                     onClick={onClick}
                     {...props}
                     className={`${propClassName} min-width-button`}

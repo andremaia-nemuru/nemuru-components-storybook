@@ -1,10 +1,10 @@
-export {useEventDispatcher} from '../kernel/utils/useEventDispatcher';
+export { useEventDispatcher } from '../kernel/utils/useEventDispatcher';
 
-export {dispatchEventToParentWindow} from '../kernel/utils/channelFunctions/dispatchEventToParentWindow';
-export {dispatchEventToDevConsole} from '../kernel/utils/channelFunctions/dispatchEventToDevConsole';
-export {pushEventToGTMDataLayer} from '../kernel/utils/channelFunctions/pushEventToGTMDataLayer';
-export {EVENT_TYPES} from '../kernel/utils/eventsConfig';
-export {sendEventForEachChannelOfTypeActive} from '../kernel/utils/sendEventForEachChannelOfTypeActive';
+export { dispatchEventToParentWindow } from '../kernel/utils/channelFunctions/dispatchEventToParentWindow';
+export { dispatchEventToDevConsole } from '../kernel/utils/channelFunctions/dispatchEventToDevConsole';
+export { pushEventToGTMDataLayer } from '../kernel/utils/channelFunctions/pushEventToGTMDataLayer';
+export { EVENT_TYPES } from '../kernel/utils/eventsConfig';
+export { sendEventForEachChannelOfTypeActive } from '../kernel/utils/sendEventForEachChannelOfTypeActive';
 
 //EXPORT UTILS
 export {
@@ -20,18 +20,13 @@ export {
     getYearsSinceAutoRegistration,
 } from './dateHelpers';
 
-export {
-    isObject,
-    mergeDeep,
-} from './object';
+export { isObject, mergeDeep } from './object';
 
-export {
-    getIconName,
-} from './icons';
+export { getIconName } from './icons';
 
 //EXPORT MAPPERS
-export {FormatDateMapper} from './mappers/FormatDateMapper';
-export {NotificationsMapper} from './mappers/NotificationsMapper';
+export { FormatDateMapper } from './mappers/FormatDateMapper';
+export { NotificationsMapper } from './mappers/NotificationsMapper';
 
 //EXPORT VALIDATIONS
 export {
@@ -44,10 +39,12 @@ export {
     validNIE,
     validateDNIorNIE,
     validatePhoneWithPrefix,
+    emailPattern,
+    phonePattern,
 } from './validations';
 
-export {assetPackIds} from "../assets/assetPacksDefs/config";
-export {assetIds} from "../assets/assetPacksDefs/config";
+export { assetPackIds } from '../assets/assetPacksDefs/config';
+export { assetIds } from '../assets/assetPacksDefs/config';
 
 export {
     capitalizeEachWord,
@@ -59,8 +56,7 @@ export {
     formatSnakecaseToSpaces,
     formatDeleteSpacesInStringAndUpperCase,
     parseStringAmountWithUnitToNumber,
-    normalizeText
-} from "./formatters";
-
+    normalizeText,
+} from './formatters';
 
 // const a = EVENT_TYPES()
