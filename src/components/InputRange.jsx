@@ -1,7 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { useTheme } from '@material-ui/styles';
-import TextField from '@material-ui/core/TextField';
+import React, { Fragment } from 'react';
 import Slider from '@material-ui/core/Slider';
 import RichTextfield from './RichTextfield';
 

@@ -5,7 +5,12 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { useTheme } from '@material-ui/styles';
 
-export default function TripleStateToggler({ name, value, handleChange, disabled }) {
+export default function TripleStateToggler({
+    name,
+    value,
+    handleChange,
+    disabled,
+}) {
     const { palette } = useTheme();
     const [state, setState] = useState(value);
     const [switchState, setSwitchState] = useState(value);
@@ -61,12 +66,15 @@ export default function TripleStateToggler({ name, value, handleChange, disabled
         zIndex: '1',
         transition: '0.3s all',
     };
+
+    const untoggledValue = null || undefined;
+
     return (
         <>
             <Paper elevation={0} className={classes.paper}>
                 <Box
                     style={
-                        state === null
+                        state === untoggledValue
                             ? {
                                   ...defaultSwitchStyle,
                                   pointerEvents: 'none',
@@ -77,11 +85,11 @@ export default function TripleStateToggler({ name, value, handleChange, disabled
                 >
                     <Switch
                         className={'Mui-checked'}
-                        checked={state === null ? false : switchState}
+                        checked={state === untoggledValue ? false : switchState}
                         onChange={(e) => handleSwitchChange(e)}
                         disabled={disabled}
                         style={{
-                            opacity: disabled ? 0.5 : 1
+                            opacity: disabled ? 0.5 : 1,
                         }}
                         icon={
                             <i
@@ -124,7 +132,7 @@ export default function TripleStateToggler({ name, value, handleChange, disabled
                 </Box>
                 <>
                     <Paper
-                        elevation={state === null ? 2 : 0}
+                        elevation={state === untoggledValue ? 2 : 0}
                         style={{ marginRight: 18, borderRadius: 10 }}
                     >
                         <StyledToggleButtonGroup
@@ -156,7 +164,7 @@ export default function TripleStateToggler({ name, value, handleChange, disabled
                                     margin: '-6px -7px',
                                 }}
 
-                              // disabled={disabled}
+                                // disabled={disabled}
                             >
                                 <i
                                     className="material-icons-outlined"
