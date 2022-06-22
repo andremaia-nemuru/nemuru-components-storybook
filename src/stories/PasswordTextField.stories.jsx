@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import './main.css';
 import PasswordTextfield from '../components/PasswordTextfield';
+import Wrapper from './shared/Wrapper';
 
 export default {
     title: 'Nemuru-components/PasswordTextfield',
     component: Template,
     argTypes: {
-        showPassword: {
-            control: 'boolean',
-        },
         showPasswordStrengthMeter: {
             control: 'boolean',
         },
@@ -50,14 +48,17 @@ const Template = (args) => {
     args.showPassword = showPasswordOnClick;
     args.className = 'mb-3';
 
-    return <PasswordTextfield {...args}></PasswordTextfield>;
+    return (
+        <Wrapper maxWidth={args.fullWidth ? '550px' : '270px'}>
+            <PasswordTextfield {...args}></PasswordTextfield>
+        </Wrapper>
+    );
 };
 export const PasswordTextfieldStory = Template.bind({});
 PasswordTextfieldStory.args = {
     fullWidth: true,
     iconColor: 'inherit',
     showPasswordStrengthMeter: true,
-    passwordStrengthLevel: 0,
     onChange: () => {},
     label: 'Introduzca contraseña',
 };

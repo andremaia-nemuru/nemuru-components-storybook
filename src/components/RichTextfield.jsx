@@ -29,6 +29,7 @@ const NumberFormatCustom = ({
         fixedDecimalScale
         isNumericString
         isAllowed={({ value }) => {
+            console.log('isAllowed', value, maxLength);
             return maxLength ? value.split('.')[0].length <= maxLength : true;
         }}
     />

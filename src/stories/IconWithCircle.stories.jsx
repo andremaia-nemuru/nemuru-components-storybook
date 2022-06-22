@@ -47,10 +47,18 @@ const Template = (args) => {
         });
     return <IconWithCircle {...args}>{icon}</IconWithCircle>;
 };
-export const IconWithCircleControlled = Template.bind({});
-IconWithCircleControlled.args = {
+export const IconWithCirclePrimary = Template.bind({});
+IconWithCirclePrimary.args = {
     icon: 'chevron_right',
     ThemeColor: 'primary',
+    backgroundSize: 40,
+    className: 'material-icons',
+    iconSize: 26,
+};
+export const IconWithCircleSecondary = Template.bind({});
+IconWithCircleSecondary.args = {
+    icon: 'done',
+    ThemeColor: 'secondary',
     backgroundSize: 40,
     className: 'material-icons',
     iconSize: 26,

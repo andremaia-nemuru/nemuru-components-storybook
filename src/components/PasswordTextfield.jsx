@@ -71,14 +71,14 @@ export default function PasswordTextfield({
                             edge="end"
                         >
                             <i
-                                className="material-icons"
+                                className="material-icons-outlined"
                                 style={{
                                     verticalAlign: 'text-top',
                                     fontSize: '24px',
                                     color: iconColor,
                                 }}
                             >
-                                {showPassword ? 'visibility_off' : 'visibility'}
+                                {showPassword ? 'visibility' : 'visibility_off'}
                             </i>
                         </IconButton>
                     ),

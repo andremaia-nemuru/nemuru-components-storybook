@@ -7,14 +7,6 @@ export default {
     title: 'Nemuru-components/InputDate',
     component: Template,
     argTypes: {
-        views: {
-            control: 'select',
-            options: [['year', 'month', 'date'], ['year', 'month'], ['year']],
-        },
-        openTo: {
-            control: 'select',
-            options: ['year', 'month', 'date'],
-        },
         disableFuture: {
             control: 'boolean',
         },
@@ -37,6 +29,8 @@ const Template = (args) => {
         disablePast,
         disableFuture,
         label,
+        emptyLabel,
+        format,
     } = args;
     const validateKeyboardInputDate = ({
         value,
@@ -60,13 +54,13 @@ const Template = (args) => {
             allowKeyboardPicking={allowKeyboardPicking}
             control={control}
             locale={esLocale}
-            emptyLabel={'Día, mes, año'}
+            emptyLabel={emptyLabel}
             fullWidth={fullWidth}
             variant="inline"
             openTo={openTo}
             autoOk
             views={views}
-            format="dd/MM/yyyy"
+            format={format}
             label={label}
             id="date"
             name="date"
@@ -91,13 +85,39 @@ const Template = (args) => {
         />
     );
 };
-export const InputDateStory = Template.bind({});
-InputDateStory.args = {
+export const InputDateStoryDay = Template.bind({});
+InputDateStoryDay.args = {
     allowKeyboardPicking: true,
+    emptyLabel: 'Día, Mes, Año',
     label: 'Fecha',
     fullWidth: false,
     views: ['year', 'month', 'date'],
     openTo: 'year',
     disablePast: false,
     disableFuture: false,
+    format: 'dd/MM/yyyy',
+};
+export const InputDateStoryMonth = Template.bind({});
+InputDateStoryMonth.args = {
+    allowKeyboardPicking: true,
+    emptyLabel: 'Mes, Año',
+    label: 'Fecha',
+    fullWidth: false,
+    views: ['year', 'month'],
+    openTo: 'year',
+    disablePast: false,
+    disableFuture: false,
+    format: 'MM/yyyy',
+};
+export const InputDateStoryYear = Template.bind({});
+InputDateStoryYear.args = {
+    allowKeyboardPicking: true,
+    emptyLabel: 'Año',
+    label: 'Fecha',
+    fullWidth: false,
+    views: ['year'],
+    openTo: 'year',
+    disablePast: false,
+    disableFuture: false,
+    format: 'yyyy',
 };

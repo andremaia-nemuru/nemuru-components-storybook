@@ -2,6 +2,7 @@ import React from 'react';
 import { useTheme } from '@material-ui/styles';
 import InputRange from '../components/InputRange';
 import './main.css';
+import Wrapper from './shared/Wrapper';
 
 export default {
     title: 'Nemuru-components/InputRange',
@@ -38,7 +39,11 @@ const Template = (args) => {
             <h4 className={'mb-2 d-inline'}>Importe</h4>
         </div>
     );
-    return <InputRange {...args}></InputRange>;
+    return (
+        <Wrapper maxWidth={args.fullWidth ? '450px' : '0px'}>
+            <InputRange {...args}></InputRange>
+        </Wrapper>
+    );
 };
 export const InputRangeStory = Template.bind({});
 InputRangeStory.args = {

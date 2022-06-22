@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Grid, Box, Typography } from '@material-ui/core';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {getIconName} from "../utils/icons";
+import { getIconName } from '../utils/icons';
 
 export default function SingleLinearStatBar(props) {
     const {
@@ -85,7 +85,6 @@ export default function SingleLinearStatBar(props) {
         default:
             break;
     }
-
     return (
         <Fragment>
             <Box

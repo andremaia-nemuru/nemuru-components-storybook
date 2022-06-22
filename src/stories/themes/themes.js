@@ -62,42 +62,6 @@ export const createSDKTheme = (accentColor = '#8e8e8e') => {
 };
 
 export const customThemes = {
-    [THEME_NAMES.neutral]: {
-        themeName: THEME_NAMES.neutral,
-        palette: {
-            primary: {
-                main: '#7c7c7c',
-                contrastText: '#ffffff',
-            },
-            secondary: {
-                main: '#b3b3b3',
-                contrastText: '#353535',
-            },
-            dark: {
-                main: '#eaeaea',
-                contrastText: '#525252',
-                accent: '#525252',
-            },
-            light: {
-                main: '#f6f6f6',
-                contrastText: '#525252',
-                accent: '#525252',
-            },
-            status: {
-                active: '#4dd970',
-                approved: '#43b46f',
-                analysing: '#36a3f7',
-                sent: '#08404d',
-                cancelled: '#d8d8d8',
-                denied: '#ef5957',
-            },
-        },
-        background: '#eaeaea',
-        customBorderRadius: {
-            button: 0,
-            paper: 0,
-        },
-    },
     [THEME_NAMES.nemuru]: {
         themeName: THEME_NAMES.nemuru,
         palette: {
@@ -719,6 +683,42 @@ export const customThemes = {
             button: 25,
             paper: 8,
             chip: 16,
+        },
+    },
+    [THEME_NAMES.neutral]: {
+        themeName: THEME_NAMES.neutral,
+        palette: {
+            primary: {
+                main: '#7c7c7c',
+                contrastText: '#ffffff',
+            },
+            secondary: {
+                main: '#b3b3b3',
+                contrastText: '#353535',
+            },
+            dark: {
+                main: '#eaeaea',
+                contrastText: '#525252',
+                accent: '#525252',
+            },
+            light: {
+                main: '#f6f6f6',
+                contrastText: '#525252',
+                accent: '#525252',
+            },
+            status: {
+                active: '#4dd970',
+                approved: '#43b46f',
+                analysing: '#36a3f7',
+                sent: '#08404d',
+                cancelled: '#d8d8d8',
+                denied: '#ef5957',
+            },
+        },
+        background: '#eaeaea',
+        customBorderRadius: {
+            button: 0,
+            paper: 0,
         },
     },
 };

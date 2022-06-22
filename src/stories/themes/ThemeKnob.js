@@ -7,7 +7,7 @@ import createCustomTheme from '../../kernel/utils/createCustomTheme';
 const themes = customThemes;
 const themeNames = Object.keys(THEME_NAMES);
 export default ({ children }) => {
-    const theme = select('Theme', themeNames, themeNames[0], 'Themes');
+    const theme = select('Theme', themeNames, themeNames[1], 'Themes');
     return (
         <ThemeProvider theme={createCustomTheme(themes[theme])}>
             {children}
